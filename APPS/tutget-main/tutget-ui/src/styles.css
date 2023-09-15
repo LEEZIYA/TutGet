@@ -1,1 +1,6 @@
-/* You can add global styles to this file, and also import other style files */
+.title{
+  color: #26608c;
+  font-weight: 750;
+  font-size: larger;
+  font-family: Arial, Helvetica, sans-serif;
+}

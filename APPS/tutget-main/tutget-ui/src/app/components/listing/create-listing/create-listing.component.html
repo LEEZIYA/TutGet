@@ -1,0 +1,180 @@
+<div class="container-fluid mt-4" *ngIf="!listingId">
+  <div class="row row-cols-1 justify-content-center">
+    <div class="col-sm-8 mb-3 mt-2">
+      <div class="title mb-3">Post a listing to find your private tutor!</div>
+    </div>
+  </div>
+  <div class="row row-cols-1 justify-content-center">
+      <div class="col-sm-4 mb-3">
+          <div class="subtitle mb-3">Academic Level</div>
+          <input type="search" class="form-control" [(ngModel)]="academicLvlLabel"  disabled/>
+          <!-- <select class="form-control" [(ngModel)]="createListingForm.acadLvl" disabled>
+            <option *ngFor="let acadLvl of academicLvlList" [value]="acadLvl.value">{{ acadLvl.label }}</option>
+          </select> -->
+      </div>
+      <div class="col-sm-4 mb-3">
+        <div class="subtitle mb-3">Subject</div>
+        <select class="form-select" [(ngModel)]="createListingForm.acadSubject">
+          <option value="">Please select</option>
+          <option *ngFor="let subj of academicLvlSubjectList" [value]="subj">{{ academicSubjectList.get(subj) }}</option>
+        </select>
+        <small class="mt-2 ms-2 text-danger" *ngIf="subjErr">{{ subjErr }}</small>
+      </div>
+  </div>
+  <div class="row justify-content-center mb-3">
+    <div class="col-sm-4 mb-3">
+      <div class="subtitle mb-3">Postal Code</div>
+        <input type="search" class="form-control" [(ngModel)]="createListingForm.postalCode" disabled/>
+    </div>
+    <div class="col-sm-4 mb-3">
+      <div class="subtitle mb-3">Address</div>
+      <input type="search" class="form-control" [(ngModel)]="address" disabled/>
+    </div>
+  </div>
+  <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 row-cols-xl-2 justify-content-center">
+    <div class="col-md-8 col-lg-6 col-xl-5 table-container mb-1">
+      <div class="subtitle mb-3">Day and Time</div>
+      <table class="table">
+        <thead class="table-head">
+          <tr>
+            <!-- <th *ngFor="let item of ['', 'Day', 'Start Time', 'AM/PM', 'No of hours', 'End Time']"> {{ item }}</th> -->
+            <th style="width: 6%; text-align: right; vertical-align: middle; border-radius: 0.5rem 0 0 0"><input class="form-check-input" [(ngModel)]="checkAllSelect" type="checkbox" (change)="checkAll(7)"></th>
+            <th style="width: 20%">Day</th>
+            <th style="width: 15%">Start Time</th>
+            <th style="width: 5%">AM/PM</th>
+            <th style="width: 5%">Hour(s)</th>
+            <th style="border-radius: 0 0.5rem 0 0">End Time</th>
+          </tr>
+        </thead>
+        <tbody style="border-bottom: hidden; border-color:#dee2e6">
+          <tr *ngFor="let day of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']; let i = index;"
+          [ngClass]="dayOfWeek[i] ? 'normal-row' : 'disabled-row'" >
+            <td style="text-align: right; vertical-align: middle;" [ngStyle]="i === 6 ? {'border-radius': '0 0 0 0.5rem'} : {'border-radius': '0 0 0 0'}">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="dayOfWeek[i]" (change)="computeEndTime(i); checkAll(i);"></td>
+            <td style="vertical-align: middle;">{{ day }}</td>
+            <td (change)="computeEndTime(i)">
+              <div style="display: flex">
+                <select class="form-select" style="width: auto; display: inline" [(ngModel)]="selectedHour[i]" [disabled]="!dayOfWeek[i]">
+                  <option *ngFor="let num of [1,2,3,4,5,6,7,8,9,10,11,12]"> {{ num }} </option>
+                </select>
+                &nbsp;<div class="mt-1">:</div>&nbsp;
+                <select class="form-select"  style="width: auto; display: inline" [(ngModel)]="selectedMin[i]" [disabled]="!dayOfWeek[i]">
+                  <option *ngFor="let min of ['00', '05', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55']"> {{ min }} </option>
+                </select>
+              </div>
+            </td>
+            <td (change)="computeEndTime(i)">
+              <select class="form-select" style="width: auto; display: flex" [(ngModel)]="selectedAMPM[i]" [disabled]="!dayOfWeek[i]">
+                <option [value]="1">AM</option>
+                <option [value]="2">PM</option>
+              </select>
+            </td>
+            <td (change)="computeEndTime(i)">
+              <select class="form-select" style="width: auto;" [(ngModel)]="selectedHourNum[i]" [disabled]="!dayOfWeek[i]">
+                <option *ngFor="let num of [1,2,3,4]">{{ num }}</option>
+              </select>
+            </td>
+            <td style="vertical-align: middle;" [ngStyle]="i === 6 ? {'border-radius': '0 0 0.5rem 0'} : {'border-radius': '0 0 0 0'}">{{ computedEndTimeArr[i] }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="ms-0 ms-lg-2 text-danger mb-3" *ngIf="dateTimeErr"><small>{{ dateTimeErr }}</small></div>
+    </div>
+    <div class="col-sm-8 col-md-8 col-lg-2 col-xl-3">
+      <div class="row">
+        <div class="col-12 mb-4 mt-0 mt-lg-5">
+          <div class="subtitle mb-3">Start Date</div>
+          <input type="date" class="form-control" [(ngModel)]="createListingForm.startDate"/>
+          <small class="mt-2 ms-2 ms-sm-2 ms-md-2 ms-lg-0 ms-xl-2 text-danger" *ngIf="startDtErr">{{ startDtErr }}</small>
+        </div>
+        <div class="col-12 mb-4">
+          <div class="subtitle mb-3">Frequency</div>
+          <select class="form-select" [(ngModel)]="createListingForm.frequency" (change)="computeTotal()">
+            <option value=-1 >Please select</option>
+            <option *ngFor="let freq of frequencyList; let i = index;" [value]="i">{{ freq }}</option>
+          </select>
+          <small class="mt-2 ms-2 ms-sm-2 ms-md-2 ms-lg-0 ms-xl-2 text-danger" *ngIf="freqErr">{{ freqErr }}</small>
+        </div>
+        <div class="col-12 mb-4">
+          <div class="subtitle mb-3">Hourly Rate</div>
+          <div style="display: flex;"><span style="font-weight: 500; font-size: large; padding-top: 5px; color: rgb(59, 61, 151)">S$&nbsp;&nbsp;</span><input type="search" class="form-control" [(ngModel)]="hourlyRate" maxlength="3" (keyup)="onKeyup($event)"/></div>
+          <small class="mt-2 text-danger" *ngIf="hourlyRateErr">{{ hourlyRateErr }}</small>
+        </div>
+        <div class="col-12 mb-4">
+          <div *ngIf="showTotal" class="subtitle mb-3">{{ frequencyList[createListingForm.frequency] }} Total </div>
+          <div *ngIf="showTotal"  style="display: flex;"><span style="font-weight: 500; font-size: large; padding-top: 5px; color: rgb(59, 61, 151)">S$&nbsp;&nbsp;</span><input type="search" class="form-control" [(ngModel)]="computedTotal" disabled /></div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="row justify-content-center mt-0 mt-md-2">
+      <div class="col-sm-8 mb-3">
+        <div class="subtitle mb-3">Brief Description</div>
+          <textarea class="form-control" [(ngModel)]="createListingForm.description" maxlength="50"></textarea>
+      </div>
+    </div>
+    <div class="row  justify-content-center mt-5">
+      <div class="col-sm-8 mb-3" style="text-align: right;">
+        <app-single-button buttonTitle="Submit" (eventEmit)="submit()" [rounderStyle]="true"></app-single-button>
+      </div>
+    </div>
+</div>
+<div class="container-fluid" *ngIf="listingId">
+  <div class="row row-cols-1 justify-content-center">
+    <div class="col justify-content-center mt-3">
+      <div class="title" style="text-align: center;">
+          <div class="tick-container">✔</div>&nbsp;
+            <div class="mt-4" style="font-size: x-large">Successfully Listed</div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-3" style="font-size: large; text-align: center;">Your listing ID:
+    <span style="font-weight: bold">{{ listingId }}</span>
+  </div>
+  <div class="mt-5" style="text-align: center;">
+    <app-single-button [longerStyle]="true" buttonTitle="View Listing"></app-single-button>
+  </div>
+</div>
+
+<!-- <div class="d-flex justify-content-center">
+  <div class="row">
+    <div class="col-12 mb-4">
+      Login
+    </div>
+  </div>
+</div> -->
+
+
+
+      <!-- <div class="form-check">
+        <div class="row">
+          <div class="col-sm-1 mb-4">
+            <input class="form-check-input" type="checkbox" (change)="flipDayIndex(0)"><label>Monday</label>
+          </div>
+          <div class="col-sm-2 mb-4">
+            <select class="form-select" [(ngModel)]="createListingForm.acadSubject">
+              <option value="">Please select</option>
+              <option *ngFor="let subj of academicLvlSubjectList" [value]="subj">{{ academicSubjectList.get(subj) }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <input class="form-check-input" type="checkbox" (change)="flipDayIndex(1)"><label>Tuesday</label>
+        </div>
+        <div class="mb-4">
+          <input class="form-check-input" type="checkbox" (change)="flipDayIndex(2)"><label>Wednesday</label>
+        </div>
+        <div class="mb-4">
+          <input class="form-check-input" type="checkbox" (change)="flipDayIndex(3)"><label>Thursday</label>
+        </div>
+        <div class="mb-4">
+          <input class="form-check-input" type="checkbox" (change)="flipDayIndex(4)"><label>Friday</label>
+        </div>
+        <div class="mb-4">
+          <input class="form-check-input" type="checkbox" (change)="flipDayIndex(5)"><label>Saturday</label>
+        </div>
+        <div class="mb-4">
+          <input class="form-check-input" type="checkbox" (change)="flipDayIndex(6)"><label>Sunday</label>
+        </div>
+      </div> -->

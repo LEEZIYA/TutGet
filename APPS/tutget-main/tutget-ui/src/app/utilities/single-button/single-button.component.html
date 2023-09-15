@@ -1,0 +1,3 @@
+<!-- <button [ngClass]="rounderStyle ? 'rounderButton' : 'singleButton'" (click)="buttonHandler($event)">{{ buttonTitle }}</button> -->
+
+<button [ngClass]="{'rounderButton': rounderStyle, 'longerButton': longerStyle}" class="singleButton" (click)="buttonHandler($event)">{{ buttonTitle }}</button>
