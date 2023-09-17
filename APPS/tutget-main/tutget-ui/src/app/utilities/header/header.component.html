@@ -6,9 +6,7 @@
 <div class="logo-container">
   <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container-fluid">
-        <a routerLink="/">
-            <img class="logo" src="./assets/images/tutget-logo.jpg">
-        </a>
+      <img class="logo" src="./assets/images/tutget-logo.jpg" routerLink="">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -21,6 +19,9 @@
                     <a class="nav-link" href="#">Link</a>
                 </li> -->
             </ul>
+            <div style="padding-right: 20px">
+              <app-single-button buttonTitle="Create Listing" (eventEmit)="createListing()"></app-single-button>
+            </div>
             <ul class="navbar-nav">
                 <a class="nav-link hover-link" routerLink="/qna">QnA Boards</a>
                 <a class="nav-link hover-link" href="#">Register</a>

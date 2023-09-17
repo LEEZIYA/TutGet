@@ -1,0 +1,65 @@
+.singleButton{
+  background-color: rgb(32, 71, 161);
+  font-family: Arial;
+  border-radius: 0.5rem;
+  color: white;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border: none;
+  transition: .2s ease-out;
+
+}
+
+.rounderButton{
+  background-color: rgb(32, 71, 161);
+  font-family: Arial;
+  border-radius: 2rem;
+  color: white;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border: none;
+  transition: .2s ease-out;
+
+}
+
+.longerButton{
+  background-color: rgb(32, 71, 161);
+  font-family: Arial;
+  border-radius: 0.5rem;
+  color: white;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border: none;
+  transition: .2s ease-out;
+
+}
+
+
+.longerButton:hover,
+.rounderButton:hover,
+.singleButton:hover{
+  box-shadow: 0 5px 11px 0 rgba(0,0,0,.18), 0 4px 15px 0 rgba(0,0,0,.15);
+  transition: .2s ease-out;
+}
+
+.longerButton:hover,
+.rounderButton:focus,
+.singleButton:focus{
+  outline: none;
+}
+
+
+.rounderButton:active,
+.singleButton:active{
+  background-color: rgb(147,182,221);
+  transition: 0.1s;
+  box-shadow:none;
+}
+
+
