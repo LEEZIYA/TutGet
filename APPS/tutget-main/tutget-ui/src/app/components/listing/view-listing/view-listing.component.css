@@ -1,0 +1,59 @@
+th{
+  background-color: rgb(17, 56, 145);
+  color: white;
+  font-weight: 500;
+  vertical-align: middle;
+  width: 30%;
+  font-weight: 400;
+}
+
+
+td:hover{
+  font-weight: 500;
+}
+
+th:hover + td{
+  font-weight: 500;
+}
+
+table {
+  border-collapse: collapse;
+  border-radius: 0.5rem;
+  border-style: hidden;
+  box-shadow: 1px 1px 1px rgba(0,0,0,0.05), 4px 4px 4px rgba(0,0,0,0.05);;
+}
+
+.action-container{
+  border-radius: 0.5rem;
+  box-shadow: 4px 4px 4px rgba(0,0,0,0.05);
+  height: 19vh;
+  text-align: center;
+  align-items: middle;
+  background-color: #fafbfd;
+  border: 1px solid #cddfff;
+
+}
+
+.div-button:hover{
+  background-color: #375998;
+  transition: 0.3s;
+  color: white;
+  cursor: pointer;
+}
+
+.div-button{
+  background-color: white;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  margin: 1.5rem;
+  text-align: left;
+  font-weight: 500;
+  border: 1px solid #7f9acc;
+  border-radius: 0.2rem;
+  color: #375998;
+
+}
+
+.div-button:active{
+  background-color: #1d2e4e;
+}

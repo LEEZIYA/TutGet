@@ -34,7 +34,7 @@ public class ListingController {
         return listingService.addListing(listing);
     }
 
-    @PutMapping("/listings/{id}")
+    @PutMapping("/listings")
     public void updateListing(@RequestBody Listing listing){
         listingService.updateListing(listing);
     }
@@ -42,7 +42,6 @@ public class ListingController {
     public void deleteListing(@PathVariable String id){
         listingService.deleteListing(id);
     }
-
     @RequestMapping("/listings/find/{description}")
     public List<Listing> getListingsByDescription(@PathVariable String description){
         return listingService.getAllListingsByDescription(description);

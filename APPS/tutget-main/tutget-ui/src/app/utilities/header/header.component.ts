@@ -11,7 +11,7 @@ export class HeaderComponent {
   constructor(private router: Router){}
 
   createListing(){
-    this.router.navigate(['create-listing'])
+    this.router.navigate(['listing'])
   }
 
 

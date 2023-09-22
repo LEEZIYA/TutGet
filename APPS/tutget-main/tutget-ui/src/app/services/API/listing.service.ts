@@ -15,5 +15,17 @@ export class ListingService {
     return this.restclient.postjsonReturnString(this.BASE_URL, form);
   }
 
+  getListing(id: string){
+    return this.restclient.getrawjson(this.BASE_URL + '/' + id, false);
+  }
+
+  updateListing(form: CreateListingForm){
+    this.restclient.putjson(this.BASE_URL, form);
+  }
+
+  deleteListing(id: string){
+    this.restclient.delete(this.BASE_URL + '/' + id);
+  }
+
 
 }

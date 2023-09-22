@@ -11,6 +11,8 @@ import { QnaComponent } from './qna/components/qna.component';
 import { QnaViewQuestionComponent } from './qna/components/qna-view-question/qna-view-question.component';
 import { SharedModule } from './shared/shared.module';
 import { CreateListingComponent } from './components/listing/create-listing/create-listing.component';
+import { ViewListingComponent } from './components/listing/view-listing/view-listing.component';
+
 
 
 
@@ -23,6 +25,7 @@ import { CreateListingComponent } from './components/listing/create-listing/crea
     QnaComponent,
     QnaViewQuestionComponent,
     CreateListingComponent,
+    ViewListingComponent,
 
   ],
   imports: [
