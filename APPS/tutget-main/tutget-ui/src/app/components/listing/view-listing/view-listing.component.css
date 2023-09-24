@@ -23,7 +23,7 @@ table {
   box-shadow: 1px 1px 1px rgba(0,0,0,0.05), 4px 4px 4px rgba(0,0,0,0.05);;
 }
 
-.action-container{
+/* .action-container{
   border-radius: 0.5rem;
   box-shadow: 4px 4px 4px rgba(0,0,0,0.05);
   height: 19vh;
@@ -32,7 +32,7 @@ table {
   background-color: #fafbfd;
   border: 1px solid #cddfff;
 
-}
+} */
 
 .div-button:hover{
   background-color: #375998;
