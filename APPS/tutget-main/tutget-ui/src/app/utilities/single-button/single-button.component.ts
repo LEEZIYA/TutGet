@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ReloadService } from 'src/app/services/reload.service';
 
 @Component({
   selector: 'app-single-button',
@@ -19,8 +20,14 @@ export class SingleButtonComponent {
   @Output()
   eventEmit: EventEmitter<any> = new EventEmitter();
 
+  constructor(private reloadService: ReloadService){
+  }
+
   buttonHandler(event: any){
     this.eventEmit.emit(event);
+    if(this.buttonTitle == 'Create Listing'){
+      this.reloadService.notifyOther({refresh: true});
+    }
   }
 
 }

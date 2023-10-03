@@ -13,6 +13,8 @@ import { QnaViewQuestionComponent } from './qna/components/qna-view-question/qna
 import { SharedModule } from './shared/shared.module';
 import { CreateListingComponent } from './components/listing/create-listing/create-listing.component';
 import { PaymentComponent } from './components/payment/payment.component';
+import { ViewListingComponent } from './components/listing/view-listing/view-listing.component';
+
 
 
 
@@ -26,6 +28,7 @@ import { PaymentComponent } from './components/payment/payment.component';
     QnaViewQuestionComponent,
     CreateListingComponent,
     PaymentComponent,
+    ViewListingComponent,
   ],
   imports: [
     BrowserModule,

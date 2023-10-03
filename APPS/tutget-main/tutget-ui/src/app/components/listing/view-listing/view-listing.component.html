@@ -1,0 +1,82 @@
+<div class="container-fluid mt-4" *ngIf="!deleted">
+  <div class="row row-cols-1 justify-content-center">
+    <div class="col-md-9 col-lg-7 mb-3 mt-2">
+      <div class="title mb-3">Listing Details</div>
+    </div>
+  </div>
+  <div class="row row-md-cols-2 justify-content-center">
+    <div class="col-md-5">
+      <table style="width:100%; border-color:#dee2e6" class="table table-striped">
+        <tbody>
+          <!-- <tr>
+            <th style="border-radius: 0.5rem 0 0 0">Listing ID</th>
+            <td style="border-radius: 0 0.5rem 0 0">{{ id }}</td>
+          </tr> -->
+          <tr>
+            <th style="border-radius: 0.5rem 0 0 0">Listing ID</th>
+            <td style="border-radius: 0 0.5rem 0 0">{{ createListingForm.id }}</td>
+          </tr>
+          <tr>
+            <th>Tutee</th>
+            <td><a href="#">Alex</a></td>
+          </tr>
+          <tr>
+            <th>Academic Level</th>
+            <td>{{ academicLvlLabel }}</td>
+          </tr>
+          <tr>
+            <th>Subject</th>
+            <td>{{ academicSubjectLabel }}</td>
+          </tr>
+          <tr>
+            <th>Postal Code</th>
+            <td>{{ createListingForm.postalCode }}</td>
+          </tr>
+          <tr>
+            <th>Address</th>
+            <td>{{ address }}</td>
+          </tr>
+          <tr>
+            <th>Schedule</th>
+            <td style="white-space: pre-line">{{ schedule }}</td>
+          </tr>
+          <tr>
+            <th>Frequency</th>
+            <td>{{ frequencyList[createListingForm.frequency] }}</td>
+          </tr>
+          <tr>
+            <th>Start Date</th>
+            <td>{{ startDate }}</td>
+          </tr>
+          <tr>
+            <th [ngStyle]="createListingForm.description ? {'border-radius': '0 0 0 0'} : {'border-radius': '0 0 0 0.5rem'}">Hourly Rate (S$)</th>
+            <td [ngStyle]="createListingForm.description ? {'border-radius': '0 0 0 0'} : {'border-radius': '0 0 0.5rem 0'}">{{ createListingForm.hourlyRate }}</td>
+          </tr>
+          <tr *ngIf="createListingForm.description">
+            <th style="border-radius: 0 0 0 0.5rem">Description</th>
+            <td style="border-radius: 0 0 0.5rem 0">{{ createListingForm.description }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-5 col-sm-4 col-lg-2 p-2 pt-0">
+        <div class="div-button mt-4 ps-3" (click)="editListing()" >Edit Listing</div>
+        <div class="div-button mt-4 ps-3" (click)="deleteListing()">Delete Listing</div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid" *ngIf="deleted">
+  <div class="row row-cols-1 justify-content-center">
+    <div class="col justify-content-center mt-3">
+      <div class="title" style="text-align: center;">
+          <div class="tick-container">✔</div>&nbsp;
+            <div class="mt-4" style="font-size: x-large">Successfully Deleted</div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-5" style="text-align: center;">
+    <app-single-button [longerStyle]="true" buttonTitle="Back to home" (eventEmit)="goHome()"></app-single-button>
+  </div>
+</div>
+
+

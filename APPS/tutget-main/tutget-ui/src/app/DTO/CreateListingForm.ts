@@ -1,5 +1,6 @@
 export class CreateListingForm{
 
+  public id: string;
   public acadLvl: string;
   public acadSubject: string = "";
   public postalCode: string;
