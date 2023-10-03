@@ -14,5 +14,8 @@ export class HeaderComponent {
     this.router.navigate(['create-listing'])
   }
 
+  createPayment(){
+    this.router.navigate(['payment'])
+  }
 
 }

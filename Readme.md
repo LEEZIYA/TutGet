@@ -15,7 +15,7 @@ Prerequisites:
     3. Run the backend: go to `tutget\APPS\tutget-main` and run `mvn spring-boot:run` or through your IDE
     4. Verify: go to your browser and type `localhost:8080`. You should see the TutGet website with images and text.
 3. STARTING DISCOVERY SERVER
-    1. Run the discovery server: go to `tutget\APPS\discovery-server` and run `mvn spring-boot:run` or through your IDE
+    1. Run the discovery server: go to `tutget\APPS\discovery-server` and run `mvn spring-boot:run` or through your IDE 'localhost:8761'
 3. STARTING INDIVIDUAL SERVICES
     1. Run the backend: go to `tutget\APPS\service-qna` and run `mvn spring-boot:run` or through your IDE
     2. Verify: go to your browser and type `localhost:XXXX`, where XXXX is the port stated in `src/main/resources/application.properties` file. You should see a Whitelable Error page.

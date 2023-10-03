@@ -1,0 +1,238 @@
+<div class="container">
+  <div class="py-5 text-center">
+    <h2>Payment form</h2>
+  </div>
+
+  <div class="row g-5">
+    <div class="col-md-5 col-lg-4 order-md-last">
+      <h4 class="d-flex justify-content-between align-items-center mb-3">
+        <span class="text-primary">Your cart</span>
+        <span class="badge bg-primary rounded-pill">3</span>
+      </h4>
+      <ul class="list-group mb-3">
+        <li class="list-group-item d-flex justify-content-between lh-sm">
+          <div>
+            <h6 class="my-0">Product name</h6>
+            <small class="text-muted">Brief description</small>
+          </div>
+          <span class="text-muted">$12</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between lh-sm">
+          <div>
+            <h6 class="my-0">Second product</h6>
+            <small class="text-muted">Brief description</small>
+          </div>
+          <span class="text-muted">$8</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between lh-sm">
+          <div>
+            <h6 class="my-0">Third item</h6>
+            <small class="text-muted">Brief description</small>
+          </div>
+          <span class="text-muted">$5</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between bg-light">
+          <div class="text-success">
+            <h6 class="my-0">Promo code</h6>
+            <small>EXAMPLECODE</small>
+          </div>
+          <span class="text-success">−$5</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between">
+          <span>Total (USD)</span>
+          <strong>$20</strong>
+        </li>
+      </ul>
+    <form class="card p-2">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Promo code">
+          <button type="submit" class="btn btn-secondary">Redeem</button>
+        </div>
+      </form>
+    </div>
+    
+    <div class="col-md-7 col-lg-8">
+      <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+        <h4 class="mb-3">Billing address</h4>
+
+        <div class="row g-3">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input type="text" id="firstName" formControlName="firstName" class="form-control" required>
+              <div *ngIf="checkoutForm.get('firstName')?.hasError('required') && checkoutForm.get('firstName')?.touched"
+                class="invalid-feedback">
+                First Name is required.
+              </div>
+              <div *ngIf="checkoutForm.get('firstName')?.hasError('onlyLetters') && checkoutForm.get('firstName')?.touched"
+                class="invalid-feedback">
+                Only letters are allowed in the First Name field.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" id="lastName" formControlName="lastName" class="form-control" required>
+              <div *ngIf="checkoutForm.get('lastName')?.hasError('required') && checkoutForm.get('lastName')?.touched"
+                class="invalid-feedback">
+                Last Name is required.
+              </div>
+              <div *ngIf="checkoutForm.get('lastName')?.hasError('onlyLetters') && checkoutForm.get('lastName')?.touched"
+              class="invalid-feedback">
+              Only letters are allowed in the Last Name field.
+            </div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" formControlName="email" class="form-control" required>
+              <div *ngIf="checkoutForm.get('email')?.hasError('required') && checkoutForm.get('email')?.touched"
+                class="invalid-feedback">
+                Email is required.
+              </div>
+              <div *ngIf="checkoutForm.get('email')?.hasError('email') && checkoutForm.get('email')?.touched"
+                class="invalid-feedback">
+                Please enter a valid email address.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="form-group">
+              <label for="address">Address</label>
+              <input type="text" id="address" formControlName="address" class="form-control" required>
+              <div *ngIf="checkoutForm.get('address')?.hasError('required') && checkoutForm.get('address')?.touched"
+                class="invalid-feedback">
+                Address is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="form-group">
+              <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
+              <input type="text" id="address2" formControlName="address2" class="form-control">
+            </div>
+          </div>
+
+          <div class="col-md-5">
+            <div class="form-group">
+              <label for="country">Country</label>
+              <input type="text" id="country" formControlName="country" class="form-control" required>
+              <div *ngIf="checkoutForm.get('country')?.hasError('required') && checkoutForm.get('country')?.touched"
+                class="invalid-feedback">
+                Country is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="state">State</label>
+              <input type="text" id="state" formControlName="state" class="form-control" required>
+              <div *ngIf="checkoutForm.get('state')?.hasError('required') && checkoutForm.get('state')?.touched"
+                class="invalid-feedback">
+                State is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="zip">ZIP Code</label>
+              <input type="text" id="zip" formControlName="zip" class="form-control" required>
+              <div *ngIf="checkoutForm.get('zip')?.hasError('required') && checkoutForm.get('zip')?.touched"
+                class="invalid-feedback">
+                ZIP Code is required.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="my-4">
+
+        <h4 class="mb-3">Payment</h4>
+
+        <div class="my-3">
+          <div class="form-group">
+            <div class="form-check">
+              <input type="radio" id="creditCard" formControlName="paymentMethod" value="creditCard" class="form-check-input" name="paymentOptions" required checked>
+              <label for="creditCard" class="form-check-label">Credit Card</label>
+            </div>
+            <div class="form-check">
+              <input type="radio" id="debitCard" formControlName="paymentMethod" value="debitCard" class="form-check-input" name="paymentOptions" required>
+              <label for="debitCard" class="form-check-label">Debit Card</label>
+            </div>
+            <div class="form-check">
+              <input type="radio" id="paypal" formControlName="paymentMethod" value="paypal" class="form-check-input" name="paymentOptions" required>
+              <label for="paypal" class="form-check-label">Paypal</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row gy-3">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="nameOnCard">Name on Card</label>
+              <input type="text" id="nameOnCard" formControlName="nameOnCard" class="form-control" required>
+              <div *ngIf="checkoutForm.get('nameOnCard')?.hasError('required') && checkoutForm.get('nameOnCard')?.touched"
+                class="invalid-feedback">
+                Name on Card is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="creditCardNumber">Credit Card Number</label>
+              <input type="text" id="creditCardNumber" formControlName="creditCardNumber" class="form-control" required>
+              <div *ngIf="checkoutForm.get('creditCardNumber')?.hasError('required') && checkoutForm.get('creditCardNumber')?.touched"
+                class="invalid-feedback">
+                Credit Card Number is required.
+              </div>
+              <div *ngIf="checkoutForm.get('creditCardNumber')?.hasError('pattern') && checkoutForm.get('creditCardNumber')?.touched"
+                class="invalid-feedback">
+                Please enter a valid 16-digit credit card number.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="expiration">Expiration Date</label>
+              <input type="text" id="expiration" formControlName="expiration" class="form-control" required>
+              <div *ngIf="checkoutForm.get('expiration')?.hasError('required') && checkoutForm.get('expiration')?.touched"
+                class="invalid-feedback">
+                Expiration Date is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="cvv">CVV</label>
+              <input type="text" id="cvv" formControlName="cvv" class="form-control" required>
+              <div *ngIf="checkoutForm.get('cvv')?.hasError('required') && checkoutForm.get('cvv')?.touched"
+                class="invalid-feedback">
+                CVV is required.
+              </div>
+              <div *ngIf="checkoutForm.get('cvv')?.hasError('pattern') && checkoutForm.get('cvv')?.touched"
+                class="invalid-feedback">
+                Please enter a valid 3 or 4-digit CVV.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="my-4">
+
+        
+        <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+      </form>
+    </div>
+  </div>
+</div>
