@@ -11,8 +11,9 @@ const routes: Routes = [
   {path: 'listing', component: CreateListingComponent},
   {path: 'listing/:id', component: ViewListingComponent},
   {path: 'qna', component: QnaComponent},
-  {path: '**', pathMatch: 'full', component: MainComponent},
   {path: 'payment', component: PaymentComponent},
+  {path: '**', pathMatch: 'full', component: MainComponent},
+
 ];
 
 @NgModule({
