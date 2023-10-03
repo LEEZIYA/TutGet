@@ -1,4 +1,4 @@
-package nucleus.tutget.service.profiles;
+package nucleus.tutget.service.profile;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
