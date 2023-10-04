@@ -5,6 +5,7 @@ import { QnaComponent } from './qna/components/qna.component';
 import { CreateListingComponent } from './components/listing/create-listing/create-listing.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { ViewListingComponent } from './components/listing/view-listing/view-listing.component';
+import { ReleaseContactComponent } from './components/payment/release-contact/release-contact.component';
 
 const routes: Routes = [
   {path: '', component: MainComponent},
@@ -12,6 +13,7 @@ const routes: Routes = [
   {path: 'listing/:id', component: ViewListingComponent},
   {path: 'qna', component: QnaComponent},
   {path: 'payment', component: PaymentComponent},
+  {path: 'payment/release-contact', component: ReleaseContactComponent},
   {path: '**', pathMatch: 'full', component: MainComponent},
 
 ];

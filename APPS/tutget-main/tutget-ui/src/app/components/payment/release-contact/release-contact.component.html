@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="py-5 text-center">
+    <h2>Release Contact Details</h2>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Contact Details</h4>
+
+          <div class="row">
+            <!-- Display contact details on the left -->
+            <div class="col-md-6">
+              <!-- Display contact details here -->
+              <p><strong>Name:</strong> Timothy Joseph </p>{{ contactDetails.name }}
+              <p><strong>Email:</strong> Ggwp.com.sg </p>{{ contactDetails.email }}
+              <p><strong>Phone:</strong> +65-999</p>{{ contactDetails.phone }}
+
+              
+              <h4 class="card-title">Tuition Timing Summary</h4>
+
+              <!-- Display tuition timing summary here -->
+              <p><strong>Course:</strong> Math  </p>{{ tuitionDetails.course }}
+              <p><strong>Days:</strong> Monday, Wednesday, Friday </p>{{ tuitionDetails.days }}
+              <p><strong>Time:</strong> 4:00 PM - 6:00 PM </p>{{ tuitionDetails.time }}
+            </div>
+
+            <!-- Display the contact person's picture -->
+            <div class="col-md-6 text-center">
+              <img [src]="contactPictureUrl" alt="Contact Person" class="contact-picture">
+            </div>
+          </div>
+          <hr>
+
+          <!-- Additional information or actions can be added here -->
+          <p class="text-muted">Please protect the data of the contact released. </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+

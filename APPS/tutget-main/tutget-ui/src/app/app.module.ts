@@ -14,6 +14,7 @@ import { SharedModule } from './shared/shared.module';
 import { CreateListingComponent } from './components/listing/create-listing/create-listing.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { ViewListingComponent } from './components/listing/view-listing/view-listing.component';
+import { ReleaseContactComponent } from './components/payment/release-contact/release-contact.component';
 
 
 
@@ -29,6 +30,7 @@ import { ViewListingComponent } from './components/listing/view-listing/view-lis
     CreateListingComponent,
     PaymentComponent,
     ViewListingComponent,
+    ReleaseContactComponent,
   ],
   imports: [
     BrowserModule,

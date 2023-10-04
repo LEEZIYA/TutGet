@@ -69,7 +69,7 @@ export class PaymentComponent implements OnInit{
 
       // Reset the form after successful submission
       //this.checkoutForm.reset();
-      this.router.navigate(['create-listing'])
+      this.router.navigate(['payment/release-contact'])
     } else {
       // Mark form controls as touched to display validation errors
       Object.values(this.checkoutForm.controls).forEach(control => {
