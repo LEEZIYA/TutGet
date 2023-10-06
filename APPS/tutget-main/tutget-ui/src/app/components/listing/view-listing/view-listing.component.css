@@ -57,3 +57,8 @@ table {
 .div-button:active{
   background-color: #1d2e4e;
 }
+
+.advert{
+  height: 130px;
+  width: 650px;
+}

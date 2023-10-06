@@ -32,10 +32,17 @@ export class ViewListingComponent implements OnInit {
   startDate: string | null;
   frequencyList = ['Weekly','Biweekly','Monthly'];
   deleted: boolean = false;
+  enableAd: boolean = false;
 
   constructor(private restClient: RestclientService, private router: Router, private activatedRoute: ActivatedRoute, private listingService: ListingService, private dialog: MatDialog) { }
 
   ngOnInit() {
+
+    this.restClient.getrawjson('/ad', false)
+      .then((res)=>{
+        this.enableAd = res;
+      });
+
     this.sub = this.activatedRoute.params.subscribe(params => {
       this.listingService.getListing(params['id'])
           .then((res) => {
