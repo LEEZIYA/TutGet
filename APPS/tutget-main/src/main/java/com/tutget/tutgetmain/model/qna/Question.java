@@ -1,11 +1,8 @@
-package nucleus.tutget.qna.domain;
+package com.tutget.tutgetmain.model.qna;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.Entity;
-
-@Entity
 public class Question extends QnaPost {
     private List<String> answerIds;
     private String questionTitle;

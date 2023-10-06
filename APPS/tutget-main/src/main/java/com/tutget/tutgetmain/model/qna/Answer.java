@@ -1,8 +1,5 @@
-package nucleus.tutget.qna.domain;
+package com.tutget.tutgetmain.model.qna;
 
-import jakarta.persistence.Entity;
-
-@Entity
 public class Answer extends QnaPost {
     private String questionId;
 
