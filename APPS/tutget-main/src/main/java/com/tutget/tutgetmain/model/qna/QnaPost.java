@@ -1,15 +1,9 @@
-package nucleus.tutget.qna.domain;
+package com.tutget.tutgetmain.model.qna;
 
 import java.time.LocalDate;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
-
-@MappedSuperclass
 public class QnaPost {
-    @Id
     private final String id;
     private String qnaString;
     private int upvotes;

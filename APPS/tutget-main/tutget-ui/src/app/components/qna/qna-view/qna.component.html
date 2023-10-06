@@ -1,0 +1,49 @@
+<div class="container pt-4">
+    <div class="row py-5">
+        <div class="col-8">
+            <h1>Questions & Answers Board</h1>
+        </div>
+        <div class="col-4">
+            <button class="btn btn-primary float-end" (click)="onNewQuestion()">
+                <i class="fa-solid fa-plus"></i> New Question
+            </button>
+        </div>
+    </div>
+    <div class="py-4">
+        <ul class="nav nav-pills">
+            <li class="nav-item" *ngFor="let sortOption of tabSortingOptions">
+              <a class="nav-link" [class.active]="sortOption === selectedTabSort" (click)="onSelectTabSort(sortOption)">{{ sortOption.displayName }}</a>
+            </li>
+          </ul>
+    </div>
+
+    <ul>
+        <li *ngFor="let question of questionsList">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-2">
+                            <p>
+                                Votes: {{ question.upvotes - question.downvotes }}
+                            </p>
+                            <p>
+                                Responses: {{ question.answers.length}}
+                            </p>
+                        </div>
+                        <div class="col-10">
+                            <a (click)="onViewQuestion(question)" class="text-blue">
+                                <h4>{{ question.questionTitle }}</h4>
+                            </a>
+                            <p>{{ question.posterName }} asked on {{ question.postDate }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <button type="button" (click)="onViewQuestion(question)" [class.selected]="question === selectedQuestion">View Question</button> -->
+        </li>
+    </ul>
+    <br>
+    <!-- <app-qna-view-question [question]="selectedQuestion"></app-qna-view-question> -->
+</div>
+
+  

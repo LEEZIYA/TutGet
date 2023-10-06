@@ -6,5 +6,6 @@ export interface qnaPost {
     upvotes: number;
     downvotes: number;
     postDate: string;
-    poster: User;
+    posterId: string;
+    posterName: string;
 }
