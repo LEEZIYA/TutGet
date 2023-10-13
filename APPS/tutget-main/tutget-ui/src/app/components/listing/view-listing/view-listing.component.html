@@ -21,7 +21,7 @@
           </tr>
           <tr>
             <th>Tutee</th>
-            <td><a href="#">Alex</a></td>
+            <td><a href="#">{{ listingOwner?.firstName }}  {{ listingOwner?.lastName }}</a></td>
           </tr>
           <tr>
             <th>Academic Level</th>
@@ -62,9 +62,54 @@
         </tbody>
       </table>
     </div>
-    <div class="col-5 col-sm-4 col-lg-2 p-2 pt-0">
+    <div class="col-5 col-sm-4 col-lg-2 p-2 pt-0" *ngIf="listingRights">
         <div class="div-button mt-4 ps-3" (click)="editListing()" >Edit Listing</div>
         <div class="div-button mt-4 ps-3" (click)="deleteListing()">Delete Listing</div>
+    </div>
+    <div class="col-5 col-sm-4 col-lg-2 p-2 pt-0" *ngIf="!listingRights && activeUser.userType === 'T'">
+      <div *ngIf="!requested" class="div-button mt-4 ps-3" (click)="requestListing()" >Request Assignment</div>
+      <!-- <div *ngIf="requested" class="div-button-disabled mt-4 ps-3">Requested</div> -->
+      <div *ngIf="requested" class="div-button mt-4 ps-3" (click)="cancelRequest()">Cancel Request</div>
+    </div>
+  </div>
+  <div *ngIf="listingRights">
+    <div class="row row-cols-1 justify-content-center">
+      <div class="col-md-9 col-lg-7 mb-2 mt-2">
+        <div class="title mb-3">Assignment Requests</div>
+      </div>
+    </div>
+    <div *ngIf="requestedUsers.length > 0" class="row row-cols-1 justify-content-center">
+      <div class="col-md-9 col-lg-7">
+        <table style="width:100%; border-color:#dee2e6" class="table table-striped">
+          <thead>
+            <tr>
+              <th style="border-radius: 0.5rem 0 0 0">Tutor</th>
+              <th style="border-radius: 0 0.5rem 0 0"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tutor of requestedUsers; let i = index;">
+              <td><a href="#">{{ tutor }}</a></td>
+              <td *ngIf="!assignedATutor">
+                <div class="div-button-2" (click)="assignListing(tutor)">Assign</div>
+              </td>
+              <td *ngIf="assignedATutor">
+                <div *ngIf="tutor == this.createListingForm.assignedTutorId" class="div-button-2" style="width: 180px;" (click)="cancelAssign()">Cancel Assignment</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div *ngIf="requestedUsers.length === 0" class="row row-cols-1 justify-content-center">
+      <div class="col-md-9 col-lg-7 mb-4">
+        There are no requests for this assignment yet!
+      </div>
+    </div>
+    <div class="row row-cols-1" *ngIf="assignedATutor">
+      <div class="col-lg-9 mb-5 mt-5 justify-content-center" style="text-align: right;">
+        <app-single-button buttonTitle="Proceed to Payment" (eventEmit)="createPayment()"></app-single-button>
+      </div>
     </div>
   </div>
 </div>

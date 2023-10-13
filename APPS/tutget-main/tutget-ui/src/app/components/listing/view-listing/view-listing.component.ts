@@ -8,6 +8,7 @@ import { RestclientService } from 'src/app/services/restclient.service';
 import { ACADEMICLEVELIDLIST, ACADEMICSUBJECTIDLIST } from 'src/app/utilities/code-table/AcademicLevelSubjectList';
 import { Constants } from 'src/app/utilities/constants';
 import { DialogComponent } from 'src/app/utilities/dialog/dialog.component';
+import { STUDENT, TEACHER, TEACHER2 } from '../test-users';
 
 @Component({
   selector: 'app-view-listing',
@@ -34,6 +35,17 @@ export class ViewListingComponent implements OnInit {
   deleted: boolean = false;
   enableAd: boolean = false;
 
+  listingOwner: any;
+  activeUser: any = STUDENT;
+  listingRights: boolean = false;
+
+  requested: boolean = false;
+  requestedUsers: string[] = [];
+  requestedUsersName: string[] = [];
+
+  assignedATutor: boolean = false;
+
+
   constructor(private restClient: RestclientService, private router: Router, private activatedRoute: ActivatedRoute, private listingService: ListingService, private dialog: MatDialog) { }
 
   ngOnInit() {
@@ -49,6 +61,22 @@ export class ViewListingComponent implements OnInit {
             if(res){
               // this.id = params['id'];
               this.createListingForm = res;
+
+              //call user service or get from localstorage after login to get user object
+              //using this.createListingForm.userID
+              this.listingOwner = STUDENT;
+
+              this.requestedUsers = this.createListingForm.requests.split(",");
+              this.requestedUsers.shift();
+
+
+              if(this.activeUser.userID == this.listingOwner.userID ){
+                this.listingRights = true;
+              } else {
+                if(this.requestedUsers.includes(this.activeUser.userID)){
+                  this.requested = true;
+                }
+              }
 
               this.academicLvlLabel = this.academicLvlList.get(this.createListingForm.acadLvl);
               this.academicSubjectLabel = this.academicSubjectList.get(this.createListingForm.acadSubject);
@@ -104,18 +132,20 @@ export class ViewListingComponent implements OnInit {
     this.router.navigateByUrl('listing', { state: this.createListingForm });
   }
 
-  deleteListing(){
-    const dialogConfig = new MatDialogConfig();
-
+  injectDialogConfig(dialogConfig: MatDialogConfig){
     dialogConfig.width = '400px';
     dialogConfig.height = '200px';
     dialogConfig.position = {
       'top': '20vh'
     };
-    dialogConfig.data = {para: 'Are you sure to delete this listing?'};
     dialogConfig.autoFocus = false;
 
+  }
 
+  deleteListing(){
+    const dialogConfig = new MatDialogConfig();
+    this.injectDialogConfig(dialogConfig);
+    dialogConfig.data = {para: 'Are you sure to delete this listing?'};
     const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((result) => {
       if(result === 'confirm'){
@@ -127,6 +157,82 @@ export class ViewListingComponent implements OnInit {
 
   goHome(){
     this.router.navigateByUrl('');
+  }
+
+  requestListing(){
+    const dialogConfig = new MatDialogConfig();
+    this.injectDialogConfig(dialogConfig);
+    dialogConfig.data = {para: 'Are you sure to request this assignment?'};
+
+    const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result === 'confirm'){
+        this.createListingForm.requests += ',' + this.activeUser.userID;
+        this.listingService.updateListing(this.createListingForm);
+        this.requested = true;
+        alert("You have successfully requested for this assignment!");
+      }
+    })
+
+  }
+
+
+  cancelRequest(){
+    const dialogConfig = new MatDialogConfig();
+    this.injectDialogConfig(dialogConfig);
+    dialogConfig.data = {para: 'Are you sure to cancel your request for this assignment?'};
+    dialogConfig.height = '230px';
+
+    const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result === 'confirm'){
+        this.createListingForm.requests = this.createListingForm.requests.replace("," + this.activeUser.userID, "");
+        this.listingService.updateListing(this.createListingForm);
+        this.requested = false;
+        alert("You have successfully cancelled your request for this assignment!");
+      }
+    })
+  }
+
+  assignListing(tutorId: string){
+    const dialogConfig = new MatDialogConfig();
+    this.injectDialogConfig(dialogConfig);
+    dialogConfig.data = {para: 'Are you sure to assign to this tutor?'};
+
+    const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result === 'confirm'){
+        this.createListingForm.assignedTutorId = tutorId;
+        this.createListingForm.status = 'A';
+        this.listingService.updateListing(this.createListingForm);
+        this.assignedATutor = true;
+        alert("You have successfully assigned a tutor!");
+        console.log(this.createListingForm.assignedTutorId);
+      }
+    })
+  }
+
+  cancelAssign(){
+    const dialogConfig = new MatDialogConfig();
+    this.injectDialogConfig(dialogConfig);
+    dialogConfig.height = '230px';
+    dialogConfig.data = {para: 'Are you sure to cancel your assignment to this tutor?'};
+
+    const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result === 'confirm'){
+        this.createListingForm.assignedTutorId = '';
+        this.createListingForm.status = 'N';
+        this.listingService.updateListing(this.createListingForm);
+        this.assignedATutor = false;
+        alert("You have successfully cancelled your assignment!");
+        console.log(this.createListingForm.assignedTutorId);
+      }
+    })
+  }
+
+  createPayment(){
+    this.router.navigate(['payment'])
   }
 
 
