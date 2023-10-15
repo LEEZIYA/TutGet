@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 // import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule,FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 // import { UtilitiesService } from './../../../services/utilities.service';
 import { LoginService } from './../../../services/API/login.service';
 import { Constants } from './../../../utilities/constants';
 // import { ACADEMICLEVELSUBJECTLIST, ACADEMICLEVELIDLIST, ACADEMICSUBJECTIDLIST,  } from './../../../utilities/code-table/AcademicLevelSubjectList';
-import { Component } from '@angular/core';
+// import { Component } from '@angular/core';
 import { CreateUserForm } from 'src/app/DTO/CreateUserForm';
 import { RestclientService } from 'src/app/services/restclient.service';
 
@@ -17,9 +17,9 @@ export class LoginComponent implements OnInit {
     loading = false;
     submitted = false;
 
-    userForm: CreateUserForm;// = new CreateUserForm();
-    userForm2: CreateUserForm;
-    loginSuccess string = '';
+    userForm: CreateUserForm | null;// = new CreateUserForm();
+    userForm2: CreateUserForm | null;
+    loginSuccess : string = '';
     loginErr: string = '';
 
 
@@ -56,7 +56,10 @@ export class LoginComponent implements OnInit {
 //           .then((res) => {
 //             this.listingId = res;
 //           })
-        this.loginService.login(form)
+        let loginUserForm:CreateUserForm = new CreateUserForm();
+        loginUserForm.userID = form.value.userName;
+        loginUserForm.password = form.value.password;
+        this.loginService.login(loginUserForm)
             .pipe(first())
             .subscribe({
                 next: (res) => {

@@ -21,8 +21,8 @@ export class LoginService {
 
     constructor(
 //         private router: Router,
-//         private http: HttpClient
-private restclient: RestclientService
+        private http: HttpClient,
+        private restclient: RestclientService
     ) {
         this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('ActiveUser')!));
         this.user = this.userSubject.asObservable();
@@ -32,14 +32,14 @@ private restclient: RestclientService
         return this.userSubject.value;
     }
 
-    login(loginForm:createUserForm) {
+    login(loginForm:CreateUserForm) {
 
-           return this.restclient.postjson(this.BASE_URL + '/users/login',loginForm)
-//         return this.http.post<User>(`${environment.apiUrl}/users/authenticate`, { username, password })
-           .then(map(res => {
+//            return this.restclient.postjson(this.BASE_URL + '/users/login',loginForm)
+        return this.http.post<CreateUserForm>(this.BASE_URL + '/users/login',loginForm)
+           .pipe(map(res => {
                // store user details and jwt token in local storage to keep user logged in between page refreshes
                localStorage.setItem('ActiveUser', JSON.stringify(res));
-               this.userSubject.next(res);
+               this.userSubject.next(JSON.parse(res));
                return res;
            }));
 //            let loginForm:CreateUserForm;

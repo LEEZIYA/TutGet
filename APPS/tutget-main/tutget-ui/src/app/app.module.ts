@@ -36,7 +36,7 @@ import { LoginComponent } from './components/user/login/login.component';
     ViewListingComponent,
 
     //CreateUserComponent,
-    ProfileComponent,
+//     ProfileComponent,
     LoginComponent
 
   ],
