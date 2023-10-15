@@ -1,16 +1,8 @@
-package nucleus.tutget.service.profile.model;
+package com.tutget.tutgetmain.model.profile;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
 
-import java.math.BigInteger;
-import java.sql.Date;
-import java.util.UUID;
-
-@Entity
 public class Profile {
-    @Id
+
     private String id;
     private String acadLvl;
     private String userID;
@@ -21,22 +13,14 @@ public class Profile {
     private String phoneNumber;
     private String billingAddress;
 
-    public String getPostalCode() {
-        return postalCode;
-    }
-
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
-    }
-
     private String postalCode;
     private String description;
-    //profile pic
+
 
     public Profile() {
     }
 
-    public Profile(String id, String acadLvl, String userID, String password, String userType, String firstName, String lastName, String phoneNumber, String billingAddress, String description) {
+    public Profile(String id, String acadLvl, String userID, String password, String userType, String firstName, String lastName, String phoneNumber, String billingAddress, String postalCode, String description) {
         this.id = id;
         this.acadLvl = acadLvl;
         this.userID = userID;
@@ -46,8 +30,8 @@ public class Profile {
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.billingAddress = billingAddress;
+        this.postalCode = postalCode;
         this.description = description;
-
     }
 
     public String getId() {
@@ -130,17 +114,12 @@ public class Profile {
         this.description = description;
     }
 
-
-    @PrePersist
-    public void generateId() {
-        String uuid_string = UUID.randomUUID().toString().replaceAll("-","");
-        BigInteger big = new BigInteger(uuid_string, 16);
-        String same_uuid_shorter_string = big.toString(36);
-        id = same_uuid_shorter_string ;
+    public String getPostalCode() {
+        return postalCode;
     }
 
-
-
-
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
 
 }
