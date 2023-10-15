@@ -3,34 +3,45 @@ package nucleus.tutget.qna.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.Entity;
+
+@Entity
 public class Question extends QnaPost {
-    private Subject subject;
-    private List<Answer> answers;
+    private List<String> answerIds;
+    private String questionTitle;
 
-
-    public Question(String questionString, User user, Subject subject) {
-        super(questionString, user);
-        this.subject = subject;
-        this.answers = new ArrayList<>();
+    public Question() {
+        super();
+        answerIds = new ArrayList<>();
     }
 
-    public void setSubject(Subject subject) {
-        this.subject = subject;
+    public Question(String questionTitle, String questionString, String userId, String userName, Subject subject) {
+        super(questionString, userId, userName, subject);
+        this.answerIds = new ArrayList<>();
+        this.questionTitle = questionTitle;
     }
 
-    public Subject getSubject() {
-        return subject;
+    public void setAnswers(List<String> answers) {
+        this.answerIds = answers;
     }
 
-    public void setAnswers(List<Answer> answers) {
-        this.answers = answers;
+    public void addAnswer(String answerId) {
+        answerIds.add(answerId);
     }
 
-    public void addAnswer(Answer answer) {
-        answers.add(answer);
+    public List<String> getAnswers() {
+        return answerIds;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public void removeAnswerById(String answerId) {
+        answerIds.remove(answerId);
+    }
+
+    public String getQuestionTitle() {
+        return questionTitle;
+    }
+
+    public void setQuestionTitle(String questionTitle) {
+        this.questionTitle = questionTitle;
     }
 }

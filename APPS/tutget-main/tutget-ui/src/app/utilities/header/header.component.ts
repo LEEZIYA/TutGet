@@ -11,8 +11,11 @@ export class HeaderComponent {
   constructor(private router: Router){}
 
   createListing(){
-    this.router.navigate(['create-listing'])
+    this.router.navigate(['listing'])
   }
 
+  createPayment(){
+    this.router.navigate(['payment'])
+  }
 
 }

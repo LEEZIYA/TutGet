@@ -6,6 +6,10 @@ import { Component } from '@angular/core';
 import { CreateListingForm } from 'src/app/DTO/CreateListingForm';
 import { RestclientService } from 'src/app/services/restclient.service';
 import { CodeTable } from 'src/app/utilities/code-table/CodeTable';
+import { ReloadService } from 'src/app/services/reload.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { map } from 'rxjs';
+import { STUDENT } from '../test-users';
 
 
 @Component({
@@ -33,7 +37,7 @@ export class CreateListingComponent {
   frequencyList = ['Weekly','Biweekly','Monthly'];
   showTotal: boolean;
   computedTotal: number = 0;
-  hourlyRate: number;
+  hourlyRate: any;
   subjErr: string = '';
   dateTimeErr: string = '';
   startDtErr: string = '';
@@ -41,20 +45,77 @@ export class CreateListingComponent {
   hourlyRateErr: string = '';
   selected24Hour: number[];
   listingId: string = '';
+  editMode: boolean = false;
+  submitted: boolean = false;
 
+  activeUser: any = STUDENT;
 
-
-  constructor(private restClient: RestclientService, private listingService: ListingService, private utilitiesService: UtilitiesService) {
+  constructor(private restClient: RestclientService, private listingService: ListingService, private utilitiesService: UtilitiesService, private reloadService: ReloadService, private router: Router, public activatedRoute: ActivatedRoute) {
+    //console.log(this.router.getCurrentNavigation()?.extras.state);
   }
 
   ngOnInit(){
-    //this.listingId = "apedxs5siqsrh0wofgnle2cuv";
+
+    this.loadComponent();
+
+    this.reloadService.notifyObservable$.subscribe(res => {
+        if(res.refresh){
+          this.loadComponent();
+        }
+      }
+    )
+
+    this.activatedRoute.paramMap
+    .pipe(map(() => window.history.state)).subscribe(res=>{
+          if(res.id){
+            this.createListingForm = res;
+            this.listingId = res.id;
+            this.editMode = true;
+            this.hourlyRate = this.createListingForm.hourlyRate;
+            this.checkAllSelect = true;
+            for(let i = 0; i < 7; i++){
+              if(this.createListingForm.dayOfWeek[i] == "1"){
+                this.dayOfWeek[i] = true;
+                let hour = this.createListingForm.selectedHour[i];
+                let hourToDisplay = hour > 12 ? hour - 12 : hour;
+                this.selectedHour[i] = hourToDisplay;
+                this.selectedAMPM[i] = ((hour >= 12) && (hour != 24)) ? 2  : 1;
+
+                let min = this.createListingForm.selectedMin[i];
+                let minToDisplay;
+                if(min == 0){
+                  minToDisplay = '00'
+                } else if (min == 5){
+                  minToDisplay = '05'
+                } else {
+                  minToDisplay = this.createListingForm.selectedMin[i].toString();
+                }
+                this.selectedMin[i] = minToDisplay;
+                this.selectedHourNum[i] = Number(this.createListingForm.selectedHourNum[i]);
+                this.computeEndTime(i);
+
+              }
+            }
+          }
+     })
+
+  }
+
+  loadComponent(){
+    this.submitted = false;
+    this.editMode = false;
+    this.checkAllSelect = false;
+    this.listingId = '';
+    this.clearError();
     this.initTableValue();
+    this.createListingForm = new CreateListingForm();
     this.createListingForm.frequency = -1;
+    this.showTotal = false;
+    this.hourlyRate = undefined;
 
-
-    this.createListingForm.acadLvl = "J1";
+    this.createListingForm.acadLvl = this.activeUser.acadLvl;
     //call userservice or get from localstorage after login to get user academic level
+
     this.academicLvlLabel = this.academicLvlList.get(this.createListingForm.acadLvl);
 
     // ACADEMICLEVELSUBJECTLIST.forEach((lvlSubj) => {
@@ -65,16 +126,17 @@ export class CreateListingComponent {
 
     this.academicLvlSubjectList = ACADEMICLEVELSUBJECTLIST.get(this.createListingForm.acadLvl);
 
-    this.createListingForm.postalCode = "200640";
+    this.createListingForm.postalCode = this.activeUser.postalCode;
+    //200640
     //call userservice or get from localstorage after login to get user postal code
 
-    this.restClient.getrawjson(Constants.oneMapURLStart + this.createListingForm.postalCode + Constants.oneMapURLEnd)
+    this.restClient.getrawjson(Constants.oneMapURLStart + this.createListingForm.postalCode + Constants.oneMapURLEnd, true)
           .then((res) => {
             this.address = res.results[0].ADDRESS;
           })
 
-
   }
+
 
   initTableValue(){
     this.dayOfWeek = Array(7).fill(false);
@@ -165,13 +227,20 @@ export class CreateListingComponent {
       this.createListingForm.selectedHour = this.selected24Hour;
       this.createListingForm.selectedHourNum = this.selectedHourNum.join("");
       this.createListingForm.selectedMin = this.selectedMinNum;
+      this.createListingForm.userId = this.activeUser.userID;
+      this.createListingForm.status = 'N';
 
 
-      this.listingService.createListing(this.createListingForm)
+      if(!this.editMode){
+        this.listingService.createListing(this.createListingForm)
         .then((res) => {
           this.listingId = res;
+          this.submitted = true;
         })
-
+      } else {
+        this.listingService.updateListing(this.createListingForm);
+        this.submitted = true;
+      }
 
     } else{
       this.utilitiesService.scrollToTop();
@@ -264,6 +333,10 @@ export class CreateListingComponent {
     this.startDtErr = '';
     this.freqErr = '';
     this.hourlyRateErr = '';
+  }
+
+  viewListing(){
+    this.router.navigate(['/listing', this.listingId]);
   }
 
 }

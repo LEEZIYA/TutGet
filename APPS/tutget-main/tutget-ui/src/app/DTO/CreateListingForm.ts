@@ -1,5 +1,6 @@
 export class CreateListingForm{
 
+  public id: string;
   public acadLvl: string;
   public acadSubject: string = "";
   public postalCode: string;
@@ -12,5 +13,9 @@ export class CreateListingForm{
   public selectedHour: number[];
   public selectedMin: number[];
   public selectedHourNum: string;
+  public userId: string;
+  public status: string;
+  public requests: string = "";
+  public assignedTutorId = "";
 
 }
