@@ -13,5 +13,9 @@ export class CreateListingForm{
   public selectedHour: number[];
   public selectedMin: number[];
   public selectedHourNum: string;
+  public userId: string;
+  public status: string;
+  public requests: string = "";
+  public assignedTutorId = "";
 
 }

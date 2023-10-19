@@ -8,13 +8,14 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './utilities/header/header.component';
 import { MainComponent } from './components/main/main.component';
 import { FooterComponent } from './utilities/footer/footer/footer.component';
-import { QnaComponent } from './qna/components/qna.component';
-import { QnaViewQuestionComponent } from './qna/components/qna-view-question/qna-view-question.component';
+import { QnaViewQuestionComponent } from './components/qna/qna-view/qna-view-question/qna-view-question.component';
 import { SharedModule } from './shared/shared.module';
 import { CreateListingComponent } from './components/listing/create-listing/create-listing.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { ViewListingComponent } from './components/listing/view-listing/view-listing.component';
 import { ReleaseContactComponent } from './components/payment/release-contact/release-contact.component';
+import { QnaComponent } from './components/qna/qna-view/qna.component';
+import { QnaNewQuestionComponent } from './components/qna/qna-new-question/qna-new-question.component';
 
 
 
@@ -27,10 +28,12 @@ import { ReleaseContactComponent } from './components/payment/release-contact/re
     FooterComponent,
     QnaComponent,
     QnaViewQuestionComponent,
+    QnaNewQuestionComponent,
     CreateListingComponent,
     PaymentComponent,
     ViewListingComponent,
     ReleaseContactComponent,
+
   ],
   imports: [
     BrowserModule,

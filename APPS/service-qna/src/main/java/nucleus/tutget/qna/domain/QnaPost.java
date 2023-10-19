@@ -3,23 +3,37 @@ package nucleus.tutget.qna.domain;
 import java.time.LocalDate;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+
+@MappedSuperclass
 public class QnaPost {
+    @Id
     private final String id;
     private String qnaString;
     private int upvotes;
     private int downvotes;
     private LocalDate postDate;
-    private User poster;
+    private String posterId;
+    private String posterName;
+    private Subject subject;
 
     private static final AtomicInteger idSeq = new AtomicInteger();
 
-    public QnaPost(String qnaString, User poster) {
+    public QnaPost() {
+        this.id = String.valueOf(idSeq.incrementAndGet());
+    }
+
+    public QnaPost(String qnaString, String posterId, String posterName, Subject subject) {
+        this.id = String.valueOf(idSeq.incrementAndGet());
         this.qnaString = qnaString;
         this.upvotes = 0;
         this.downvotes = 0;
         this.postDate = LocalDate.now();
-        this.poster = poster;
-        this.id = String.valueOf(idSeq.incrementAndGet());
+        this.posterId = posterId;
+        this.posterName = posterName;
+        this.subject = subject;
     }
 
     public String getId() {
@@ -54,8 +68,20 @@ public class QnaPost {
         return postDate;
     }
 
-    public User getPoster() {
-        return poster;
+    public String getPosterId() {
+        return posterId;
+    }
+
+    public String getPosterName() {
+        return posterName;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+
+    public Subject getSubject() {
+        return subject;
     }
 
     @Override
