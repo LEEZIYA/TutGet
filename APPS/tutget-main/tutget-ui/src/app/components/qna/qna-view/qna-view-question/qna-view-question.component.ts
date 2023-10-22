@@ -4,6 +4,7 @@ import { RestclientService } from 'src/app/services/restclient.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QnaService } from 'src/app/services/API/qna.service';
 import { Answer } from '../answer';
+import { CreateAnswerForm } from 'src/app/DTO/CreateAnswerForm';
 
 @Component({
   selector: 'app-qna-view-question',
@@ -22,8 +23,13 @@ export class QnaViewQuestionComponent {
   tabSortingOptions: SortOption[] = [{displayName: "Newest", id: "new"},
   {displayName: "Weekly Popular", id:"popular"},
   {displayName: "Weekly Upvoted", id:"upvoted"}];
-selectedTabSort: SortOption = this.tabSortingOptions[0];
+  selectedTabSort: SortOption = this.tabSortingOptions[0];
 
+  
+  createAnswerForm: CreateAnswerForm = new CreateAnswerForm();
+  answerErr: string = '';
+
+  readonly answerEmptyErr: string = 'Please input an answer';
 
   ngOnInit() {
     this.sub = this.activatedRoute.params.subscribe(params => {
@@ -44,6 +50,39 @@ selectedTabSort: SortOption = this.tabSortingOptions[0];
 
   onSelectTabSort(sortOption: SortOption) {
     this.selectedTabSort = sortOption;
+  }  
+  
+  submit() {
+    this.clearError();
+
+    if(!this.validateFormHasError()){
+      this.createAnswerForm.questionId = this.question!.id;
+      this.createAnswerForm.posterId = "123";
+      this.createAnswerForm.posterName = "LoggedInUserPlaceholder";
+      this.createAnswerForm.acadLvl = this.question!.acadLvl;
+      this.createAnswerForm.acadSubject = this.question!.acadSubj;
+      this.createAnswerForm.postDate = new Date();
+      this.qnaService.createAnswer(this.createAnswerForm)
+      .then((res) => {
+        window.alert('Success! Reloading page now.');
+        location.reload();
+      })
+    }
+  }
+
+  clearError() {
+    this.answerErr = '';
+  }
+
+  validateFormHasError() {
+    let hasErr = false;
+
+    if (!this.createAnswerForm.qnaString) {
+      this.answerErr = this.answerEmptyErr;
+      hasErr = true;
+    }
+
+    return hasErr;
   }
 }
 

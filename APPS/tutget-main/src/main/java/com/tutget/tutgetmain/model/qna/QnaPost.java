@@ -11,7 +11,8 @@ public class QnaPost {
     private LocalDate postDate;
     private String posterId;
     private String posterName;
-    private Subject subject;
+    private String acadLvl;
+    private String acadSubj;
 
     private static final AtomicInteger idSeq = new AtomicInteger();
 
@@ -19,7 +20,7 @@ public class QnaPost {
         this.id = String.valueOf(idSeq.incrementAndGet());
     }
 
-    public QnaPost(String qnaString, String posterId, String posterName, Subject subject) {
+    public QnaPost(String qnaString, String posterId, String posterName, String acadLvl, String acadSubj) {
         this.id = String.valueOf(idSeq.incrementAndGet());
         this.qnaString = qnaString;
         this.upvotes = 0;
@@ -27,7 +28,8 @@ public class QnaPost {
         this.postDate = LocalDate.now();
         this.posterId = posterId;
         this.posterName = posterName;
-        this.subject = subject;
+        this.acadLvl = acadLvl;
+        this.acadSubj = acadSubj;
     }
 
     public String getId() {
@@ -70,13 +72,22 @@ public class QnaPost {
         return posterName;
     }
 
-    public void setSubject(Subject subject) {
-        this.subject = subject;
+    public void setAcadLvl(String acadLvl) {
+        this.acadLvl = acadLvl;
     }
 
-    public Subject getSubject() {
-        return subject;
+    public String getAcadLvl() {
+        return acadLvl;
     }
+
+    public void setAcadSubj(String acadSubj) {
+        this.acadSubj = acadSubj;
+    }
+
+    public String getAcadSubj() {
+        return this.acadSubj;
+    }
+
 
     @Override
     public boolean equals(Object o) {

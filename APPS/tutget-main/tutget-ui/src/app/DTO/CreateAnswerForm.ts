@@ -6,6 +6,7 @@ export class CreateAnswerForm{
   public qnaString: string;
   public postDate: Date;
   public posterId: string;
+  public posterName: string;
   public upvotes: number;
   public downvotes: number;
 

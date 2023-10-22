@@ -7,8 +7,8 @@ public class Answer extends QnaPost {
         
     }
 
-    public Answer(String answerString, String userId, String userName, String questionId, Subject subject) {
-        super(answerString, userId, userName, subject);
+    public Answer(String answerString, String userId, String userName, String questionId, String acadLvl, String acadSubj) {
+        super(answerString, userId, userName, acadLvl, acadSubj);
         this.questionId = questionId;
     }
 
