@@ -16,6 +16,16 @@ export class QnaNewQuestionComponent {
   academicLvlSubjectList: Map<String, String[]> = ACADEMICLEVELSUBJECTLIST;
   academicSubjectList: Map<String, String> = ACADEMICSUBJECTIDLIST;
   
+  titleErr: string = '';
+  acadLvlErr: string = '';
+  acadSubjErr: string = '';
+  descErr: string = '';
+
+  readonly titleEmptyErr: string = 'Please input the question title';
+  readonly acadLvlEmptyErr: string = 'Please select an academic level';
+  readonly acadSubjEmptyErr: string = 'Please select a subject';
+  readonly descEmptyErr: string = 'Please input the question description';
+  
   constructor(private restClient: RestclientService, private router: Router, private activatedRoute: ActivatedRoute, private qnaService: QnaService) { }
 
   loadComponent(){
@@ -25,12 +35,49 @@ export class QnaNewQuestionComponent {
     this.router.navigate(['/qna']);
   }
 
+
   submit() {
-    this.createQuestionForm.postDate = new Date();
-    this.qnaService.createQuestion(this.createQuestionForm)
-    .then((res) => {
-      window.alert('Success! Navigating to main qna board.');
-      this.router.navigate(['/qna']);
-    })
+    this.clearError();
+
+    if(!this.validateFormHasError()){
+      this.createQuestionForm.posterId = '123';
+      this.createQuestionForm.posterName = 'LoggedInUserPlaceholder'; // TODO with profile
+      this.createQuestionForm.postDate = new Date();
+      this.qnaService.createQuestion(this.createQuestionForm)
+      .then((res) => {
+        window.alert('Success! Navigating to main qna board.');
+        this.router.navigate(['/qna']);
+      })
+    }
+  }
+
+  clearError() {
+    this.titleErr = '';
+    this.acadLvlErr = '';
+    this.acadSubjErr = '';
+    this.descErr = '';
+  }
+
+  validateFormHasError() {
+    let hasErr = false;
+    
+    if(!this.createQuestionForm.questionTitle){
+      this.titleErr = this.titleEmptyErr;
+      hasErr = true;
+    }
+    if(!this.createQuestionForm.acadLvl){
+      this.acadLvlErr = this.acadLvlEmptyErr;
+      hasErr = true;
+    }
+    if(!this.createQuestionForm.acadSubject){
+      this.acadSubjErr = this.acadSubjEmptyErr;
+      hasErr = true;
+    }
+    if(!this.createQuestionForm.qnaString){
+      this.descErr = this.descEmptyErr;
+      hasErr = true;
+    }
+
+    return hasErr;
   }
 }

@@ -8,4 +8,6 @@ export interface qnaPost {
     postDate: string;
     posterId: string;
     posterName: string;
+    acadLvl: string;
+    acadSubj: string;
 }

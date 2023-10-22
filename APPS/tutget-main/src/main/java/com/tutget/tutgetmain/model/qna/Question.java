@@ -12,8 +12,8 @@ public class Question extends QnaPost {
         answerIds = new ArrayList<>();
     }
 
-    public Question(String questionTitle, String questionString, String userId, String userName, Subject subject) {
-        super(questionString, userId, userName, subject);
+    public Question(String questionTitle, String questionString, String userId, String userName, String acadLvl, String acadSubj) {
+        super(questionString, userId, userName, acadLvl, acadSubj);
         this.answerIds = new ArrayList<>();
         this.questionTitle = questionTitle;
     }

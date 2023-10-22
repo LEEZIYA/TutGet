@@ -18,6 +18,10 @@ import { QnaNewQuestionComponent } from './components/qna/qna-new-question/qna-n
 import { SearchComponent } from './components/search/search.component';
 
 
+//import {CreateUserComponent} from './components/user/create-user/create-user.component';
+import { LoginComponent } from './components/user/login/login.component';
+// import { ProfileComponent } from './components/user/profile/profile.component';
+
 
 @NgModule({
   declarations: [
@@ -31,6 +35,11 @@ import { SearchComponent } from './components/search/search.component';
     CreateListingComponent,
     PaymentComponent,
     ViewListingComponent,
+
+    //CreateUserComponent,
+//     ProfileComponent,
+    LoginComponent,
+
     SearchComponent
   ],
   imports: [

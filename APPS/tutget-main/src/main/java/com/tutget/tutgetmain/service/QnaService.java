@@ -34,4 +34,8 @@ public class QnaService {
     public String addQuestion(Question question) {
         return restTemplate.postForObject(microserviceURL + "/addQuestion", question, String.class);
     }
+
+    public String addAnswer(Answer answer) {
+        return restTemplate.postForObject(microserviceURL + "/addAnswer", answer, String.class);
+    }
 }
