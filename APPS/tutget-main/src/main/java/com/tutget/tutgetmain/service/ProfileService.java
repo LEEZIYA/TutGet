@@ -27,9 +27,14 @@ public class ProfileService {
     }
 
     public Profile login(Profile loginProfile) {
+//        ProfileList profilelist;
         Profile profile;
-        profile = restTemplate.getForObject(microserviceURL + "/" + loginProfile.getId(), Profile.class);
-        if (profile.getPassword().equals(loginProfile.getPassword())) {
+        if(loginProfile.getUserID()==null){
+            return loginProfile;
+        }
+        profile = restTemplate.getForObject(microserviceURL + "/userId/" + loginProfile.getUserID(), Profile.class);
+//        profile = profilelist.getProfileList().get(0);
+        if (profile!= null && profile.getPassword()!=null && profile.getPassword().equals(loginProfile.getPassword())) {
             return profile;
         } else {
             return loginProfile;
@@ -56,9 +61,10 @@ public class ProfileService {
 
     }
 
-    public List<Profile> getProfileByUserID(String userID) {
-        ProfileList profileList = restTemplate.getForObject(microserviceURL + "/userId/" + userID, ProfileList.class);
-        return profileList.getProfileList();
+    public Profile getProfileByUserID(String userID) {
+        Profile profile = restTemplate.getForObject(microserviceURL + "/userId/" + userID, Profile.class);
+//        return profileList.getProfileList();
+        return profile;
     }
 
     public List<Profile> getProfileListByName(String name) {

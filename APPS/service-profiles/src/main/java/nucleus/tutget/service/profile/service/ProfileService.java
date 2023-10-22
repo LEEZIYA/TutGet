@@ -28,12 +28,22 @@ public class ProfileService {
         return profileRepository.findById(id);
     }
 
-    public ProfileList getProfileByUserID(String userID) {
-        ProfileList profileList = new ProfileList();
+    public Profile getProfileByUserID(String userID) {
+////        ProfileList profileList = new ProfileList();
+//        List<Profile> profiles = new ArrayList<>();
+//        profileRepository.findByUserID(userID).forEach(profiles::add);
+//        profileList.setProfileList(profiles);
+//        return profileList;
+
+        Profile profile = new Profile();
         List<Profile> profiles = new ArrayList<>();
         profileRepository.findByUserID(userID).forEach(profiles::add);
-        profileList.setProfileList(profiles);
-        return profileList;
+        if(profiles.size()>0){
+            profile = profiles.get(0);
+        }
+
+//        profileList.setProfileList(profiles);
+        return profile;
     }
 
     public Profile addProfile(Profile profile) {
@@ -52,7 +62,7 @@ public class ProfileService {
     public ProfileList getProfileListByDescription(String description) {
         ProfileList profileList = new ProfileList();
         List<Profile> profiles = new ArrayList<>();
-        profileRepository.findByDescription(description).forEach(profiles::add);
+        profileRepository.findByDescriptionContainingIgnoreCase(description).forEach(profiles::add);
         profileList.setProfileList(profiles);
         return profileList;
 
@@ -63,10 +73,12 @@ public class ProfileService {
     public ProfileList getProfileListByName(String name) {
         ProfileList profileList = new ProfileList();
         List<Profile> profiles = new ArrayList<>();
-        profileRepository.findByFirstName(name).forEach(profiles::add);
-        profileRepository.findByLastName(name).forEach(profiles::add);
+        profileRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(name,name).forEach(profiles::add);
+//        profileRepository.findByFirstName(name).forEach(profiles::add);
+//        profileRepository.findByLastName(name).forEach(profiles::add);
         profileList.setProfileList(profiles);
         return profileList;
 
     }
+
 }

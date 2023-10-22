@@ -15,4 +15,8 @@ public interface ProfileRepository extends CrudRepository<Profile, String> {
 
     public List<Profile> findByUserID(String userID);
 
+    public List<Profile> findByDescriptionContainingIgnoreCase(String description);
+
+    public List<Profile> findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(String firstName, String SecondName);
+
 }

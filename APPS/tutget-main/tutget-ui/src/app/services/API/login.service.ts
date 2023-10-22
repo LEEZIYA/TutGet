@@ -16,7 +16,7 @@ import { CreateUserForm } from 'src/app/DTO/CreateUserForm';
 export class LoginService {
     private userSubject: BehaviorSubject<CreateUserForm | null>;
     public user: Observable<CreateUserForm | null>;
-    BASE_URL: string = '/';
+    BASE_URL: string = '/api/users';
 
 
     constructor(
@@ -35,11 +35,11 @@ export class LoginService {
     login(loginForm:CreateUserForm) {
 
 //            return this.restclient.postjson(this.BASE_URL + '/users/login',loginForm)
-        return this.http.post<CreateUserForm>(this.BASE_URL + '/users/login',loginForm)
+        return this.http.post<CreateUserForm>(this.BASE_URL + '/login',loginForm)
            .pipe(map(res => {
                // store user details and jwt token in local storage to keep user logged in between page refreshes
                localStorage.setItem('ActiveUser', JSON.stringify(res));
-               this.userSubject.next(JSON.parse(res));
+               this.userSubject.next(res);
                return res;
            }));
 //            let loginForm:CreateUserForm;
@@ -52,7 +52,7 @@ export class LoginService {
 
     logout() {
         // remove user from local storage and set current user to null
-        localStorage.removeItem('user');
+        localStorage.removeItem('ActiveUser');
         this.userSubject.next(null);
 //         this.router.navigate(['/account/login']);
     }

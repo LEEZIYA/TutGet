@@ -19,10 +19,11 @@ const routes: Routes = [
   {path: 'payment', component: PaymentComponent},
   {path: 'qna/new-question', component: QnaNewQuestionComponent},
   {path: 'qna/view/:id', component: QnaViewQuestionComponent},
-  {path: '**', pathMatch: 'full', component: MainComponent},
+
   //   {path: 'create-user', component: CreateUserComponent},
-  {path: 'login', component: LoginComponent}
+  {path: 'login', component: LoginComponent},
   //   {path: 'profile', component: ProfileComponent}
+  {path: '**', pathMatch: 'full', component: MainComponent}
 ];
 
 @NgModule({

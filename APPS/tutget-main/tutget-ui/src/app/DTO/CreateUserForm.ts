@@ -1,5 +1,6 @@
 export class CreateUserForm{
 
+  public id: string;
   public acadLvl: string;
   public userID: string;
   public password: string;

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api")
 public class ProfileController {
 
     @Autowired
@@ -36,7 +36,7 @@ public class ProfileController {
     }
 
     @GetMapping("/users/userId/{userID}")
-    public List<Profile> getProfileByUserID(@PathVariable String userID){
+    public Profile getProfileByUserID(@PathVariable String userID){
         return profileService.getProfileByUserID(userID);
     }
 
