@@ -1,17 +1,8 @@
-package nucleus.tutget.service.listing.model;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
-
-import java.math.BigInteger;
+package nucleus.tutget.service.payment.model;
 import java.sql.Date;
-import java.util.UUID;
 
-@Entity
 public class Listing {
 
-    @Id
     private String id;
     private String acadLvl;
     private String acadSubject;
@@ -29,11 +20,11 @@ public class Listing {
     private String status;
     private String requests;
 
-    private String assignedTutorId;
     private int computedTotal;
+    private String assignedTutorId;
 
     public Listing(){
-        
+
     }
 
     public Listing(String id, String acadLvl, String acadSubject, String postalCode, Date postDate, String dayOfWeek, int frequency, Date startDate, int hourlyRate, String description, int[] selectedHour, int[] selectedMin, String selectedHourNum, String userId, String status, String requests, String assignedTutorId, int computedTotal) {
@@ -199,13 +190,5 @@ public class Listing {
 
     public void setAssignedTutorId(String assignedTutorId) {
         this.assignedTutorId = assignedTutorId;
-    }
-
-    @PrePersist
-    public void generateId() {
-        String uuid_string = UUID.randomUUID().toString().replaceAll("-","");
-        BigInteger big = new BigInteger(uuid_string, 16);
-        String same_uuid_shorter_string = big.toString(36);
-        id = same_uuid_shorter_string ;
     }
 }

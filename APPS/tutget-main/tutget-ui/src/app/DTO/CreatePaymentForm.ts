@@ -8,12 +8,11 @@ export class CreatePaymentForm{
     public country: string;
     public state: string;
     public postal: number;
-    public paymentMethod: number;
+    public paymentMethod: string;
     public nameOnCard: string;
     public creditCardNum: number;
     public expiration: string;
     public cvv: number;
-    public transactionalId: number;
-  
+    public id: string;
   }
   

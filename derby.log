@@ -1,7 +1,7 @@
 ----------------------------------------------------------------
-Sun Oct 01 01:54:50 SGT 2023:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.13.1.1 - (1765088): instance a816c00e-018a-e73a-9363-000001c84248 
-on database directory memory:C:\Users\D1348011\OneDrive - NCS Pte Ltd\Desktop\TestLearning\Year 1 project\TutGet App\e6e441b0-6010-44d3-b069-02889e048f7b with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@6d5380c2 
+Sat Oct 21 20:44:52 SGT 2023:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.13.1.1 - (1765088): instance a816c00e-018b-5244-566d-000002246538 
+on database directory memory:C:\Users\D1348011\OneDrive - NCS Pte Ltd\Desktop\TestLearning\Year 1 project\TutGet App\a390b088-6f67-45f3-bf8f-97ecf690c23f with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@2a139a55 
 Loaded from file:/C:/Users/D1348011/.m2/repository/org/apache/derby/derby/10.13.1.1/derby-10.13.1.1.jar
 java.vendor=Eclipse Adoptium
 java.runtime.version=17.0.8.1+1
@@ -11,3 +11,6 @@ os.arch=amd64
 os.version=10.0
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Sat Oct 21 20:44:53 SGT 2023:
+Shutting down instance a816c00e-018b-5244-566d-000002246538 on database directory memory:C:\Users\D1348011\OneDrive - NCS Pte Ltd\Desktop\TestLearning\Year 1 project\TutGet App\a390b088-6f67-45f3-bf8f-97ecf690c23f with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@2a139a55 

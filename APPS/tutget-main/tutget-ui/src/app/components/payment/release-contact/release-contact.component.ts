@@ -1,8 +1,8 @@
 import { PaymentService } from 'src/app/services/API/payment.service';
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContactDetails } from 'src/app/DTO/ContactDetails';
-import { TuitionDetails } from 'src/app/DTO/TuitionDetails';
+import { CreateListingForm } from 'src/app/DTO/CreateListingForm';
 
 @Component({
   selector: 'app-release-contact',
@@ -12,42 +12,52 @@ import { TuitionDetails } from 'src/app/DTO/TuitionDetails';
 export class ReleaseContactComponent{
 
   contactDetails: ContactDetails;
-  tuitionDetails: TuitionDetails;
   contactPictureUrl: string = ''; // Initialize the picture URL as an empty string
+  createListingFormResult: CreateListingForm = new CreateListingForm();
+  schedule: string | null=null;
+  id: string | null=null;
+  transactionId: string | null=null;
 
+  acadLvl: String | undefined;
+  acadSubject: String | undefined;
+  frequency: number;
+  hourlyRate: number;
+  userId: String | undefined;
+  assignedTutorId: String | undefined;
 
   private sub: any;
 
-  constructor(private router: Router, private paymentService: PaymentService, private activatedRoute: ActivatedRoute) {}
+  constructor(private paymentService: PaymentService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    // Fetch contact details data from the service
-    this.sub = this.activatedRoute.params.subscribe(params => {
-      this.paymentService.getContactDetails(params['teacher_id'])
-        .then((res) => {
-          this.contactDetails = res;
-          this.loadContactPicture(res);
-        }
-      )
-    });
 
-    this.sub = this.activatedRoute.params.subscribe(params => {
-      this.paymentService.getTuitionDetails(params['listing_id'])
-        .then((res) => {
-          this.tuitionDetails = res;
-        }
-      )
-    });
-  }
+    this.id = this.route.snapshot.paramMap.get('id');
+    console.log('This is the id', this.id);
+    if (this.id == null){
+      alert('An error occured, this ID is null.');
+    }
 
-  loadContactPicture(profilePic:Blob) {
-    // Assuming you have a function to fetch the blob data from your API
-    const reader = new FileReader();
-    reader.onload = () => {
-      // Set the image URL once the blob data is loaded
-      this.contactPictureUrl = reader.result as string;
-    };
-    reader.readAsDataURL(profilePic);
+    this.schedule = this.route.snapshot.paramMap.get('schedule');
+    console.log('This is the schedule', this.schedule);
+
+    this.transactionId = this.route.snapshot.paramMap.get('transactionId');
+    console.log('This is the transactionId', this.transactionId);
+
+    this.sub = this.route.params.subscribe(params => {
+      this.paymentService.getListingDetails(params['id'])
+          .then((res) => {
+            if(res){
+              this.createListingFormResult = res;
+              console.log('LISTING FORM INFO', this.createListingFormResult);
+              this.acadLvl = this.createListingFormResult.acadLvl;
+              this.acadSubject = this.createListingFormResult.acadSubject;
+              this.frequency = this.createListingFormResult.frequency;
+              this.hourlyRate = this.createListingFormResult.hourlyRate;
+              this.assignedTutorId = this.createListingFormResult.assignedTutorId;
+            }
+          
+      });
+    })
   }
 }
 

@@ -14,8 +14,8 @@ const routes: Routes = [
   {path: 'listing', component: CreateListingComponent},
   {path: 'listing/:id', component: ViewListingComponent},
   {path: 'qna', component: QnaComponent},
-  {path: 'payment', component: PaymentComponent},
-  {path: 'payment/release-contact', component: ReleaseContactComponent},
+  {path: 'payment/:id/:schedule', component: PaymentComponent},
+  {path: 'payment/release-contact/:id/:schedule/:transactionId', component: ReleaseContactComponent},
   {path: 'qna/new-question', component: QnaNewQuestionComponent},
   {path: 'qna/view/:id', component: QnaViewQuestionComponent},
   {path: '**', pathMatch: 'full', component: MainComponent}

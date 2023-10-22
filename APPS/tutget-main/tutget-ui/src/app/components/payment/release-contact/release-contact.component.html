@@ -11,24 +11,19 @@
 
           <div class="row">
             <!-- Display contact details on the left -->
-            <div class="col-md-6">
+            <div class="col-md-15">
               <!-- Display contact details here -->
-              <p><strong>Name:</strong> Timothy Joseph </p>{{ contactDetails.name }}
-              <p><strong>Email:</strong> Ggwp.com.sg </p>{{ contactDetails.email }}
-              <p><strong>Phone:</strong> +65-999</p>{{ contactDetails.phone }}
+              <p><strong>Name:</strong> {{ assignedTutorId }} </p>
+              <p><strong>Email:</strong> Ggwp.com.sg </p>
+              <p><strong>Phone:</strong> +65-999</p>
 
               
               <h4 class="card-title">Tuition Timing Summary</h4>
 
               <!-- Display tuition timing summary here -->
-              <p><strong>Course:</strong> Math  </p>{{ tuitionDetails.course }}
-              <p><strong>Days:</strong> Monday, Wednesday, Friday </p>{{ tuitionDetails.days }}
-              <p><strong>Time:</strong> 4:00 PM - 6:00 PM </p>{{ tuitionDetails.time }}
-            </div>
-
-            <!-- Display the contact person's picture -->
-            <div class="col-md-6 text-center">
-              <img [src]="contactPictureUrl" alt="Contact Person" class="contact-picture">
+              <p><strong>Course:</strong> {{ acadLvl }} - {{ acadSubject }}  </p>
+              <p><strong>Days:</strong> {{ schedule }} </p>
+              <p><strong>Transaction ID:</strong> {{ transactionId }} </p>
             </div>
           </div>
           <hr>

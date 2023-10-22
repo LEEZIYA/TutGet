@@ -229,7 +229,7 @@ export class CreateListingComponent {
       this.createListingForm.selectedMin = this.selectedMinNum;
       this.createListingForm.userId = this.activeUser.userID;
       this.createListingForm.status = 'N';
-
+      this.createListingForm.computedTotal = this.computedTotal;
 
       if(!this.editMode){
         this.listingService.createListing(this.createListingForm)
@@ -254,6 +254,7 @@ export class CreateListingComponent {
         let total = 0;
         this.computedEndTimeArr.forEach((e, i) => {if(e){total +=  this.selectedHourNum[i] * Number(this.hourlyRate)}})
         this.computedTotal = total;
+        console.log('this is my computed total: ', this.computedTotal);
     } else {
       this.showTotal = false;
     }
