@@ -17,5 +17,6 @@ export class CreateListingForm{
   public status: string;
   public requests: string = "";
   public assignedTutorId = "";
+  public computedTotal : number;
 
 }

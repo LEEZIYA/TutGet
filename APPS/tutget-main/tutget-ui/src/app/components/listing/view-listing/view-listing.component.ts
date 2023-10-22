@@ -145,6 +145,7 @@ export class ViewListingComponent implements OnInit {
   deleteListing(){
     const dialogConfig = new MatDialogConfig();
     this.injectDialogConfig(dialogConfig);
+    console.log('This shows my createListingForm', this.createListingForm);
     dialogConfig.data = {para: 'Are you sure to delete this listing?'};
     const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((result) => {
@@ -232,7 +233,8 @@ export class ViewListingComponent implements OnInit {
   }
 
   createPayment(){
-    this.router.navigate(['payment'])
+    alert('This is schedule' +  this.schedule);
+    this.router.navigate(['payment', this.createListingForm.id, this.schedule])
   }
 
 
