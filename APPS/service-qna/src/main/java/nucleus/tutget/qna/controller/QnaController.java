@@ -1,6 +1,8 @@
 package nucleus.tutget.qna.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,10 @@ public class QnaController {
     // test data. TODO remove and add methods for database.
     @PostConstruct
     public void init() {
+        Map<String, String[]> subjectsMap = new HashMap<>();
+        subjectsMap.put("P1", new String[] {"ENG", "MATH", "SCI", "CHN", "MLY", "TML"});
+        subjectsMap.put("J1", new String[] {"H1MATH", "H2MATH", "H3MATH", "H1BIO", "H2BIO", "H3BIO"});
+        
         Student student1 = new Student("Anna");
         Student student2 = new Student("Bree");
         Tutor tutor1 = new Tutor("Clara");
@@ -52,14 +58,14 @@ public class QnaController {
         userRepo.addUser(student2);
         userRepo.addUser(tutor1);
         userRepo.addUser(tutor2);
-        Question q1 = new Question("What is the powerhouse of the cell?", "Haven't gotten to this part of my science class yet but everyone is talking and making fun of this I dont understend pls help,,", student1.getId(), student1.getName(), Subject.SCIENCE);
-        Question q2 = new Question("Should I use \"comprising of\" or \"compromising of\"?", "As title.", student1.getId(), student1.getName(), Subject.ENGLISH);
-        Question q3 = new Question("Need someone to explain what imaginary numbers mean :<", "You telling me numbers aint real??? smh smh", student2.getId(), student2.getName(), Subject.MATHS);
+        Question q1 = new Question("What is the powerhouse of the cell?", "Haven't gotten to this part of my science class yet but everyone is talking and making fun of this I dont understend pls help,,", student1.getId(), student1.getName(), "J1", "H1BIO");
+        Question q2 = new Question("Should I use \"comprising of\" or \"compromising of\"?", "As title.", student1.getId(), student1.getName(), "P1", "ENG");
+        Question q3 = new Question("Need someone to explain what imaginary numbers mean :<", "You telling me numbers aint real??? smh smh", student2.getId(), student2.getName(), "J1", "H2MATH");
         qnaService.addQuestion(q1);
         qnaService.addQuestion(q2);
         qnaService.addQuestion(q3);
-        Answer a1 = new Answer("The mitochondria makes energy for the cell, which is also often described as the powerhouse of the cell.", tutor1.getId(), tutor1.getName(), q1.getId(), q1.getSubject());
-        Answer a2 = new Answer("Mitochondria are known as the powerhouse of cells. It is because the mitochondrion is the site of cellular respiration where energy in the form of ATP (Adenosine triphosphate) is generated as a result of oxidation of food constituents.", tutor2.getId(), tutor2.getName(), q1.getId(), q1.getSubject());
+        Answer a1 = new Answer("The mitochondria makes energy for the cell, which is also often described as the powerhouse of the cell.", tutor1.getId(), tutor1.getName(), q1.getId(), q1.getAcadLvl(), q1.getAcadSubj());
+        Answer a2 = new Answer("Mitochondria are known as the powerhouse of cells. It is because the mitochondrion is the site of cellular respiration where energy in the form of ATP (Adenosine triphosphate) is generated as a result of oxidation of food constituents.", tutor2.getId(), tutor2.getName(), q1.getId(), q1.getAcadLvl(), q1.getAcadSubj());
         qnaService.addAnswer(a1);
         qnaService.addAnswer(a2);
     }

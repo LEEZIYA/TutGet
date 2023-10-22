@@ -8,7 +8,8 @@
         <div class="py-2">
             <label for="questionTitleInput">Question Title</label>
             <input class="form-control" id="questionTitleInput" aria-describedby="titleDesc" [(ngModel)]="createQuestionForm.questionTitle">
-            <small id="titleDesc" class="form-text text-muted">Be concise with your question title.</small>
+            <small class="mt-2 ms-2 text-danger" *ngIf="titleErr">{{ titleErr }}</small>
+            <small id="titleDesc" class="form-text text-muted" *ngIf="!titleErr">Be concise with your question title.</small>
         </div>
 
         <div class="row py-2">
@@ -17,18 +18,21 @@
                 <select class="form-select" id="acadLvlSelect" [(ngModel)]="createQuestionForm.acadLvl">
                     <option *ngFor="let acadLvl of academicLvlList | keyvalue" [value]="acadLvl.key">{{ acadLvl.value }}</option>
                 </select>
+                <small class="mt-2 ms-2 text-danger" *ngIf="acadLvlErr">{{ acadLvlErr }}</small>
             </div>
             <div class="col-6">
                 <label for="subjectSelect">Subject</label>
-                <select class="form-select" id="subjectSelect" [disabled]="createQuestionForm.acadLvl == null">
+                <select class="form-select" id="subjectSelect" [disabled]="createQuestionForm.acadLvl == null" [(ngModel)]="createQuestionForm.acadSubject">
                     <option *ngFor="let subj of academicLvlSubjectList.get(createQuestionForm.acadLvl)" [value]="subj">{{ academicSubjectList.get(subj) }}</option>
                 </select>
+                <small class="mt-2 ms-2 text-danger" *ngIf="acadSubjErr">{{ acadSubjErr }}</small>
             </div>
         </div>
         
         <div class="py-2">
             <label for="questionBody">Question Description</label>
             <textarea class="form-control" id="questionBody" rows="3" [(ngModel)]="createQuestionForm.qnaString"></textarea>
+            <small class="mt-2 ms-2 text-danger" *ngIf="descErr">{{ descErr }}</small>
         </div>
 
         <br>

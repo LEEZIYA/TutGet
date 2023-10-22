@@ -42,4 +42,9 @@ public class QnaController {
     public String addQuestion(@RequestBody Question question){
         return qnaService.addQuestion(question);
     }
+
+    @PostMapping("/addAnswer")
+    public String addQuestion(@RequestBody Answer answer){
+        return qnaService.addAnswer(answer);
+    }
 }
