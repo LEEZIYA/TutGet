@@ -18,4 +18,7 @@ export class HeaderComponent {
     this.router.navigate(['payment'])
   }
 
+  createSearch(){
+    this.router.navigate(['search'])
+  }
 }

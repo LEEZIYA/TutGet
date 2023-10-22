@@ -1,20 +1,14 @@
 package nucleus.tutget.qna.controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.lang.NonNull;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.annotation.PostConstruct;
@@ -26,7 +20,6 @@ import nucleus.tutget.qna.domain.QuestionWithAnswers;
 import nucleus.tutget.qna.domain.Student;
 import nucleus.tutget.qna.domain.Subject;
 import nucleus.tutget.qna.domain.Tutor;
-import nucleus.tutget.qna.domain.User;
 import nucleus.tutget.qna.repository.UserRepository;
 import nucleus.tutget.qna.service.QnaService;
 

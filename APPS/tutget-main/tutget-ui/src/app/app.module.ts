@@ -15,7 +15,7 @@ import { PaymentComponent } from './components/payment/payment.component';
 import { ViewListingComponent } from './components/listing/view-listing/view-listing.component';
 import { QnaComponent } from './components/qna/qna-view/qna.component';
 import { QnaNewQuestionComponent } from './components/qna/qna-new-question/qna-new-question.component';
-
+import { SearchComponent } from './components/search/search.component';
 
 
 
@@ -31,7 +31,7 @@ import { QnaNewQuestionComponent } from './components/qna/qna-new-question/qna-n
     CreateListingComponent,
     PaymentComponent,
     ViewListingComponent,
-
+    SearchComponent
   ],
   imports: [
     BrowserModule,

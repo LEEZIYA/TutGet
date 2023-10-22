@@ -46,5 +46,14 @@ public class Controller {
         return listingService.getAllListingsByDescription(description);
     }
 
+    @GetMapping("/listings/find/{searchKey}")
+    public AllListing getSearchListings(@PathVariable(required=false) String searchKey){
+        return listingService.getSearchListings(searchKey);
+    }
+
+    // @GetMapping("/listings/find/all/{requestData}")
+    // public AllListing getSearchListings(@PathVariable(required=false) Object requestData){
+    //     return listingService.getSearchListingsAll(requestData);
+    // }
 
 }
