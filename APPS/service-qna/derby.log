@@ -1,0 +1,16 @@
+----------------------------------------------------------------
+Wed Oct 18 10:24:34 SGT 2023:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.13.1.1 - (1765088): instance a816c00e-018b-4099-5b91-000001f87098 
+on database directory memory:D:\Desktop\TutGet\APPS\service-qna\23722b2c-c5e5-4905-a428-762793047af6 with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@4d7e1886 
+Loaded from file:/C:/Users/User/.m2/repository/org/apache/derby/derby/10.13.1.1/derby-10.13.1.1.jar
+java.vendor=Oracle Corporation
+java.runtime.version=18.0.2.1+1-1
+user.dir=D:\Desktop\TutGet\APPS\service-qna
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Wed Oct 18 12:13:27 SGT 2023:
+Shutting down instance a816c00e-018b-4099-5b91-000001f87098 on database directory memory:D:\Desktop\TutGet\APPS\service-qna\23722b2c-c5e5-4905-a428-762793047af6 with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@4d7e1886 
