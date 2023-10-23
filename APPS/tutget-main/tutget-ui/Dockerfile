@@ -1,7 +1,7 @@
 FROM node:alpine AS builder
 WORKDIR /usr/local/app
 COPY ./ /usr/local/app/
-RUN npm install && \
+RUN npm ci && \
     npm run build-prod
 FROM nginx:alpine
 COPY --from=builder /usr/local/app/dist/* /usr/share/nginx/html/
