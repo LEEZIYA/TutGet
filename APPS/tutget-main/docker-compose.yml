@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+  backend:
+    image: liziyang624/tutget
+    # image: public.ecr.aws/o5g5h4e8/tutget
+    x-aws-pull_credentials: arn:aws:secretsmanager:us-east-1:469098516244:secret:myToken-Ly6oIv
+    container_name: tutget
+    build:
+      context: .
+    ports:
+      - "9000:9000"
+  frontend:
+    image: liziyang624/tutget-ui
+    # image: public.ecr.aws/o5g5h4e8/tutget-ui
+    x-aws-pull_credentials: arn:aws:secretsmanager:us-east-1:469098516244:secret:myToken-Ly6oIv
+    container_name: tutget-ui
+    build:
+      context: ./tutget-ui
+    ports:
+      - "4200:4200"
+    depends_on:
+      - backend
