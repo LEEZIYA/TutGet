@@ -10,7 +10,6 @@
         <module name="tutget-main" />
         <module name="discovery-server" />
         <module name="service-config" />
-        <module name="auth" />
         <module name="qna" />
         <module name="profiles" />
         <module name="payment" />

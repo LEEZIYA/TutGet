@@ -239,7 +239,6 @@ export class ViewListingComponent implements OnInit {
   }
 
   createPayment(){
-    alert('This is schedule' +  this.schedule);
     this.router.navigate(['payment', this.createListingForm.id, this.schedule])
   }
 
