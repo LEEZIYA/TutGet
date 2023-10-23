@@ -11,7 +11,7 @@
 	<groupId>com.tutget</groupId>
 	<artifactId>tutget-main</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>tutget-main</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -38,6 +38,11 @@
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 			<version>4.0.3</version>
 		</dependency>
+		<!-- <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+			<version>4.0.4</version>
+		</dependency> -->
 	</dependencies>
 	<build>
 		<finalName>TutgetMain</finalName>
@@ -64,6 +69,10 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.tutget.tutgetmain.TutgetMainApplication</mainClass>
+                    <layout>JAR</layout>
+                </configuration>
 				<executions>
 					<execution>
 						<goals>
