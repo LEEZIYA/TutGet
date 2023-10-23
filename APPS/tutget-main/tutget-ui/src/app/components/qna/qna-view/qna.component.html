@@ -1,7 +1,7 @@
 <div class="container pt-4">
     <div class="row py-5">
         <div class="col-8">
-            <h1>Questions & Answers Board</h1>
+            <h1 style="color: #26608c">Questions & Answers Board</h1>
         </div>
         <div class="col-4">
             <button class="btn btn-primary float-end" (click)="onNewQuestion()">
@@ -35,7 +35,7 @@
                                 <h4>{{ question.questionTitle }}</h4>
                             </a>
                             <p>{{ question.posterName }} asked on {{ question.postDate }}</p>
-                            
+
                             <div class="question-tags">
                                 <span class="badge bg-primary">{{ question.acadLvl }}</span>
                                 <span class="badge bg-primary">{{ question.acadSubj }}</span>
@@ -51,4 +51,3 @@
     <!-- <app-qna-view-question [question]="selectedQuestion"></app-qna-view-question> -->
 </div>
 
-  

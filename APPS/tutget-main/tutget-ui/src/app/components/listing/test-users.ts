@@ -1,10 +1,10 @@
 export let STUDENT: any =
   {
     acadLvl:"J1",
-    userID:"StudentSam1",
-    password:"pass2word",
+    userID:"StudentSam",
+    password:"password",
     userType:"S",
-    firstName:"Sarah",
+    firstName:"Sam",
     lastName:"See",
     phoneNumber:"99998888",
     billingAddress:"1 Singapore Avenue",
@@ -16,8 +16,8 @@ export let STUDENT: any =
 export let TEACHER: any =
 {
   acadLvl:"J1",
-  userID:"TeacherTom1",
-  password:"pass1word",
+  userID:"TeacherTom",
+  password:"password",
   userType:"T",
   firstName:"Tom",
   lastName:"Tan",
@@ -30,10 +30,10 @@ export let TEACHER: any =
 export let TEACHER2: any =
 {
   acadLvl:"J1",
-  userID:"TeacherTom2",
-  password:"pass3word",
+  userID:"TeacherKen",
+  password:"password",
   userType:"T",
-  firstName:"Mary",
+  firstName:"Ken",
   lastName:"Lim",
   phoneNumber:"91234567",
   billingAddress:"Blk 144 Singapore",

@@ -1,13 +1,16 @@
 ----------------------------------------------------------------
-Sun Oct 22 14:15:26 SGT 2023:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.13.1.1 - (1765088): instance a816c00e-018b-5606-2861-000001baa4b8 
-on database directory memory:C:\Users\D1348011\OneDrive - NCS Pte Ltd\Desktop\TestLearning\Year 1 project\TutGet App\APPS\service-payment\643d75c9-4d64-4031-a333-a9b57ea37957 with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@2a139a55 
-Loaded from file:/C:/Users/D1348011/.m2/repository/org/apache/derby/derby/10.13.1.1/derby-10.13.1.1.jar
-java.vendor=Eclipse Adoptium
-java.runtime.version=17.0.8.1+1
-user.dir=C:\Users\D1348011\OneDrive - NCS Pte Ltd\Desktop\TestLearning\Year 1 project\TutGet App\APPS\service-payment
+Sun Oct 22 16:57:15 SGT 2023:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.13.1.1 - (1765088): instance a816c00e-018b-569a-4e79-000001b9acf0 
+on database directory memory:C:\Users\D1346426\OneDrive - NCS Pte Ltd\Desktop\TutGet\APPS\service-payment\3a50fac2-590c-4160-b4f7-c4ba3fa4ef1d with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@1d44bcfa 
+Loaded from file:/C:/Users/D1346426/.m2/repository/org/apache/derby/derby/10.13.1.1/derby-10.13.1.1.jar
+java.vendor=Amazon.com Inc.
+java.runtime.version=17.0.8.1+8-LTS
+user.dir=C:\Users\D1346426\OneDrive - NCS Pte Ltd\Desktop\TutGet\APPS\service-payment
 os.name=Windows 10
 os.arch=amd64
 os.version=10.0
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Sun Oct 22 17:45:32 SGT 2023:
+Shutting down instance a816c00e-018b-569a-4e79-000001b9acf0 on database directory memory:C:\Users\D1346426\OneDrive - NCS Pte Ltd\Desktop\TutGet\APPS\service-payment\3a50fac2-590c-4160-b4f7-c4ba3fa4ef1d with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@1d44bcfa 

@@ -1,12 +1,12 @@
 <div class="container">
   <div class="py-5 text-center">
-    <h2>Payment form</h2>
+    <h2 style="color: #26608c">Payment form</h2>
   </div>
 
   <div class="row g-5">
     <div class="col-md-5 col-lg-4 order-md-last">
-      <h4 class="d-flex justify-content-between align-items-center mb-3">
-        <span class="text-primary">Your cart</span>
+      <h4 class="d-flex justify-content-between align-items-center mb-3" style="color: #26608c">
+        <span>Your cart</span>
       </h4>
       <ul class="list-group mb-3">
         <li class="list-group-item d-flex justify-content-between lh-sm">
@@ -40,10 +40,10 @@
         </li>
       </ul>
     </div>
-    
+
     <div class="col-md-7 col-lg-8">
       <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
-        <h4 class="mb-3">Billing address</h4>
+        <h4 class="mb-3" style="color: #26608c">Billing address</h4>
 
         <div class="row g-3">
           <div class="col-sm-6">
@@ -145,7 +145,7 @@
 
         <hr class="my-4">
 
-        <h4 class="mb-3">Payment</h4>
+        <h4 class="mb-3" style="color: #26608c">Payment</h4>
 
         <div class="my-3">
           <div class="form-group">
@@ -220,8 +220,8 @@
 
         <hr class="my-4">
 
-        
-        <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+
+        <button class="w-100 btn btn-primary btn-lg mb-5" style="background-color: rgb(32, 71, 161); border-style: none;" type="submit">Continue to checkout</button>
       </form>
     </div>
   </div>

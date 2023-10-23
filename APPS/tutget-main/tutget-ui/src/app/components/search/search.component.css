@@ -79,3 +79,14 @@ select {
   width: 100%;
   /* Other styles as needed */
 }
+
+.anchorLink{
+  cursor: pointer;
+}
+
+th{
+  background-color: rgb(17, 56, 145);
+  color: white;
+  font-weight: 500;
+  vertical-align: middle;
+}

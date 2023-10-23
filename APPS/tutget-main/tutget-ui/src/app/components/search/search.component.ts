@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { SearchService } from 'src/app/services/API/search.service';
 import { RestclientService } from 'src/app/services/restclient.service';
 import { ACADEMICSUBJECTIDLIST,ACADEMICLEVELIDLIST } from 'src/app/utilities/code-table/AcademicLevelSubjectList';
@@ -21,15 +22,15 @@ export class SearchComponent {
   acadSubject: string[] | undefined;
   hourlyRateRangeList: Map<String, String>  = HOURLYRATERANGELIST;
   hourlyRateRange: string[] | undefined;
-  
-  constructor(private restClient: RestclientService, private searchService: SearchService) {
+
+  constructor(private restClient: RestclientService, private searchService: SearchService, private router: Router) {
     //console.log(this.router.getCurrentNavigation()?.extras.state);
   }
   ngOnInit(){
 
     this.loadComponent();
-  
-  
+
+
   }
   loadComponent(){
 
@@ -40,7 +41,7 @@ export class SearchComponent {
   // constructor(private restClient: RestclientService, private searchService: SearchService, private utilitiesService: UtilitiesService, private reloadService: ReloadService, private router: Router, public activatedRoute: ActivatedRoute) {
   //   //console.log(this.router.getCurrentNavigation()?.extras.state);
   // }
-  
+
   onSubmit() {
     const trimmedSearchQuery = this.searchQuery.trim();
 
@@ -49,7 +50,7 @@ export class SearchComponent {
     }else{
       this.searchService.getSearchResult(trimmedSearchQuery)
       .then((res)=>{this.searchResults = res.allListing; console.log(this.searchResults);});
-    }  
+    }
     if (trimmedSearchQuery === ''){
       alert("Please enter a valid search.");
     }else{
@@ -61,10 +62,14 @@ export class SearchComponent {
       console.log("HELP: " + requestData.acadlvl + requestData.acadSubject + requestData.trimmedSearchQuery);
       this.searchService.getSearchResultAll(requestData)
       .then((res)=>{this.searchResults = res.allListing; console.log(this.searchResults);});
-      
-    
+
+
     }
   }
-  
+
+  navigate(listingId: string){
+    this.router.navigate(['listing/' + listingId]);
+  }
+
 }
 

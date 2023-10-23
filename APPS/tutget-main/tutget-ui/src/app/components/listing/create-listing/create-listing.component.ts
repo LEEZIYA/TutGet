@@ -1,3 +1,4 @@
+import { LoginService } from './../../../services/API/login.service';
 import { UtilitiesService } from './../../../services/utilities.service';
 import { ListingService } from './../../../services/API/listing.service';
 import { Constants } from './../../../utilities/constants';
@@ -9,7 +10,7 @@ import { CodeTable } from 'src/app/utilities/code-table/CodeTable';
 import { ReloadService } from 'src/app/services/reload.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
-import { STUDENT } from '../test-users';
+
 
 
 @Component({
@@ -48,9 +49,11 @@ export class CreateListingComponent {
   editMode: boolean = false;
   submitted: boolean = false;
 
-  activeUser: any = STUDENT;
+  activeUser: any;
 
-  constructor(private restClient: RestclientService, private listingService: ListingService, private utilitiesService: UtilitiesService, private reloadService: ReloadService, private router: Router, public activatedRoute: ActivatedRoute) {
+  constructor(private restClient: RestclientService, private listingService: ListingService, private utilitiesService: UtilitiesService, private reloadService: ReloadService, private router: Router, public activatedRoute: ActivatedRoute,
+    private loginService: LoginService) {
+      this.loginService.user.subscribe(user => this.activeUser = user);
     //console.log(this.router.getCurrentNavigation()?.extras.state);
   }
 

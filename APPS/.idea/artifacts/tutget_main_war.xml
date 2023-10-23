@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="tutget-main:war">
+    <output-path>$PROJECT_DIR$/tutget-main/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>tutget-main</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="TutgetMain.war">
+      <element id="artifact" artifact-name="tutget-main:war exploded" />
+    </root>
+  </artifact>
+</component>

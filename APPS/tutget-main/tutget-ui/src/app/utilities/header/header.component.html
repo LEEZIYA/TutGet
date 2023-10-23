@@ -20,15 +20,17 @@
                 </li> -->
             </ul>
             <div style="padding-right: 20px">
-              <app-single-button buttonTitle="Create Listing" (eventEmit)="createListing()"></app-single-button>
+              <app-single-button *ngIf="showMenu && isStudent" buttonTitle="Create Listing" (eventEmit)="createListing()"></app-single-button>
             </div>
-            <div style="padding-right: 20px">
+            <!-- <div style="padding-right: 20px">
                 <app-single-button buttonTitle="Search" (eventEmit)="createSearch()"></app-single-button>
-              </div>
+              </div> -->
             <ul class="navbar-nav">
+                <a class="nav-link hover-link" routerLink="/search">Search</a>
                 <a class="nav-link hover-link" routerLink="/qna">QnA Board</a>
-                <a class="nav-link hover-link" href="#">Register</a>
-                <a class="nav-link hover-link" routerLink="/login">Login</a>
+                <a *ngIf="!showMenu" class="nav-link hover-link" href="#">Register</a>
+                <a  *ngIf="!showMenu" class="nav-link hover-link" routerLink="/login">Login</a>
+                <a  *ngIf="showMenu" class="nav-link hover-link" routerLink="/login">Logout</a>
                 <!-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Menu </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

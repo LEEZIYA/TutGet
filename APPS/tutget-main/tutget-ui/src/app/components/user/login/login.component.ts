@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { LocalStorageService } from './../../../services/local-storage.service';
+import { Component, Input, OnInit } from '@angular/core';
 // import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule,FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
@@ -10,6 +11,7 @@ import { Constants } from './../../../utilities/constants';
 // import { Component } from '@angular/core';
 import { CreateUserForm } from 'src/app/DTO/CreateUserForm';
 import { RestclientService } from 'src/app/services/restclient.service';
+import { Router } from '@angular/router';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
@@ -29,10 +31,13 @@ export class LoginComponent implements OnInit {
         private formBuilder: FormBuilder,
 //         private route: ActivatedRoute,
 //         private router: Router,
-        private loginService: LoginService
+        private loginService: LoginService,
+        private localStorageService: LocalStorageService,
+        private router: Router
     ) {
       this.userForm = null;
       this.loginService.user.subscribe(user => this.userForm = user);
+
     }
 
     ngOnInit() {
@@ -40,6 +45,12 @@ export class LoginComponent implements OnInit {
           userName: ['', Validators.required],
           password: ['', Validators.required],
         });
+
+        this.loginService.createUser();
+        this.clearStorage();
+        this.localStorageService.setShowMenu(false);
+        this.localStorageService.setIsStudent(false);
+
 
     }
 
@@ -76,11 +87,16 @@ export class LoginComponent implements OnInit {
                         console.log(res.id);
                         this.loginSuccess = 'You have logged in as user';
                         this.loginErr = '';
+                        if(res.userType == 'S'){
+                          this.localStorageService.setIsStudent(true);
+                        }
+                        this.localStorageService.setShowMenu(true);
+                        this.router.navigate(['']);
 //                         this.userForm = res;
 //                         this.userForm2 = this.loginService.userValue;
                     }
                     else{
-                      this.loginErr = 'login failed';
+                      this.loginErr = 'Login failed!';
 
                       this.loginService.logout();
                     }
@@ -99,5 +115,11 @@ export class LoginComponent implements OnInit {
     logOut(){
       this.loginService.logout();
       this.loginSuccess = '';
+    }
+
+    clearStorage(){
+      this.localStorageService.clearStorageToken();
+      localStorage.clear();
+      window.sessionStorage.clear();
     }
 }
