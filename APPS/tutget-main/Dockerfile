@@ -1,6 +1,7 @@
 FROM maven:3.8.4-openjdk-17-slim AS build
 COPY src /home/app/src
 COPY pom.xml /home/app
+RUN mvn -f /home/app/pom.xml dependency:go-offline
 RUN mvn -f /home/app/pom.xml package spring-boot:repackage
 
 FROM eclipse-temurin:17-jdk-alpine
