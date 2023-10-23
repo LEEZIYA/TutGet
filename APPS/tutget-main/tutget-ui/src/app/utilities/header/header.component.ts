@@ -14,5 +14,11 @@ export class HeaderComponent {
     this.router.navigate(['listing'])
   }
 
+  createPayment(){
+    this.router.navigate(['payment'])
+  }
 
+  createSearch(){
+    this.router.navigate(['search'])
+  }
 }

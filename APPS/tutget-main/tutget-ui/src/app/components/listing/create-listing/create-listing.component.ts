@@ -9,6 +9,7 @@ import { CodeTable } from 'src/app/utilities/code-table/CodeTable';
 import { ReloadService } from 'src/app/services/reload.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
+import { STUDENT } from '../test-users';
 
 
 @Component({
@@ -47,7 +48,7 @@ export class CreateListingComponent {
   editMode: boolean = false;
   submitted: boolean = false;
 
-
+  activeUser: any = STUDENT;
 
   constructor(private restClient: RestclientService, private listingService: ListingService, private utilitiesService: UtilitiesService, private reloadService: ReloadService, private router: Router, public activatedRoute: ActivatedRoute) {
     //console.log(this.router.getCurrentNavigation()?.extras.state);
@@ -112,9 +113,9 @@ export class CreateListingComponent {
     this.showTotal = false;
     this.hourlyRate = undefined;
 
-
-    this.createListingForm.acadLvl = "J1";
+    this.createListingForm.acadLvl = this.activeUser.acadLvl;
     //call userservice or get from localstorage after login to get user academic level
+
     this.academicLvlLabel = this.academicLvlList.get(this.createListingForm.acadLvl);
 
     // ACADEMICLEVELSUBJECTLIST.forEach((lvlSubj) => {
@@ -125,7 +126,8 @@ export class CreateListingComponent {
 
     this.academicLvlSubjectList = ACADEMICLEVELSUBJECTLIST.get(this.createListingForm.acadLvl);
 
-    this.createListingForm.postalCode = "200640";
+    this.createListingForm.postalCode = this.activeUser.postalCode;
+    //200640
     //call userservice or get from localstorage after login to get user postal code
 
     this.restClient.getrawjson(Constants.oneMapURLStart + this.createListingForm.postalCode + Constants.oneMapURLEnd, true)
@@ -225,6 +227,9 @@ export class CreateListingComponent {
       this.createListingForm.selectedHour = this.selected24Hour;
       this.createListingForm.selectedHourNum = this.selectedHourNum.join("");
       this.createListingForm.selectedMin = this.selectedMinNum;
+      this.createListingForm.userId = this.activeUser.userID;
+      this.createListingForm.status = 'N';
+      this.createListingForm.computedTotal = this.computedTotal;
 
       if(!this.editMode){
         this.listingService.createListing(this.createListingForm)
@@ -249,6 +254,7 @@ export class CreateListingComponent {
         let total = 0;
         this.computedEndTimeArr.forEach((e, i) => {if(e){total +=  this.selectedHourNum[i] * Number(this.hourlyRate)}})
         this.computedTotal = total;
+        console.log('this is my computed total: ', this.computedTotal);
     } else {
       this.showTotal = false;
     }

@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Sun Oct 22 14:15:26 SGT 2023:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.13.1.1 - (1765088): instance a816c00e-018b-5606-2861-000001baa4b8 
+on database directory memory:C:\Users\D1348011\OneDrive - NCS Pte Ltd\Desktop\TestLearning\Year 1 project\TutGet App\APPS\service-payment\643d75c9-4d64-4031-a333-a9b57ea37957 with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@2a139a55 
+Loaded from file:/C:/Users/D1348011/.m2/repository/org/apache/derby/derby/10.13.1.1/derby-10.13.1.1.jar
+java.vendor=Eclipse Adoptium
+java.runtime.version=17.0.8.1+1
+user.dir=C:\Users\D1348011\OneDrive - NCS Pte Ltd\Desktop\TestLearning\Year 1 project\TutGet App\APPS\service-payment
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

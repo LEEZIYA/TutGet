@@ -1,6 +1,5 @@
 package com.tutget.tutgetmain.model;
 
-
 import java.sql.Date;
 
 public class Listing {
@@ -18,12 +17,19 @@ public class Listing {
     private int[] selectedHour;
     private int[] selectedMin;
     private String selectedHourNum;
+    private int computedTotal;
+
+    private String userId;
+    private String status;
+    private String requests;
+
+    private String assignedTutorId;
 
     public Listing(){
-
+        
     }
 
-    public Listing(String id, String acadLvl, String acadSubject, String postalCode, Date postDate, String dayOfWeek, int frequency, Date startDate, int hourlyRate, String description, int[] selectedHour, int[] selectedMin, String selectedHourNum) {
+    public Listing(String id, String acadLvl, String acadSubject, String postalCode, Date postDate, String dayOfWeek, int frequency, Date startDate, int hourlyRate, String description, int[] selectedHour, int[] selectedMin, String selectedHourNum, String userId, String status, String requests, String assignedTutorId, int computedTotal) {
         this.id = id;
         this.acadLvl = acadLvl;
         this.acadSubject = acadSubject;
@@ -37,6 +43,19 @@ public class Listing {
         this.selectedHour = selectedHour;
         this.selectedMin = selectedMin;
         this.selectedHourNum = selectedHourNum;
+        this.userId = userId;
+        this.status = status;
+        this.requests = requests;
+        this.assignedTutorId = assignedTutorId;
+        this.computedTotal = computedTotal;
+    }
+
+    public int getComputedTotal() {
+        return computedTotal;
+    }
+
+    public void setComputedTotal(int computedTotal) {
+        this.computedTotal = computedTotal;
     }
 
     public String getId() {
@@ -143,5 +162,35 @@ public class Listing {
         this.selectedHourNum = selectedHourNum;
     }
 
+    public String getUserId() {
+        return userId;
+    }
 
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getRequests() {
+        return requests;
+    }
+
+    public void setRequests(String requests) {
+        this.requests = requests;
+    }
+
+    public String getAssignedTutorId() {
+        return assignedTutorId;
+    }
+
+    public void setAssignedTutorId(String assignedTutorId) {
+        this.assignedTutorId = assignedTutorId;
+    }
 }

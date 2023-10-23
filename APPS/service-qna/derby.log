@@ -1,4 +1,5 @@
 ----------------------------------------------------------------
+<<<<<<< HEAD
 Sun Oct 22 14:37:58 SGT 2023:
 Booting Derby version The Apache Software Foundation - Apache Derby - 10.13.1.1 - (1765088): instance a816c00e-018b-561a-ca43-000001cff808 
 on database directory memory:C:\tutget\APPS\service-qna\d13fdcdf-363b-47ec-bb9f-1a2cf46b152e with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@2a139a55 
@@ -6,6 +7,15 @@ Loaded from file:/C:/nexgen-repo/org/apache/derby/derby/10.13.1.1/derby-10.13.1.
 java.vendor=Oracle Corporation
 java.runtime.version=17.0.8+9-LTS-211
 user.dir=C:\tutget\APPS\service-qna
+=======
+Sun Oct 22 10:46:07 SGT 2023:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.13.1.1 - (1765088): instance a816c00e-018b-5546-86e9-000002246f60 
+on database directory memory:C:\Users\D1348011\OneDrive - NCS Pte Ltd\Desktop\TestLearning\Year 1 project\TutGet App\APPS\service-qna\a8446c04-24f7-4b92-976f-648c503a9b64 with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@2a139a55 
+Loaded from file:/C:/Users/D1348011/.m2/repository/org/apache/derby/derby/10.13.1.1/derby-10.13.1.1.jar
+java.vendor=Eclipse Adoptium
+java.runtime.version=17.0.8.1+1
+user.dir=C:\Users\D1348011\OneDrive - NCS Pte Ltd\Desktop\TestLearning\Year 1 project\TutGet App\APPS\service-qna
+>>>>>>> dev
 os.name=Windows 10
 os.arch=amd64
 os.version=10.0

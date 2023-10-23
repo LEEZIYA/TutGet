@@ -1,0 +1,88 @@
+<div class="container">
+  
+  <h2>Search</h2>
+
+  <div class="button-toggle"style="text-align: center;">
+    <button class="toggle-button" [class.active]="selectedSearch === 'Listing'" (click)="selectedSearch = 'Listing' ">
+      Search Listing
+    </button>
+    <button class="toggle-button" [class.active]="selectedSearch === 'QnA'" (click)="selectedSearch = 'QnA' ">
+      Q&A Search
+    </button>
+  </div>
+
+
+  <div class="justify-content-center">
+    
+      <div>
+        <div class="subtitle mb-2">Quick Search</div>
+        <input class="col-12" type="text" placeholder="Search.." [(ngModel)]="searchQuery" />
+      </div>
+      
+        <div class="subtitle mb-2">Academic Level</div>
+        <select class="form-select" [(ngModel)]="acadlvl">
+          <option value="-1">Please select</option>
+          <option *ngFor="let acad of academicLvlList | keyvalue" [value]="acad.key">{{ acad.value }}</option>
+        </select>
+      </div>
+    
+  
+      <div class="col-md-12" >
+        <div class="subtitle mb-2">Academic Subject</div>
+        <select class="form-select" [(ngModel)]="acadSubject">
+          <option value="">Please select</option>
+          <option *ngFor="let subj of academicSubjectList | keyvalue" [value]="subj.key">{{ subj.value }}</option>
+        </select>
+      </div>
+    
+      <div class="col-md-12" [ngClass]="{ 'disabled-section': selectedSearch !== 'Listing' }">
+        <div class="subtitle mb-2">Hourly Rate</div>
+        <select class="form-select" [(ngModel)]="hourlyRateRange">
+          <option value="">Please select</option>
+          <option *ngFor="let hourly of hourlyRateRangeList | keyvalue" [value]="hourly.key">{{ hourly.value }}</option>
+        </select>
+      </div>
+  
+  </div>
+
+
+
+  <div class="col-md-12" style="text-align: center; padding-top: 20px;">
+    <app-single-button buttonTitle="Submit" (eventEmit)="onSubmit()" [rounderStyle]="true"></app-single-button>
+  </div>
+
+
+  <ul>
+    <table class="table">   
+    <thead>
+          <tr>
+            <th>ID</th>
+            <th>Academic Level</th>
+            <th>Academic Subject</th>
+            <th>Postal Code</th>
+            <th>Post Date</th>
+            <th>Day of the Week</th>
+            <th>Frequency</th>
+            <th>Start Date</th>
+            <th>Hourly Rate</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+      <tbody>
+          <tr *ngFor="let result of searchResults key">
+            <td>{{ result.id }}</td>
+            <td>{{ result.acadLvl }}</td>
+            <td>{{ result.acadSubject }}</td>
+            <td>{{ result.postalCode }}</td>
+            <td>{{ result.postDate }}</td>
+            <td>{{ result.dayOfWeek }}</td>
+            <td>{{ result.frequency }}</td>
+            <td>{{ result.startDate }}</td>
+            <td>{{ result.hourlyRate }}</td>
+            <td>{{ result.description }}</td>
+          </tr>
+        </tbody>
+      </table>
+  </ul>
+  
+  

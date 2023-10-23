@@ -50,4 +50,48 @@ public class ListingService {
 
     }
 
+    public AllListing getSearchListings(String searchKey) {
+        AllListing allListing = new AllListing();
+        List<Listing> listings = new ArrayList<>();     
+        System.out.println("ITS IS WITHIN THE FUNCTION getSearchListings");
+        if(searchKey == null){
+            listingRepository.findAll().forEach(listings::add);
+            allListing.setAllListing(listings);
+            return allListing;
+        }
+        else{
+            listingRepository.findByIdContainingIgnoreCaseOrDescriptionContainingIgnoreCase(searchKey,searchKey).forEach(listings::add);
+            System.out.println("Listings : " + listings.toString());
+            allListing.setAllListing(listings);  
+            return allListing;
+        }
+    }
+
+    // public AllListing getSearchListingsAll(Object requestData) {
+    //     // AllListing allListing = new AllListing();
+    //     // List<Listing> listings = new ArrayList<>();     
+    //     // System.out.println("ITS IS WITHIN THE FUNCTION getSearchListingsAll");
+
+    //     for (Listing listing : requestData.getListings()) {
+    //         if (listing == null) {
+    //             allNotNull = false;
+    //             break;
+    //         }
+    //     }
+        
+
+        
+    //     if(requestData == null){
+    //         listingRepository.findAll().forEach(listings::add);
+    //         allListing.setAllListing(listings);
+    //         return allListing;
+    //     }
+    //     else{
+    //         listingRepository.findByIdContainingIgnoreCaseOrDescriptionContainingIgnoreCase(searchKey,searchKey).forEach(listings::add);
+    //         System.out.println("Listings : " + listings.toString());
+    //         allListing.setAllListing(listings);  
+    //         return allListing;
+    //     }
+    // }
+
 }
