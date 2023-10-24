@@ -3,11 +3,13 @@ package nucleus.tutget.service.payment.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
+import javax.persistence.Table;
 
 import java.math.BigInteger;
 import java.util.UUID;
 
 @Entity
+@Table(name="payment")
 public class Payment {
 
     @Id

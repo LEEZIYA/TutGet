@@ -12,6 +12,7 @@ import { SearchComponent } from './components/search/search.component';
 // import { CreateUserComponent } from './components/user/create-user/create-user.component';
 import { LoginComponent } from './components/user/login/login.component';
 // import { ProfileComponent } from './components/user/profile/profile.component';
+import { SearchComponent } from './components/search/search.component';
 
 const routes: Routes = [
   {path: '', component: MainComponent},

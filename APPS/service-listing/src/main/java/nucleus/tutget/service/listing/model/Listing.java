@@ -3,12 +3,14 @@ package nucleus.tutget.service.listing.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
+import javax.persistence.Table;
 
 import java.math.BigInteger;
 import java.sql.Date;
 import java.util.UUID;
 
 @Entity
+@Table(name= "listings")
 public class Listing {
 
     @Id
