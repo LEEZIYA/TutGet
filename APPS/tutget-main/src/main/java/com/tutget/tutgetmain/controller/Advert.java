@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RefreshScope
+//@RefreshScope
 public class Advert {
-    @Value("${enableAd}")
+    //@Value("${enableAd}")
     private boolean enableAd;
 
     @RequestMapping("/api/ad")

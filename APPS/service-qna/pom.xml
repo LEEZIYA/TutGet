@@ -12,6 +12,7 @@
 	<artifactId>qna</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>qna</name>
+	<packaging>jar</packaging>
 	<description>QnA Service for Tutget!</description>
 	<properties>
 		<java.version>17</java.version>
@@ -50,12 +51,29 @@
 	</dependencies>
 
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
+		<finalName>TutgetQna</finalName>
+		<pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <configuration>
+                        <mainClass>nucleus.tutget.qna.QnaApplication</mainClass>
+                        <layout>JAR</layout>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                            <configuration>
+                                <skip>true</skip>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+		</pluginManagement>
 	</build>
 
 </project>
