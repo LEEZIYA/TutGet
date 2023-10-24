@@ -1,5 +1,5 @@
 # TutGet
-A tutor-student matching service with QnA board for interactivity and discovery! 
+A tutor-student matching service with QnA board for interactivity and discovery!
 
 # Installation & Running the app
 
