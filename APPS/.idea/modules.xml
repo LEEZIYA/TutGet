@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/APPS.iml" filepath="$PROJECT_DIR$/.idea/APPS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/discovery-server/discovery-server.iml" filepath="$PROJECT_DIR$/discovery-server/discovery-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service-listing/listing.iml" filepath="$PROJECT_DIR$/service-listing/listing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service-payment/payment.iml" filepath="$PROJECT_DIR$/service-payment/payment.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service-profiles/profiles.iml" filepath="$PROJECT_DIR$/service-profiles/profiles.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service-qna/qna.iml" filepath="$PROJECT_DIR$/service-qna/qna.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service-search/search.iml" filepath="$PROJECT_DIR$/service-search/search.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service-config/service-config.iml" filepath="$PROJECT_DIR$/service-config/service-config.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tutget-main/tutget-main.iml" filepath="$PROJECT_DIR$/tutget-main/tutget-main.iml" />
+    </modules>
+  </component>
+</project>
