@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/APPS.iml" filepath="$PROJECT_DIR$/.idea/APPS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SeleniumTest/SeleniumTest.iml" filepath="$PROJECT_DIR$/SeleniumTest/SeleniumTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/discovery-server/discovery-server.iml" filepath="$PROJECT_DIR$/discovery-server/discovery-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/service-listing/listing.iml" filepath="$PROJECT_DIR$/service-listing/listing.iml" />
       <module fileurl="file://$PROJECT_DIR$/service-payment/payment.iml" filepath="$PROJECT_DIR$/service-payment/payment.iml" />

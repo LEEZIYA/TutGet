@@ -14,6 +14,7 @@
         <module name="profiles" />
         <module name="payment" />
         <module name="listing" />
+        <module name="SeleniumTest" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -23,6 +24,7 @@
       <module name="profiles" target="17" />
       <module name="qna" target="17" />
       <module name="search" target="17" />
+      <module name="SeleniumTest" target="18" />
       <module name="service-config" target="17" />
       <module name="tutget-main" target="17" />
     </bytecodeTargetLevel>

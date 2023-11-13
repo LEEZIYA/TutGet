@@ -14,6 +14,7 @@
         <option value="$PROJECT_DIR$/service-qna/pom.xml" />
         <option value="$PROJECT_DIR$/service-search/pom.xml" />
         <option value="$PROJECT_DIR$/tutget-main/pom.xml" />
+        <option value="$PROJECT_DIR$/SeleniumTest/pom.xml" />
       </list>
     </option>
   </component>
