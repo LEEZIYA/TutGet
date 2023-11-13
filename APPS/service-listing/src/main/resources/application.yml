@@ -1,0 +1,21 @@
+server:
+    port: 8091
+spring:
+    application:
+        name: listing-service
+    # datasource:
+    #     username: admin
+    #     password: password
+    #     url: jdbc:sqlserver://listing-database.cw54gfk857lm.ap-southeast-2.rds.amazonaws.com:1433;encrypt=false;trustServerCertificate=true;
+    #     # url: jdbc:sqlserver://listing-database.cw54gfk857lm.ap-southeast-2.rds.amazonaws.com:1433;databaseName=listings;encrypt=false;trustServerCertificate=true;
+    #     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    # jpa:
+    #     hibernate:
+    #         ddl-auto: update
+    #     show-sql: true
+    #     properties:
+    #         hibernate:
+    #             dialect: org.hibernate.dialect.SQLServer2012Dialect
+    # hikari:
+    #   data-source-properties:
+    #     trustServerCertificate: true # Set this to true to trust the server certificate

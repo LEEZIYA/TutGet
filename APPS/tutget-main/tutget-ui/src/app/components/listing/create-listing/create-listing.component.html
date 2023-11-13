@@ -23,7 +23,7 @@
       </div>
       <div class="col-sm-4 mb-3">
         <div class="subtitle mb-3">Subject</div>
-        <select class="form-select" [(ngModel)]="createListingForm.acadSubject">
+        <select id="subj-dropdown" class="form-select" [(ngModel)]="createListingForm.acadSubject">
           <option value="">Please select</option>
           <option *ngFor="let subj of academicLvlSubjectList" [value]="subj">{{ academicSubjectList.get(subj) }}</option>
         </select>
@@ -59,27 +59,27 @@
           <tr *ngFor="let day of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']; let i = index;"
           [ngClass]="dayOfWeek[i] ? 'normal-row' : 'disabled-row'" >
             <td style="text-align: right; vertical-align: middle;" [ngStyle]="i === 6 ? {'border-radius': '0 0 0 0.5rem'} : {'border-radius': '0 0 0 0'}">
-              <input class="form-check-input" type="checkbox" [(ngModel)]="dayOfWeek[i]" (change)="computeEndTime(i); checkAll(i);"></td>
+              <input [attr.id]="'box-'+ i" class="form-check-input" type="checkbox" [(ngModel)]="dayOfWeek[i]" (change)="computeEndTime(i); checkAll(i);"></td>
             <td style="vertical-align: middle;">{{ day }}</td>
             <td (change)="computeEndTime(i)">
               <div style="display: flex">
-                <select class="form-select" style="width: auto; display: inline" [(ngModel)]="selectedHour[i]" [disabled]="!dayOfWeek[i]">
+                <select [attr.id]="'hour-'+ i" class="form-select" style="width: auto; display: inline" [(ngModel)]="selectedHour[i]" [disabled]="!dayOfWeek[i]">
                   <option *ngFor="let num of [1,2,3,4,5,6,7,8,9,10,11,12]"> {{ num }} </option>
                 </select>
                 &nbsp;<div class="mt-1">:</div>&nbsp;
-                <select class="form-select"  style="width: auto; display: inline" [(ngModel)]="selectedMin[i]" [disabled]="!dayOfWeek[i]">
+                <select [attr.id]="'min-'+ i" class="form-select"  style="width: auto; display: inline" [(ngModel)]="selectedMin[i]" [disabled]="!dayOfWeek[i]">
                   <option *ngFor="let min of ['00', '05', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55']"> {{ min }} </option>
                 </select>
               </div>
             </td>
             <td (change)="computeEndTime(i)">
-              <select class="form-select" style="width: auto; display: flex" [(ngModel)]="selectedAMPM[i]" [disabled]="!dayOfWeek[i]">
+              <select [attr.id]="'ampm-'+ i" class="form-select" style="width: auto; display: flex" [(ngModel)]="selectedAMPM[i]" [disabled]="!dayOfWeek[i]">
                 <option [value]="1">AM</option>
                 <option [value]="2">PM</option>
               </select>
             </td>
             <td (change)="computeEndTime(i)">
-              <select class="form-select" style="width: auto;" [(ngModel)]="selectedHourNum[i]" [disabled]="!dayOfWeek[i]">
+              <select [attr.id]="'hournum-'+ i" class="form-select" style="width: auto;" [(ngModel)]="selectedHourNum[i]" [disabled]="!dayOfWeek[i]">
                 <option *ngFor="let num of [1,2,3,4]">{{ num }}</option>
               </select>
             </td>
@@ -93,12 +93,12 @@
       <div class="row">
         <div class="col-12 mb-4 mt-0 mt-lg-5">
           <div class="subtitle mb-3">Start Date</div>
-          <input type="date" class="form-control" [(ngModel)]="createListingForm.startDate"/>
+          <input id="date-picker" type="date" class="form-control" [(ngModel)]="createListingForm.startDate"/>
           <small class="mt-2 ms-2 ms-sm-2 ms-md-2 ms-lg-0 ms-xl-2 text-danger" *ngIf="startDtErr">{{ startDtErr }}</small>
         </div>
         <div class="col-12 mb-4">
           <div class="subtitle mb-3">Frequency</div>
-          <select class="form-select" [(ngModel)]="createListingForm.frequency" (change)="computeTotal()">
+          <select id="freq-dropdown" class="form-select" [(ngModel)]="createListingForm.frequency" (change)="computeTotal()">
             <option value=-1 >Please select</option>
             <option *ngFor="let freq of frequencyList; let i = index;" [value]="i">{{ freq }}</option>
           </select>
@@ -106,7 +106,7 @@
         </div>
         <div class="col-12 mb-4">
           <div class="subtitle mb-3">Hourly Rate</div>
-          <div style="display: flex;"><span style="font-weight: 500; font-size: large; padding-top: 5px; color: rgb(59, 61, 151)">S$&nbsp;&nbsp;</span><input type="search" class="form-control" [(ngModel)]="hourlyRate" maxlength="3" (keyup)="onKeyup($event)"/></div>
+          <div style="display: flex;"><span style="font-weight: 500; font-size: large; padding-top: 5px; color: rgb(59, 61, 151)">S$&nbsp;&nbsp;</span><input type="search" id="hourly-rate" class="form-control" [(ngModel)]="hourlyRate" maxlength="3" (keyup)="onKeyup($event)"/></div>
           <small class="mt-2 text-danger" *ngIf="hourlyRateErr">{{ hourlyRateErr }}</small>
         </div>
         <div class="col-12 mb-4">

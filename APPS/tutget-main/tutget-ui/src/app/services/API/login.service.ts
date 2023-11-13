@@ -11,6 +11,7 @@ import { RestclientService } from '../restclient.service';
 // import { environment } from '@environments/environment';
 // import { User } from '@app/_models';
 import { CreateUserForm } from 'src/app/DTO/CreateUserForm';
+import { STUDENT, TEACHER, TEACHER2 } from 'src/app/components/listing/test-users';
 
 @Injectable({ providedIn: 'root' })
 export class LoginService {
@@ -56,4 +57,20 @@ export class LoginService {
         this.userSubject.next(null);
 //         this.router.navigate(['/account/login']);
     }
+
+
+    createUser(){
+      this.restclient.postjson('/users', STUDENT);
+      this.restclient.postjson('/users', TEACHER);
+      this.restclient.postjson('/users', TEACHER2);
+    }
+
+
+    getUser(id: string){
+      return this.restclient.getrawjson('/users/userId/' + id, false);
+    }
+
+
+
+
 }

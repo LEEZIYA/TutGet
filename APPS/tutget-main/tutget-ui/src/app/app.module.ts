@@ -13,8 +13,10 @@ import { SharedModule } from './shared/shared.module';
 import { CreateListingComponent } from './components/listing/create-listing/create-listing.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { ViewListingComponent } from './components/listing/view-listing/view-listing.component';
+import { ReleaseContactComponent } from './components/payment/release-contact/release-contact.component';
 import { QnaComponent } from './components/qna/qna-view/qna.component';
 import { QnaNewQuestionComponent } from './components/qna/qna-new-question/qna-new-question.component';
+import { SearchComponent } from './components/search/search.component';
 
 
 //import {CreateUserComponent} from './components/user/create-user/create-user.component';
@@ -34,11 +36,13 @@ import { LoginComponent } from './components/user/login/login.component';
     CreateListingComponent,
     PaymentComponent,
     ViewListingComponent,
+    ReleaseContactComponent,
 
     //CreateUserComponent,
 //     ProfileComponent,
-    LoginComponent
+    LoginComponent,
 
+    SearchComponent
   ],
   imports: [
     BrowserModule,

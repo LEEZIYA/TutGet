@@ -3,7 +3,6 @@ package com.tutget.tutgetmain.service;
 import com.tutget.tutgetmain.model.AllListing;
 import com.tutget.tutgetmain.model.Listing;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 

@@ -1,0 +1,92 @@
+
+.checkbox-container {
+  display: inline-block;
+}
+
+.table-head th {
+  background-color: rgb(17, 56, 145);
+  color: white;
+  font-weight: 500;
+  vertical-align: middle;
+}
+
+.disabled-row td {
+  background-color: #e9ecef;
+  color: #949494;
+  transition: 0.3s;
+}
+
+select:disabled {
+  color: #949494;
+  transition: 0.3s;
+}
+
+select {
+  transition: 0.3s;
+}
+
+.normal-row td {
+  transition: 0.3s;
+}
+
+.table-container {
+  overflow: auto;
+}
+
+.disabled-section {
+  background-color: #f0f0f0; /* Set a light gray background color */
+  pointer-events: none; /* Disable pointer events for elements in the section */
+  opacity: 0.6; /* Reduce the opacity to visually gray out the section */
+}
+
+.toggle-button {
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #ccc; /* Default background color for inactive buttons */
+  color: #333; /* Default text color for inactive buttons */
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.toggle-button.active {
+  background-color: #007bff; /* Background color for active buttons */
+  color: #fff; /* Text color for active buttons */
+}
+
+/* Left Column */
+.left-column {
+  width: 50%; /* Adjust the width as needed */
+  float: left; /* Float the left column to the left */
+  padding: 10px; /* Add padding as needed */
+  /* Other left column styles */
+}
+
+/* Right Column */
+.right-column {
+  width: 50%; /* Adjust the width as needed */
+  float: left; /* Float the right column to the left */
+  padding: 10px; /* Add padding as needed */
+  /* Other right column styles */
+}
+
+.bottom-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  text-align: center;
+  width: 100%;
+  /* Other styles as needed */
+}
+
+.anchorLink{
+  cursor: pointer;
+}
+
+th{
+  background-color: rgb(17, 56, 145);
+  color: white;
+  font-weight: 500;
+  vertical-align: middle;
+}

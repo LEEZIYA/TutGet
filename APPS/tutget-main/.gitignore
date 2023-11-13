@@ -33,4 +33,4 @@ build/
 ### VS Code ###
 .vscode/
 
-tutget-ui/.angular/cache/ 
+!**/tutget-ui/.angular/cache/ 

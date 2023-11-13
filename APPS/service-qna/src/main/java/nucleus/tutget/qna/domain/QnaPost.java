@@ -3,7 +3,6 @@ package nucleus.tutget.qna.domain;
 import java.time.LocalDate;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 

@@ -3,12 +3,14 @@ package nucleus.tutget.service.listing.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
+import javax.persistence.Table;
 
 import java.math.BigInteger;
 import java.sql.Date;
 import java.util.UUID;
 
 @Entity
+@Table(name= "listings")
 public class Listing {
 
     @Id
@@ -30,12 +32,13 @@ public class Listing {
     private String requests;
 
     private String assignedTutorId;
+    private int computedTotal;
 
     public Listing(){
-
+        
     }
 
-    public Listing(String id, String acadLvl, String acadSubject, String postalCode, Date postDate, String dayOfWeek, int frequency, Date startDate, int hourlyRate, String description, int[] selectedHour, int[] selectedMin, String selectedHourNum, String userId, String status, String requests, String assignedTutorId) {
+    public Listing(String id, String acadLvl, String acadSubject, String postalCode, Date postDate, String dayOfWeek, int frequency, Date startDate, int hourlyRate, String description, int[] selectedHour, int[] selectedMin, String selectedHourNum, String userId, String status, String requests, String assignedTutorId, int computedTotal) {
         this.id = id;
         this.acadLvl = acadLvl;
         this.acadSubject = acadSubject;
@@ -53,6 +56,15 @@ public class Listing {
         this.status = status;
         this.requests = requests;
         this.assignedTutorId = assignedTutorId;
+        this.computedTotal = computedTotal;
+    }
+
+    public int getComputedTotal() {
+        return computedTotal;
+    }
+
+    public void setComputedTotal(int computedTotal) {
+        this.computedTotal = computedTotal;
     }
 
     public String getId() {

@@ -9,6 +9,7 @@ import { ACADEMICLEVELIDLIST, ACADEMICSUBJECTIDLIST } from 'src/app/utilities/co
 import { Constants } from 'src/app/utilities/constants';
 import { DialogComponent } from 'src/app/utilities/dialog/dialog.component';
 import { STUDENT, TEACHER, TEACHER2 } from '../test-users';
+import { LoginService } from 'src/app/services/API/login.service';
 
 @Component({
   selector: 'app-view-listing',
@@ -36,7 +37,7 @@ export class ViewListingComponent implements OnInit {
   enableAd: boolean = false;
 
   listingOwner: any;
-  activeUser: any = STUDENT;
+  activeUser: any;
   listingRights: boolean = false;
 
   requested: boolean = false;
@@ -46,10 +47,11 @@ export class ViewListingComponent implements OnInit {
   assignedATutor: boolean = false;
 
 
-  constructor(private restClient: RestclientService, private router: Router, private activatedRoute: ActivatedRoute, private listingService: ListingService, private dialog: MatDialog) { }
+  constructor(private restClient: RestclientService, private router: Router, private activatedRoute: ActivatedRoute, private listingService: ListingService, private dialog: MatDialog,
+    private loginService: LoginService) { }
 
   ngOnInit() {
-
+    this.loginService.user.subscribe(user => this.activeUser = user);
     this.restClient.getrawjson('/ad', false)
       .then((res)=>{
         this.enableAd = res;
@@ -62,59 +64,63 @@ export class ViewListingComponent implements OnInit {
               // this.id = params['id'];
               this.createListingForm = res;
 
-              //call user service or get from localstorage after login to get user object
-              //using this.createListingForm.userID
-              this.listingOwner = STUDENT;
+               this.loginService.getUser(res.userId).then((res) => {
+                if(res){
+                  this.listingOwner = res;
 
-              this.requestedUsers = this.createListingForm.requests.split(",");
-              this.requestedUsers.shift();
+                  this.requestedUsers = this.createListingForm.requests.split(",");
+                  this.requestedUsers.shift();
 
 
-              if(this.activeUser.userID == this.listingOwner.userID ){
-                this.listingRights = true;
-              } else {
-                if(this.requestedUsers.includes(this.activeUser.userID)){
-                  this.requested = true;
+                  if(this.activeUser.userID == this.listingOwner.userID ){
+                    this.listingRights = true;
+                  } else {
+                    if(this.requestedUsers.includes(this.activeUser.userID)){
+                      this.requested = true;
+                    }
+                  }
+
+                  this.academicLvlLabel = this.academicLvlList.get(this.createListingForm.acadLvl);
+                  this.academicSubjectLabel = this.academicSubjectList.get(this.createListingForm.acadSubject);
+
+                  this.restClient.getrawjson(Constants.oneMapURLStart + this.createListingForm.postalCode + Constants.oneMapURLEnd, true)
+                  .then((res) => {
+                    this.address = res.results[0].ADDRESS;
+                  })
+
+                  for(let i = 0; i < 7; i++){
+                    if(this.createListingForm.dayOfWeek[i] === "1"){
+                      let day = this.dayOfWeek[i];
+                      let hour = this.createListingForm.selectedHour[i];
+                      let hourToDisplay = hour > 12 ? hour - 12 : hour;
+                      let min = this.createListingForm.selectedMin[i];
+                      let minToDisplay;
+                      if(min == 0){
+                        minToDisplay = '00'
+                      } else if (min == 5){
+                        minToDisplay = '05'
+                      } else {
+                        minToDisplay = this.createListingForm.selectedMin[i].toString();
+                      }
+                      let ampm = ((hour >= 12) && (hour != 24)) ? 'PM' : 'AM';
+                      let startTime = hourToDisplay.toString() + ':' + minToDisplay + ' ' + ampm;
+                      let startDayTime = day + ' ' + startTime;
+
+                      let startDate = new Date(2023, 8, 11, hour, Number(minToDisplay));
+                      startDate.setTime(startDate.getTime() + (Number(this.createListingForm.selectedHourNum[i]) * 60 * 60 * 1000));
+                      let endTime = startDate.toLocaleTimeString([], {timeStyle: 'short'});
+
+                      this.schedule += startDayTime + ' - ' + endTime + '\n';
+                    }
+
+                    const datepipe: DatePipe = new DatePipe('en-US')
+                    this.startDate = datepipe.transform(this.createListingForm.startDate, 'd MMMM y (EEEE)');
+
+                  }
+
                 }
-              }
-
-              this.academicLvlLabel = this.academicLvlList.get(this.createListingForm.acadLvl);
-              this.academicSubjectLabel = this.academicSubjectList.get(this.createListingForm.acadSubject);
-
-              this.restClient.getrawjson(Constants.oneMapURLStart + this.createListingForm.postalCode + Constants.oneMapURLEnd, true)
-              .then((res) => {
-                this.address = res.results[0].ADDRESS;
               })
 
-              for(let i = 0; i < 7; i++){
-                if(this.createListingForm.dayOfWeek[i] === "1"){
-                  let day = this.dayOfWeek[i];
-                  let hour = this.createListingForm.selectedHour[i];
-                  let hourToDisplay = hour > 12 ? hour - 12 : hour;
-                  let min = this.createListingForm.selectedMin[i];
-                  let minToDisplay;
-                  if(min == 0){
-                    minToDisplay = '00'
-                  } else if (min == 5){
-                    minToDisplay = '05'
-                  } else {
-                    minToDisplay = this.createListingForm.selectedMin[i].toString();
-                  }
-                  let ampm = ((hour >= 12) && (hour != 24)) ? 'PM' : 'AM';
-                  let startTime = hourToDisplay.toString() + ':' + minToDisplay + ' ' + ampm;
-                  let startDayTime = day + ' ' + startTime;
-
-                  let startDate = new Date(2023, 8, 11, hour, Number(minToDisplay));
-                  startDate.setTime(startDate.getTime() + (Number(this.createListingForm.selectedHourNum[i]) * 60 * 60 * 1000));
-                  let endTime = startDate.toLocaleTimeString([], {timeStyle: 'short'});
-
-                  this.schedule += startDayTime + ' - ' + endTime + '\n';
-                }
-
-                const datepipe: DatePipe = new DatePipe('en-US')
-                this.startDate = datepipe.transform(this.createListingForm.startDate, 'd MMMM y (EEEE)');
-
-              }
 
             } else {
               this.router.navigate(['']);
@@ -145,6 +151,7 @@ export class ViewListingComponent implements OnInit {
   deleteListing(){
     const dialogConfig = new MatDialogConfig();
     this.injectDialogConfig(dialogConfig);
+    console.log('This shows my createListingForm', this.createListingForm);
     dialogConfig.data = {para: 'Are you sure to delete this listing?'};
     const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((result) => {
@@ -232,7 +239,7 @@ export class ViewListingComponent implements OnInit {
   }
 
   createPayment(){
-    this.router.navigate(['payment'])
+    this.router.navigate(['payment', this.createListingForm.id, this.schedule])
   }
 
 
