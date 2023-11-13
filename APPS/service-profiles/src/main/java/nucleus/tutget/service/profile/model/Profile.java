@@ -21,6 +21,17 @@ public class Profile {
     private String phoneNumber;
     private String billingAddress;
 
+
+    public Boolean getAuthenticateStatus() {
+        return authenticateStatus;
+    }
+
+    public void setAuthenticateStatus(Boolean authenticateStatus) {
+        this.authenticateStatus = authenticateStatus;
+    }
+
+    private Boolean authenticateStatus;
+
     public String getPostalCode() {
         return postalCode;
     }
@@ -34,6 +45,7 @@ public class Profile {
     //profile pic
 
     public Profile() {
+        this.authenticateStatus = false;
     }
 
     public Profile(String id, String acadLvl, String userID, String password, String userType, String firstName, String lastName, String phoneNumber, String billingAddress, String description) {
@@ -47,6 +59,7 @@ public class Profile {
         this.phoneNumber = phoneNumber;
         this.billingAddress = billingAddress;
         this.description = description;
+        this.authenticateStatus = false;
 
     }
 

@@ -39,6 +39,11 @@ public class Controller {
         return profileService.getProfileByUserID(userID);
     }
 
+    @PostMapping("/users/login")
+    public Profile userLogin(@RequestBody Profile profile){
+        return profileService.login(profile);
+    }
+
     @PostMapping("/users")
     public Profile addUser(@RequestBody Profile profile){
         return profileService.addProfile(profile);

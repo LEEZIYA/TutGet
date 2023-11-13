@@ -15,9 +15,22 @@ public class Profile {
 
     private String postalCode;
     private String description;
+    private Boolean authenticateStatus;
+
+
+    public Boolean getAuthenticateStatus() {
+        return authenticateStatus;
+    }
+
+    public void setAuthenticateStatus(Boolean authenticateStatus) {
+        this.authenticateStatus = authenticateStatus;
+    }
+
+
 
 
     public Profile() {
+        this.authenticateStatus = false;
     }
 
     public Profile(String id, String acadLvl, String userID, String password, String userType, String firstName, String lastName, String phoneNumber, String billingAddress, String postalCode, String description) {
@@ -32,6 +45,7 @@ public class Profile {
         this.billingAddress = billingAddress;
         this.postalCode = postalCode;
         this.description = description;
+        this.authenticateStatus = false;
     }
 
     public String getId() {

@@ -32,10 +32,17 @@ public class ProfileService {
         if(loginProfile.getUserID()==null){
             return loginProfile;
         }
-        profile = restTemplate.getForObject(microserviceURL + "/userId/" + loginProfile.getUserID(), Profile.class);
+        profile = restTemplate.postForObject(microserviceURL + "/login", loginProfile ,Profile.class);
 //        profile = profilelist.getProfileList().get(0);
-        if (profile!= null && profile.getPassword()!=null && profile.getPassword().equals(loginProfile.getPassword())) {
+
+        if (profile.getAuthenticateStatus()) {
             return profile;
+
+//        profile = restTemplate.getForObject(microserviceURL + "/userId/" + loginProfile.getUserID(), Profile.class);
+////        profile = profilelist.getProfileList().get(0);
+//
+//        if (profile!= null && profile.getPassword()!=null && profile.getPassword().equals(loginProfile.getPassword())) {
+//            return profile;
         } else {
             return loginProfile;
         }
