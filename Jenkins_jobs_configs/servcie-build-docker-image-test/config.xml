@@ -1,0 +1,96 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@1348.v32a_a_f150910e">
+  <actions>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@2.2144.v077a_d1928a_40"/>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@2.2144.v077a_d1928a_40">
+      <jobProperties/>
+      <triggers/>
+      <parameters/>
+      <options/>
+    </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
+  </actions>
+  <description>build dockerfile and push to dockerhub</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>1</daysToKeep>
+        <numToKeep>-1</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>module</name>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>tutget-main</string>
+              <string>tutget-main/tutget-ui</string>
+              <string>service-qna</string>
+              <string>service-profiles</string>
+              <string>service-payment</string>
+              <string>service-listing</string>
+              <string>service-config</string>
+              <string>service-auth</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>branch</name>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>main</string>
+              <string>dev</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@3802.vd42b_fcf00b_a_c">
+    <script>pipeline {
+  environment {
+    registry = &quot;liziyang624/tutget&quot;
+    registryCredential = &apos;dockerhub&apos;
+    dockerImage = &apos;&apos;
+  }
+  agent any
+  stages {
+    stage(&apos;Cloning Git&apos;) {
+      steps {
+        git branch: &apos;${params.branch}&apos;, url:&apos;https://github.com/sigmund-c/TutGet.git&apos;
+      }
+    }
+    stage(&apos;Building image&apos;) {
+      steps{
+        script {
+          dir(&apos;APPS/${params.module}/&apos;) { 
+            dockerImage = docker.build registry +&quot;${params.module}&quot; + &quot;:$BUILD_NUMBER&quot;
+          }
+        }
+      }
+    }
+    stage(&apos;Push Image&apos;) {
+      steps{
+        script {
+          docker.withRegistry( &apos;&apos;, registryCredential ) {
+            dockerImage.push()
+          }
+        }
+      }
+    }
+    stage(&apos;Remove Unused docker image&apos;) {
+      steps{
+        sh &quot;docker rmi $registry&quot;+&quot;${params.module}&quot;+&quot;:$BUILD_NUMBER&quot;
+      }
+    }
+
+  }
+}</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>
