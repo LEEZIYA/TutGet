@@ -1,5 +1,5 @@
-<app-header></app-header>
-  <section class="container">
+<app-header [showMenu]="localStorageService.getShowMenu()" [isStudent]="localStorageService.getIsStud()"></app-header>
+  <section>
     <router-outlet></router-outlet>
   </section>
-<app-footer class="mt-auto"></app-footer>
+<app-footer class="mt-auto" style="background-color: #375998;"></app-footer>

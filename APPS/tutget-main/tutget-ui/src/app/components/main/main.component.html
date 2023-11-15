@@ -1,6 +1,84 @@
-<div class="mt-4">
-  <p>Find your tutor today!</p>
+<!-- <div class="mt-4">
+  <p>Find your tutor today!!!</p>
 </div>
-<div>
-  <img src="./assets/images/istockphoto.jpeg">
+<div class="background-image">
+  <img class="background-image" src="./assets/images/istockphoto.jpeg">
+</div> -->
+<!DOCTYPE html>
+<html>
+<head>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<style>
+.main-container,h1,h2{font-family: "Raleway", sans-serif}
+.main-container, html {height: 100%}
+p {line-height: 2}
+.bgimg, .bgimg2 {
+  min-height: 100%;
+  background-position: center;
+  background-size: cover;
+}
+.bgimg {background-image: url("./assets/images/istockphoto.jpeg")}
+.bgimg2 {background-image: url("./assets/images/istockphoto.jpeg")}
+html::-webkit-scrollbar {
+  display: none;
+}
+html{
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.w3-jumbo{
+	  -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: rgb(32, 71, 161);
+    font-weight: 900;
+    font-family: arial;
+}
+
+</style>
+</head>
+<div class="main-container">
+
+<!-- Header / Home-->
+<header class="w3-display-container w3-wide bgimg w3-grayscale-min" id="home">
+  <div class="w3-display-middle w3-text-white w3-center">
+    <h1 *ngIf="!showMenu" class="w3-jumbo">TutGet, your trusted tuition platform.</h1>
+    <h1 *ngIf="showMenu" class="w3-jumbo">Welcome back, {{ activeUser?.firstName }}!</h1>
+  </div>
+</header>
+
+
+<!-- About / Jane And John -->
+<div class="w3-container w3-padding-64 w3-grayscale-min" style="background-color: rgb(71, 113, 211);" id="us">
+  <div class="w3-content">
+    <h1 class="w3-center" style="color: white;"><b>About us</b></h1>
+    <br><br>
+    <p style="color: white"><i>TutGet was established in 2023 with the mission of matching tuition seekers with suitable tutors. We aim to transform Singapore's tuition landscape.
+      We want to improve the quality of tutor-student match, where quality is defined by a high suitability of the tutor's teaching style for each unique student.
+      In matching tutors to students, TutGet allows students to post academic questions for subjects, while prospective tutors can post their responses.
+      This allows students to better understand a prospective tutor's teaching styles before requesting for their services.</i>
+    </p><br>
+  </div>
 </div>
+
+
+
+
+<!-- RSVP section -->
+<div class="w3-container w3-padding-64 w3-center w3-wide" style="background-color: rgb(207, 221, 255);" id="rsvp">
+  <h1>Join us in transforming education.</h1>
+  <p class="w3-large">&nbsp;</p>
+  <p class="w3-xlarge">&nbsp;</p>
+  <p class="w3-xlarge">&nbsp;</p>
+  <p class="w3-xlarge">&nbsp;</p>
+
+
+
+</div>
+
+
+
+</div>
+</html>

@@ -1,0 +1,86 @@
+<!-- <div class="row row-cols-1 justify-content-center">
+  <div class="col-sm-8 mb-3 mt-2">
+    <div class="title mb-3">Welcome to login page!</div>
+  </div>
+  <div class="col-sm-8 mb-3 mt-2" *ngIf="userForm">
+    <div class="title mb-3">Hello {{userForm!.firstName}}!</div>
+  </div>
+</div>
+<div class="container-fluid" *ngIf="loginSuccess">
+  <div class="row row-cols-1 justify-content-center">
+    <div class="col justify-content-center mt-3">
+      <div class="title" style="text-align: center;">
+        <div class="tick-container">✔</div>&nbsp;
+        <div class="mt-4" style="font-size: x-large">{{ loginSuccess }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid" *ngIf="loginErr">
+  <div class="row row-cols-1 justify-content-center">
+    <div class="col justify-content-center mt-3">
+      <div class="title" style="text-align: center;">
+
+        <div class="mt-4" style="font-size: x-large">{{ loginErr }}</div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+<!-- <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)" *ngIf="!userForm" >
+  <div>
+    <div *ngIf="invalid">
+      Please provide user name and password.
+    </div>
+    <label>
+      User Name:
+      <input formControlName="userName" placeholder="StudentSam1" value="StudentSam1">
+    </label>
+  </div>
+  <div>
+    <label>
+      Password
+      <input type="password"  formControlName="password" placeholder="pass2word" value="pass2word">
+    </label>
+  </div>
+  <app-single-button buttonTitle="Login" type="submit" [rounderStyle]="true">Login</app-single-button>
+</form>
+
+<div class="col-sm-8 mb-3" style="text-align: right;" *ngIf="userForm">
+  <app-single-button buttonTitle="LogOut" (eventEmit)="logOut()" [rounderStyle]="true"></app-single-button>
+</div> -->
+
+
+
+<div class="container mt-5 justify-content-center">
+  <div class="row">
+    <div class="col-12 mb-4 title">
+      Login
+    </div>
+    <div class="col-12 mb-4 title" *ngIf="loginErr" style="color: red">
+      {{ loginErr }}
+    </div>
+  </div>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)">
+  <div class="row">
+    <div *ngIf="invalid" class="mb-3">
+      <span class="text-danger">Please provide username and password.</span>
+    </div>
+    <div class="col-md-4 mb-3">
+      <div class="label"><span style="color: red">*</span>Username:</div>
+      <input id="userName" formControlName="userName" class="form-control" autocomplete="off" type="text"/>
+    </div>
+    <div class="col-md-4 mb-3">
+      <div class="label"><span style="color: red">*</span>Password:</div>
+      <input id="password" formControlName="password" class="form-control" autocomplete="off" type="password" maxlength="20"/>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-10" style="text-align: right;">
+      <app-single-button buttonTitle="Login" type="submit" [rounderStyle]="true">Login</app-single-button>
+    </div>
+  </div>
+  </form>
+</div>

@@ -1,1 +1,30 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+.title{
+  color: #26608c;
+  font-weight: 750;
+  font-size: larger;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.subtitle{
+  font-weight: 500;
+  font-size: 105%;
+  color: rgb(59, 61, 151);
+}
+
+.tick-container{
+  padding: 0;
+  margin-top: 20px;
+  display: inline-flex;
+  height: 80px;
+  width: 80px;
+  align-items: center;
+  background-color:  #375998;
+  color: white;
+  border-radius: 40px;
+  font-size: 50px;
+  align-items: center;
+  padding-left: 18px;
+
+}

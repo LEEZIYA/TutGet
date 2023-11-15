@@ -1,0 +1,61 @@
+<div class="container pt-5">
+    <a (click)="backToQnaBoards()" class="text-blue">< Back to QnA Boards</a>
+    <div class="py-4">
+            <h1>{{ question?.questionTitle }}</h1>
+            <p>{{ question?.qnaString }}</p>
+            <p>{{ question?.posterName }} asked on {{ question?.postDate }}</p>
+            
+            <div class="question-tags">
+                <span class="badge bg-primary">{{ question?.acadLvl }}</span>
+                <span class="badge bg-primary">{{ question?.acadSubj }}</span>
+            </div>
+    </div>
+    <div class="py-4">
+        <ul class="nav nav-pills">
+            <li class="nav-item" *ngFor="let sortOption of tabSortingOptions">
+              <a class="nav-link" [class.active]="sortOption === selectedTabSort" (click)="onSelectTabSort(sortOption)">{{ sortOption.displayName }}</a>
+            </li>
+          </ul>
+    </div>
+
+    <ul>
+        <li *ngFor="let answer of answers">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-2">
+                            <p>
+                                Votes: {{ answer.upvotes - answer.downvotes }}
+                            </p>
+                        </div>
+                        <div class="col-10">
+                            <p>{{ answer.qnaString }}</p>
+                            <p>{{ answer.posterName }} answered on {{ answer.postDate }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <button type="button" (click)="onViewQuestion(question)" [class.selected]="question === selectedQuestion">View Question</button> -->
+        </li>
+    </ul>
+</div>
+
+
+<div class="container pt-5">
+    <h2>Post Your Answer</h2>
+    <div class="form-group">
+        <div class="py-2">
+            <textarea class="form-control" id="questionBody" rows="3" [(ngModel)]="createAnswerForm.qnaString" placeholder="Your answer here..."></textarea>
+        </div>
+
+        <br>
+        
+        <button type="submit" class="btn btn-primary float-end" (click)="submit()">
+            <i class="fa-solid fa-plus"></i> Post Answer
+        </button>
+    </div>
+    <br>
+    <!-- <app-qna-view-question [question]="selectedQuestion"></app-qna-view-question> -->
+</div>
+
+  
