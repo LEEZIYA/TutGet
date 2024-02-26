@@ -1,0 +1,30 @@
+<div class="container-fluid mt-4" >
+  <div class="row row-cols-1 justify-content-center">
+    <div class="col-sm-8 mb-3 mt-2">
+      <div class="title mb-3">Create Account</div>
+    </div>
+  </div>
+
+  <div class="row row-cols-1 justify-content-center">
+
+    <div class="col-sm-4 mb-3">
+      <div class="subtitle mb-3">Academic Level</div>
+      <input type="search" class="form-control" [(ngModel)]="academicLvlLabel"  disabled/>
+      <!-- <select class="form-control" [(ngModel)]="createListingForm.acadLvl" disabled>
+        <option *ngFor="let acadLvl of academicLvlList" [value]="acadLvl.value">{{ acadLvl.label }}</option>
+      </select> -->
+    </div>
+    <div class="col-sm-4 mb-3">
+      <div class="subtitle mb-3">User Type</div>
+      <select class="form-select" [(ngModel)]="createUserForm.userType">
+        <option value="">Please select</option>
+        <option *ngFor="let typ of userTypeList" [value]="typ">{{ userTypeList.get(typ) }}</option>
+      </select>
+      <small class="mt-2 ms-2 text-danger" *ngIf="typeErr">{{ typeErr }}</small>
+    </div>
+
+  </div>
+
+
+
+  </div>
