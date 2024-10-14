@@ -7,7 +7,8 @@ import { firstValueFrom } from 'rxjs';
 })
 export class RestclientService {
 
-  BASE_URL: string = '/api'
+  // BASE_URL: string = '/api';
+  BASE_URL: string = 'http://localhost:8069/api';
   external: boolean = false;
 
   httpOptions = {
