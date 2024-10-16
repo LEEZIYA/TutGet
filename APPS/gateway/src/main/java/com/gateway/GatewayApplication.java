@@ -16,10 +16,9 @@ public class GatewayApplication {
 	@Bean
 	public RouteLocator routerBuilder(RouteLocatorBuilder routeLocatorBuilder){
 		return routeLocatorBuilder.routes()
-				.route(
-						"tutget-main",
-						route -> route
-								.path("/**")
+				.route("tutget-main",
+						r -> r.path("/**")
+								.filters(f -> f.circuitBreaker(c -> c.setName("tutget-main").setFallbackUri("forward:/http://localhost:8080")))
 								.uri("lb://tutget-main")
 				)
 				.build();
