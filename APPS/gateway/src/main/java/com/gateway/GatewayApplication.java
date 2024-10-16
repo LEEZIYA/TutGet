@@ -16,8 +16,12 @@ public class GatewayApplication {
 	@Bean
 	public RouteLocator routerBuilder(RouteLocatorBuilder routeLocatorBuilder){
 		return routeLocatorBuilder.routes()
-				.route("tutget-main",r->r.path("/**")
-						.uri("http://localhost:8080/"))
+				.route(
+						"tutget-main",
+						route -> route
+								.path("/**")
+								.uri("lb://tutget-main")
+				)
 				.build();
 	}
 }
