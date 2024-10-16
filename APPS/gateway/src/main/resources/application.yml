@@ -1,0 +1,26 @@
+server:
+  port: 8069
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      filter:
+        request-rate-limiter:
+          deny-empty-key: false
+      routes:
+      - id: tutget-main
+        uri: lb://tutget-main
+        predicates:
+        - Path=/**
+        filters:
+          - name: CircuitBreaker
+            args:
+              name: tutget-main-cb
+              fallbackUri: forward:/http://localhost:8080
+          - name: RequestRateLimiter
+            args:
+              redis-rate-limiter.replenishRate: 10
+              redis-rate-limiter.burstCapacity: 20
+              redis-rate-limiter.requestedTokens: 1
