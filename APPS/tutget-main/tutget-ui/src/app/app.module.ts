@@ -18,11 +18,11 @@ import { QnaComponent } from './components/qna/qna-view/qna.component';
 import { QnaNewQuestionComponent } from './components/qna/qna-new-question/qna-new-question.component';
 import { SearchComponent } from './components/search/search.component';
 
-
+import { HttpClientXsrfModule } from '@angular/common/http';
+import { importProvidersFrom } from '@angular/core';
 //import {CreateUserComponent} from './components/user/create-user/create-user.component';
 import { LoginComponent } from './components/user/login/login.component';
 // import { ProfileComponent } from './components/user/profile/profile.component';
-
 
 @NgModule({
   declarations: [
@@ -53,7 +53,13 @@ import { LoginComponent } from './components/user/login/login.component';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    // Csrf token
+    importProvidersFrom(HttpClientModule),
+    importProvidersFrom(
+      HttpClientXsrfModule.withOptions()
+    ),
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
