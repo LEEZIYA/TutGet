@@ -133,10 +133,16 @@ export class CreateListingComponent {
     //200640
     //call userservice or get from localstorage after login to get user postal code
 
-    this.restClient.getrawjson(Constants.oneMapURLStart + this.createListingForm.postalCode + Constants.oneMapURLEnd, true)
-          .then((res) => {
-            this.address = res.results[0].ADDRESS;
+    this.loginService.getUser('unusedIdGetFromContext').then( res => {
+          this.createListingForm.postalCode = res.postalCode
+
+          this.restClient.getrawjson(Constants.oneMapURLStart + this.createListingForm.postalCode + Constants.oneMapURLEnd, true)
+            .then((res) => {
+              this.address = res.results[0].ADDRESS;
           })
+    });
+
+
 
   }
 

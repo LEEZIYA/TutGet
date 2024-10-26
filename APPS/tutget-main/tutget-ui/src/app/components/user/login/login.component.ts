@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
         private router: Router
     ) {
       this.userForm = null;
-      this.loginService.user.subscribe(user => this.userForm = user);
+//       this.loginService.user.subscribe(user => this.userForm = user);
 
     }
 
@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
           password: ['', Validators.required],
         });
 
-        this.loginService.createUser();
+//         this.loginService.createUser();
         this.clearStorage();
         this.localStorageService.setShowMenu(false);
         this.localStorageService.setIsStudent(false);
@@ -81,21 +81,26 @@ export class LoginComponent implements OnInit {
         this.loginService.login(loginUserForm)
             .pipe(first())
             .subscribe({
-                next: (res) => {
-                    if(res.id != null&& res.id !=''){
-                        console.log('login verified');
-                        console.log(res.id);
+                next: (res: any) => {
+                    if(res && res.status === 200){
+//                         console.log('login verified');
+//                         console.log(res.id);
                         this.loginSuccess = 'You have logged in as user';
                         this.loginErr = '';
-                        if(res.userType == 'S'){
+
+
+
+                        if(res.body.userType === 'S'){
                           this.localStorageService.setIsStudent(true);
                         }
+
+
                         this.localStorageService.setShowMenu(true);
                         this.router.navigate(['']);
-//                         this.userForm = res;
-//                         this.userForm2 = this.loginService.userValue;
+// //                         this.userForm = res;
+// //                         this.userForm2 = this.loginService.userValue;
                     }
-                    else{
+                    else {
                       this.loginErr = 'Login failed!';
 
                       this.loginService.logout();

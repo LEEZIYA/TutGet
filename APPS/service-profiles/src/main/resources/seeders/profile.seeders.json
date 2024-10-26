@@ -1,0 +1,38 @@
+[
+  {
+    "acadLvl": "J1",
+    "userID": "<script>alert('HI')</script>",
+    "password": "password",
+    "userType": "S",
+    "firstName": "Sam",
+    "lastName": "See",
+    "phoneNumber": "99998888",
+    "billingAddress": "1 Singapore Avenue",
+    "postalCode": "138607",
+    "description": "JC student looking for weekly tutoring"
+  },
+  {
+    "acadLvl": "J1",
+    "userID": "TeacherTom",
+    "password": "password",
+    "userType": "T",
+    "firstName": "Tom",
+    "lastName": "Tan",
+    "phoneNumber": "1234567890",
+    "billingAddress": "Blk 123 Singapore",
+    "postalCode": "119615",
+    "description": "experienced Chinese tutor for JC"
+  },
+  {
+    "acadLvl":"J1",
+    "userID":"TeacherKen",
+    "password":"password",
+    "userType":"T",
+    "firstName":"Ken",
+    "lastName":"Lim",
+    "phoneNumber":"91234567",
+    "billingAddress":"Blk 144 Singapore",
+    "postalCode":"200640",
+    "description":"new tutor for JC"
+  }
+]

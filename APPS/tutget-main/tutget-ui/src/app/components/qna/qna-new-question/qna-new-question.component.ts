@@ -15,7 +15,7 @@ export class QnaNewQuestionComponent {
   academicLvlList: Map<String, String> = ACADEMICLEVELIDLIST;
   academicLvlSubjectList: Map<String, String[]> = ACADEMICLEVELSUBJECTLIST;
   academicSubjectList: Map<String, String> = ACADEMICSUBJECTIDLIST;
-  
+
   titleErr: string = '';
   acadLvlErr: string = '';
   acadSubjErr: string = '';
@@ -25,7 +25,7 @@ export class QnaNewQuestionComponent {
   readonly acadLvlEmptyErr: string = 'Please select an academic level';
   readonly acadSubjEmptyErr: string = 'Please select a subject';
   readonly descEmptyErr: string = 'Please input the question description';
-  
+
   constructor(private restClient: RestclientService, private router: Router, private activatedRoute: ActivatedRoute, private qnaService: QnaService) { }
 
   loadComponent(){
@@ -60,7 +60,7 @@ export class QnaNewQuestionComponent {
 
   validateFormHasError() {
     let hasErr = false;
-    
+
     if(!this.createQuestionForm.questionTitle){
       this.titleErr = this.titleEmptyErr;
       hasErr = true;
