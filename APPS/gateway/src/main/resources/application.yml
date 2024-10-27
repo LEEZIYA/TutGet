@@ -9,6 +9,23 @@ spring:
       filter:
         request-rate-limiter:
           deny-empty-key: false
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:4200"
+            allowCredentials: true
+            allowed-headers:
+              - Content-Type
+              - Accept
+              - X-Requested-With
+              - remember-me
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            maxAge: 3600
       routes:
       - id: tutget-main
         uri: lb://tutget-main
@@ -18,7 +35,7 @@ spring:
           - name: CircuitBreaker
             args:
               name: tutget-main-cb
-              fallbackUri: forward:/http://localhost:8080
+              fallbackUri: forward:/fallback
           - name: RequestRateLimiter
             args:
               redis-rate-limiter.replenishRate: 10
