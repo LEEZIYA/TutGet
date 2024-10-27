@@ -26,9 +26,10 @@ import { AuthComponent } from './components/auth/auth.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { LoginComponent } from './components/user/login/login.component';
 
+import { HttpClientXsrfModule } from '@angular/common/http';
+import { importProvidersFrom } from '@angular/core';
 //import {CreateUserComponent} from './components/user/create-user/create-user.component';
 // import { ProfileComponent } from './components/user/profile/profile.component';
-
 
 @NgModule({
   declarations: [
@@ -70,7 +71,12 @@ import { LoginComponent } from './components/user/login/login.component';
     }),
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+      // Csrf token
+      importProvidersFrom(HttpClientModule),
+      importProvidersFrom(
+        HttpClientXsrfModule.withOptions()
+      ),
   ],
   bootstrap: [AppComponent]
 })

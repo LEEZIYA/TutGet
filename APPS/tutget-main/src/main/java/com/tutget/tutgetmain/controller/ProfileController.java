@@ -1,21 +1,30 @@
 package com.tutget.tutgetmain.controller;
 
+import com.tutget.tutgetmain.model.profile.AuthResult;
 import com.tutget.tutgetmain.model.profile.Profile;
 import com.tutget.tutgetmain.model.profile.ProfileList;
 import com.tutget.tutgetmain.service.ProfileService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
 public class ProfileController {
+
+    private static final Logger logger = LoggerFactory.getLogger(ProfileController.class);
 
     @Autowired
     private ProfileService profileService;
@@ -27,17 +36,50 @@ public class ProfileController {
 
     @GetMapping("/users/{id}")
     public Profile getProfile(@PathVariable String id){
-        return profileService.getProfile(id);
+        System.out.println("id" + id);
+        String contextId = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
+        System.out.println("contextId" + contextId);
+        return profileService.getProfile(contextId);
     }
 
     @PostMapping("/users/login")
-    public Profile loginUser(@RequestBody Profile profile){
-        return profileService.login(profile);
+    public ResponseEntity<AuthResult> loginUser(@RequestBody Profile profile, HttpServletResponse response){
+        System.out.println("Profile: " + profile);
+        AuthResult loginResult = profileService.login(profile);
+
+        if (loginResult == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        Cookie authCookie = new Cookie("authCookie", loginResult.jwt());
+        authCookie.setMaxAge(60*60); // 1 hour
+        authCookie.setPath("/");
+        authCookie.setHttpOnly(true);
+        authCookie.setSecure(true);
+
+        response.addCookie(authCookie);
+        return ResponseEntity.ok(new AuthResult(null, loginResult.userType(), loginResult.acadLvl()));
+    }
+
+    @GetMapping("/users/logout")
+    public ResponseEntity<Void> logoutUser(HttpServletResponse response) {
+        Cookie authCookie = new Cookie("authCookie", null);
+        authCookie.setMaxAge(0); // 1 hour
+        authCookie.setPath("/");
+        authCookie.setHttpOnly(true);
+        authCookie.setSecure(true);
+
+        response.addCookie(authCookie);
+
+        return ResponseEntity.ok(null);
     }
 
     @GetMapping("/users/userId/{userID}")
     public Profile getProfileByUserID(@PathVariable String userID){
-        return profileService.getProfileByUserID(userID);
+        System.out.println("user id" + userID);
+        String contextId = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
+        System.out.println("contextId" + contextId);
+        return profileService.getProfile(contextId);
     }
 
     @PostMapping("/users")

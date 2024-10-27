@@ -86,6 +86,13 @@ public class ProfileService {
 
     public Profile addProfile(Profile profile) {
         profile.setPassword(passwordEncoder.encode(profile.getPassword()));
+        var existingProfile = profileRepository.findOneByUserID(profile.getUserID());
+
+        if (existingProfile != null) {
+            // Replace id with existing profile id if it already exists
+            profile.setId(existingProfile.getId());
+        }
+        System.out.println("Adding profile: " + profile);
         profileRepository.save(profile);
         return profile;
     }

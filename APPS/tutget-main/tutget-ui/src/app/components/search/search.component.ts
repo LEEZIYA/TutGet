@@ -45,13 +45,13 @@ export class SearchComponent {
   onSubmit() {
     const trimmedSearchQuery = this.searchQuery.trim();
 
-    if (trimmedSearchQuery === ''){
+    if (trimmedSearchQuery === 'invalidsearch'){
       alert("Please enter a valid search.");
     }else{
-      this.searchService.getSearchResult(trimmedSearchQuery)
+      this.searchService.getSearchResult(trimmedSearchQuery ? trimmedSearchQuery : null)
       .then((res)=>{this.searchResults = res.allListing; console.log(this.searchResults);});
     }
-    if (trimmedSearchQuery === ''){
+    if (trimmedSearchQuery === 'invalidsearch'){
       alert("Please enter a valid search.");
     }else{
       const requestData = {

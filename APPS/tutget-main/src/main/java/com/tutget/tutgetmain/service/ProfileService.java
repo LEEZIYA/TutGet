@@ -1,12 +1,18 @@
 package com.tutget.tutgetmain.service;
 
+import com.tutget.tutgetmain.model.profile.AuthResult;
 import com.tutget.tutgetmain.model.profile.ProfileList;
 import com.tutget.tutgetmain.model.profile.Profile;
+import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 
 @Service
@@ -17,6 +23,9 @@ public class ProfileService {
 
     private String microserviceURL = "http://profile-service/users";
 
+    @Value("${jjwt.key}")
+    private String jjwtKey;
+
     public List<Profile> getAllProfiles() {
         ProfileList profileList = restTemplate.getForObject(microserviceURL, ProfileList.class);
         return profileList.getProfileList();
@@ -26,27 +35,31 @@ public class ProfileService {
         return restTemplate.getForObject(microserviceURL + "/" + id, Profile.class);
     }
 
-    public Profile login(Profile loginProfile) {
-//        ProfileList profilelist;
+    public AuthResult login(Profile loginProfile) {
+        if (loginProfile.userID() == null) {
+            // return loginProfile
+            return null;
+        }
+
         Profile profile;
-        if(loginProfile.getUserID()==null){
-            return loginProfile;
-        }
         profile = restTemplate.postForObject(microserviceURL + "/login", loginProfile ,Profile.class);
-//        profile = profilelist.getProfileList().get(0);
+        // profile = profilelist.getProfileList().get(0);
+        // if (profile.getAuthenticateStatus()) {
+        //    return profile;
+//        System.out.println("Login jwt key: " + jjwtKey);
 
-        if (profile.getAuthenticateStatus()) {
-            return profile;
-
-//        profile = restTemplate.getForObject(microserviceURL + "/userId/" + loginProfile.getUserID(), Profile.class);
-////        profile = profilelist.getProfileList().get(0);
-//
-//        if (profile!= null && profile.getPassword()!=null && profile.getPassword().equals(loginProfile.getPassword())) {
-//            return profile;
-        } else {
-            return loginProfile;
+        if (profile != null && profile.authenticateStatus().equals("true")) {
+            System.out.println(profile.toString());
+            return new AuthResult(Jwts.builder()
+              .subject(profile.userID())
+              .claim("id", profile.id())
+              .issuer("TutGet")
+              .expiration(Date.from(LocalDateTime.now().plusHours(1L).atZone(ZoneId.systemDefault()).toInstant())) // 1 hour
+              .signWith(new SecretKeySpec(jjwtKey.getBytes(StandardCharsets.UTF_8), "HmacSHA256"))
+              .compact(), profile.userType(), profile.acadLvl());
         }
 
+        return null;
     }
 
 
