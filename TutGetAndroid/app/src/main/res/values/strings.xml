@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">TutGetAndroid</string>
+
+    <string name="login">Login</string>
+    <string name="loginFailed">Login Failed</string>
+    <string name="login_again">Try Login Again</string>
+    <string name="exit">Exit</string>
+    <string name="userName">User Name</string>
+    <string name="passWord">Password</string>
+    <string name="wrong_login">Either Username or Password is wrong</string>
+
+
+
+    <!--    buttons-->
+    <string name="post">Post</string>
+    <string name="New">New</string>
+    <string name="search">Search</string>
+    <string name="postList">Post Listing</string>
+    <!--    listing page-->
+    <string name="listingPageTitle">Post a new listing to find your private tutor!</string>
+    <string name="listingSubmitted">New listing submitted!</string>
+    <string name="listingAcadLvl">Academic Level</string>
+    <string name="listingSubject">Subject</string>
+    <string name="listingDescription">Description</string>
+    <string name="listingPostalCode">Postal code</string>
+    <string name="listingAddress">Address</string>
+    <string name="listingTiming">Day and Time</string>
+
+    <string name="listingTime">Timing</string>
+
+    <string name="bottom_navigation_add">Post Listing</string>
+    <string name="bottom_navigation_home">My Listing</string>
+    <string name="bottom_navigation_profile">Profile</string>
+    bottom_navigation_home
+
+</resources>
