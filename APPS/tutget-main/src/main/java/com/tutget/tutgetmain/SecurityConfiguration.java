@@ -89,6 +89,13 @@ final class CsrfCookieFilter extends OncePerRequestFilter {
         // Render the token value to a cookie by causing the deferred token to be loaded
         csrfToken.getToken();
 
+        // Cors before filter
+        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setHeader("Access-Control-Allow-Methods", "*");
+        response.setHeader("Access-Control-Allow-Headers", "*");
+        response.setHeader("Access-Control-Max-Age", "3600");
+
         filterChain.doFilter(request, response);
     }
 }

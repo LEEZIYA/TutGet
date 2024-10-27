@@ -16,7 +16,7 @@ public class QnaService {
     @Autowired
     private RestTemplate restTemplate;
 
-    private String microserviceURL = "http://qna-service/qna";
+    private String microserviceURL = "http://gateway/qna";
 
     public List<Question> getQuestions() {
         AllQuestion allQuestions = restTemplate.getForObject(microserviceURL + "/getQuestions", AllQuestion.class);

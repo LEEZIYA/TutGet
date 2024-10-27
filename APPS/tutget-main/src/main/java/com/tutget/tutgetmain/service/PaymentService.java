@@ -12,7 +12,7 @@ public class PaymentService {
     @Autowired
     private RestTemplate restTemplate;
 
-    private String microserviceURL = "http://payment-service/payment";
+    private String microserviceURL = "http://gateway/payment";
 
    
     public Listing getListingDetails(String id){

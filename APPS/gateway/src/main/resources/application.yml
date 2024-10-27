@@ -12,23 +12,84 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOrigins: "http://localhost:4200"
+            allowedOrigins: "http://localhost:9000"
             allowCredentials: true
             allowedHeaders: '*'
             allowedMethods: '*'
             maxAge: 3600
+        add-to-simple-url-handler-mapping: true
       routes:
-      - id: tutget-main
-        uri: lb://tutget-main
-        predicates:
-        - Path=/**
-        filters:
-          - name: CircuitBreaker
-            args:
-              name: tutget-main-cb
-              fallbackUri: forward:/fallback
-          - name: RequestRateLimiter
-            args:
-              redis-rate-limiter.replenishRate: 10
-              redis-rate-limiter.burstCapacity: 20
-              redis-rate-limiter.requestedTokens: 1
+        - id: listing-service
+          uri: lb://listing-service:8091
+          predicates:
+            - Path=/listings/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: listing-service-cb
+                fallbackUri: forward:/fallback
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+                redis-rate-limiter.requestedTokens: 1
+        - id: payment-service
+          uri: lb://payment-service:8092
+          predicates:
+            - Path=/payment/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: payment-service-cb
+                fallbackUri: forward:/fallback
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+                redis-rate-limiter.requestedTokens: 1
+        - id: profile-service
+          uri: lb://profile-service:8093
+          predicates:
+            - Path=/users/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: profile-service-cb
+                fallbackUri: forward:/fallback
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+                redis-rate-limiter.requestedTokens: 1
+        - id: qna-service
+          uri: lb://qna-service:8094
+          predicates:
+            - Path=/qna/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: qna-service-cb
+                fallbackUri: forward:/fallback
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+                redis-rate-limiter.requestedTokens: 1
+        - id: search-service
+          uri: lb://search-service:8096
+          predicates:
+            - Path=/search/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: search-service-cb
+                fallbackUri: forward:/fallback
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+                redis-rate-limiter.requestedTokens: 1
+        - id: fallback
+          uri: http://localhost:9000
+          predicates:
+            - Path=/fallback
