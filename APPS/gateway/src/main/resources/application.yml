@@ -14,17 +14,8 @@ spring:
           '[/**]':
             allowedOrigins: "http://localhost:4200"
             allowCredentials: true
-            allowed-headers:
-              - Content-Type
-              - Accept
-              - X-Requested-With
-              - remember-me
-            allowedMethods:
-              - GET
-              - POST
-              - PUT
-              - DELETE
-              - OPTIONS
+            allowedHeaders: '*'
+            allowedMethods: '*'
             maxAge: 3600
       routes:
       - id: tutget-main
