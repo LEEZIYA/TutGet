@@ -1,6 +1,13 @@
 package com.tutget.tutgetmain.controller;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwt;
+import io.jsonwebtoken.Jwts;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tutget.tutgetmain.model.AllListing;
 import com.tutget.tutgetmain.model.Listing;
 import com.tutget.tutgetmain.service.SearchService;
+
+import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 @RestController
 @RequestMapping("api/search")
@@ -23,7 +34,11 @@ public class SearchController {
     }
 
     @GetMapping("/all/{searchKey}")    
-    public AllListing getSearchResult(@PathVariable("searchKey") String searchKey){
+    public AllListing getSearchResult(@PathVariable("searchKey") String searchKey, HttpServletRequest request){
+
+        System.out.println("THE USER ID IS: " + SecurityContextHolder.getContext().getAuthentication().getName());
+
+
         return searchService.searchAll(searchKey);
     }
 

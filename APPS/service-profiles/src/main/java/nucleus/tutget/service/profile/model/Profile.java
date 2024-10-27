@@ -6,6 +6,7 @@ import jakarta.persistence.PrePersist;
 
 import java.math.BigInteger;
 import java.sql.Date;
+import java.util.StringJoiner;
 import java.util.UUID;
 
 @Entity
@@ -150,10 +151,25 @@ public class Profile {
         BigInteger big = new BigInteger(uuid_string, 16);
         String same_uuid_shorter_string = big.toString(36);
         id = same_uuid_shorter_string ;
+        System.out.println("Generated Profile id: " + id);
     }
 
 
-
-
-
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", Profile.class.getSimpleName() + "[", "]")
+          .add("id='" + id + "'")
+          .add("acadLvl='" + acadLvl + "'")
+          .add("userID='" + userID + "'")
+          .add("password='" + password + "'")
+          .add("userType='" + userType + "'")
+          .add("firstName='" + firstName + "'")
+          .add("lastName='" + lastName + "'")
+          .add("phoneNumber='" + phoneNumber + "'")
+          .add("billingAddress='" + billingAddress + "'")
+          .add("authenticateStatus=" + authenticateStatus)
+          .add("postalCode='" + postalCode + "'")
+          .add("description='" + description + "'")
+          .toString();
+    }
 }

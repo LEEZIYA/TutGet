@@ -12,6 +12,8 @@ import { Constants } from './../../../utilities/constants';
 import { CreateUserForm } from 'src/app/DTO/CreateUserForm';
 import { RestclientService } from 'src/app/services/restclient.service';
 import { Router } from '@angular/router';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { authCodeFlowConfig } from '../../../auth.config';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
@@ -33,11 +35,13 @@ export class LoginComponent implements OnInit {
 //         private router: Router,
         private loginService: LoginService,
         private localStorageService: LocalStorageService,
-        private router: Router
+        private router: Router,
+        private oauthService: OAuthService
     ) {
       this.userForm = null;
-      this.loginService.user.subscribe(user => this.userForm = user);
-
+//       this.loginService.user.subscribe(user => this.userForm = user);
+      this.oauthService.configure(authCodeFlowConfig);
+      this.oauthService.loadDiscoveryDocument();
     }
 
     ngOnInit() {
@@ -46,8 +50,8 @@ export class LoginComponent implements OnInit {
           password: ['', Validators.required],
         });
 
-        this.loginService.createUser();
-        this.clearStorage();
+//         this.loginService.createUser();
+        // this.clearStorage();
         this.localStorageService.setShowMenu(false);
         this.localStorageService.setIsStudent(false);
 
@@ -81,21 +85,26 @@ export class LoginComponent implements OnInit {
         this.loginService.login(loginUserForm)
             .pipe(first())
             .subscribe({
-                next: (res) => {
-                    if(res.id != null&& res.id !=''){
-                        console.log('login verified');
-                        console.log(res.id);
+                next: (res: any) => {
+                    if(res && res.status === 200){
+//                         console.log('login verified');
+//                         console.log(res.id);
                         this.loginSuccess = 'You have logged in as user';
                         this.loginErr = '';
-                        if(res.userType == 'S'){
+
+
+
+                        if(res.body.userType === 'S'){
                           this.localStorageService.setIsStudent(true);
                         }
+
+
                         this.localStorageService.setShowMenu(true);
                         this.router.navigate(['']);
-//                         this.userForm = res;
-//                         this.userForm2 = this.loginService.userValue;
+// //                         this.userForm = res;
+// //                         this.userForm2 = this.loginService.userValue;
                     }
-                    else{
+                    else {
                       this.loginErr = 'Login failed!';
 
                       this.loginService.logout();
@@ -121,5 +130,35 @@ export class LoginComponent implements OnInit {
       this.localStorageService.clearStorageToken();
       localStorage.clear();
       window.sessionStorage.clear();
+    }
+
+    get userName(): string {
+      const claims = this.oauthService.getIdentityClaims();
+      if (!claims) return "";
+      return claims['given_name'];
+    }
+
+    get email(): string {
+      const claims = this.oauthService.getIdentityClaims();
+      if (!claims) return "";
+      return claims['email'];
+    }
+  
+    get idToken(): string {
+      return this.oauthService.getIdToken();
+    }
+  
+    get accessToken(): string {
+      return this.oauthService.getAccessToken();
+    }
+
+    login() {
+      this.oauthService.loadDiscoveryDocumentAndLogin();
+    }
+
+    logout() {
+      this.oauthService.loadDiscoveryDocument();
+      console.log(this.oauthService.logoutUrl);
+      this.oauthService.logOut(false);
     }
 }

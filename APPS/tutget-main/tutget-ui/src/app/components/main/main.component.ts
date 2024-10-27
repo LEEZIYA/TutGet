@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class MainComponent {
 
   activeUser: CreateUserForm | null;
+  firstName?: string
 
   @Input()
   showMenu: boolean = false;
@@ -22,8 +23,10 @@ export class MainComponent {
 
 
   ngOnInit() {
-    this.loginService.user.subscribe(user => this.activeUser = user);
-
+//     this.loginService.user.subscribe(user => this.activeUser = user);
+    this.loginService.getUser('unusedIdGetFromContext').then( res => {
+      this.firstName = res.firstName
+    })
   }
 
 

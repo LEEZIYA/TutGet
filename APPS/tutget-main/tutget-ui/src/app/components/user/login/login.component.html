@@ -84,3 +84,24 @@
   </div>
   </form>
 </div>
+
+<div class="row">
+  <div class="col-10" style="text-align: right;">
+    <app-single-button buttonTitle="Login with Google" (click)="login()" [rounderStyle]="true">Login with Google</app-single-button>
+  </div>
+  <div class="col-10" style="text-align: right;">
+    <app-single-button buttonTitle="Logout from Google" (click)="logout()" [rounderStyle]="true">Logout from Google</app-single-button>
+  </div>
+</div>
+
+<h2>User</h2>
+<p>{{ userName }}</p>
+<p>{{ email }}</p>
+
+<h2>Id-Token</h2>
+<p>{{ idToken }}</p>
+
+<h2>Access Token</h2>
+<p>{{ accessToken }}</p>
+
+<router-outlet></router-outlet>
