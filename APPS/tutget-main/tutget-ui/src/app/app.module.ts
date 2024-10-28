@@ -28,6 +28,7 @@ import { LoginComponent } from './components/user/login/login.component';
 
 import { HttpClientXsrfModule } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
+import { ErrorComponent } from "./components/error/error.component";
 //import {CreateUserComponent} from './components/user/create-user/create-user.component';
 // import { ProfileComponent } from './components/user/profile/profile.component';
 
@@ -44,13 +45,12 @@ import { importProvidersFrom } from '@angular/core';
     PaymentComponent,
     ViewListingComponent,
     ReleaseContactComponent,
-
     //CreateUserComponent,
     // ProfileComponent,
     LoginComponent,
-
     SearchComponent,
     AuthComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,

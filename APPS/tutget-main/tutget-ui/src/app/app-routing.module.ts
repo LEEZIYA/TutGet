@@ -12,6 +12,7 @@ import { SearchComponent } from './components/search/search.component';
 // import { CreateUserComponent } from './components/user/create-user/create-user.component';
 import { AuthComponent } from "./components/auth/auth.component";
 import { LoginComponent } from './components/user/login/login.component';
+import { ErrorComponent } from "./components/error/error.component";
 // import { ProfileComponent } from './components/user/profile/profile.component';
 
 
@@ -25,11 +26,11 @@ const routes: Routes = [
   {path: 'search', component: SearchComponent},
   {path: 'qna/new-question', component: QnaNewQuestionComponent},
   {path: 'qna/view/:id', component: QnaViewQuestionComponent},
-
   //   {path: 'create-user', component: CreateUserComponent},
-  { path: 'auth', component: AuthComponent },
+  {path: 'auth', component: AuthComponent},
   {path: 'login', component: LoginComponent},
   //   {path: 'profile', component: ProfileComponent}
+  {path: 'error', component: ErrorComponent},
   {path: '**', pathMatch: 'full', component: MainComponent}
 ];
 

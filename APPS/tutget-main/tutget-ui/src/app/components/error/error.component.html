@@ -1,0 +1,7 @@
+<div class="d-flex flex-column justify-content-center align-items-center mt-5">
+  <img src="/assets/images/fail.jpg">
+  <h1>Oops!</h1>
+  <h3>Something went wrong here.</h3>
+  <div>{{ this.error.message }}</div>
+  <button type="button" class="btn btn-primary mt-3" (click)="this.router.navigate(['/'])">Back to Home</button>
+</div>

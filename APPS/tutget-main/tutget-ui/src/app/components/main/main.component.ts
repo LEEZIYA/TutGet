@@ -24,9 +24,9 @@ export class MainComponent {
 
   ngOnInit() {
 //     this.loginService.user.subscribe(user => this.activeUser = user);
-    this.loginService.getUser('unusedIdGetFromContext').then( res => {
-      this.firstName = res.firstName
-    })
+//     this.loginService.getUser('unusedIdGetFromContext').then( res => {
+//       this.firstName = res.firstName
+//     })
   }
 
 
