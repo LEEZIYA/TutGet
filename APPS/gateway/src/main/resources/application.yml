@@ -30,6 +30,7 @@ spring:
                 fallbackUri: forward:/fallback
             - name: RequestRateLimiter
               args:
+                key-resolver: '#{@customKeyResolver}'
                 redis-rate-limiter.replenishRate: 10
                 redis-rate-limiter.burstCapacity: 20
                 redis-rate-limiter.requestedTokens: 1
@@ -44,6 +45,7 @@ spring:
                 fallbackUri: forward:/fallback
             - name: RequestRateLimiter
               args:
+                key-resolver: '#{@customKeyResolver}'
                 redis-rate-limiter.replenishRate: 10
                 redis-rate-limiter.burstCapacity: 20
                 redis-rate-limiter.requestedTokens: 1
@@ -58,6 +60,7 @@ spring:
                 fallbackUri: forward:/fallback
             - name: RequestRateLimiter
               args:
+                key-resolver: '#{@customKeyResolver}'
                 redis-rate-limiter.replenishRate: 10
                 redis-rate-limiter.burstCapacity: 20
                 redis-rate-limiter.requestedTokens: 1
@@ -72,6 +75,7 @@ spring:
                 fallbackUri: forward:/fallback
             - name: RequestRateLimiter
               args:
+                key-resolver: '#{@customKeyResolver}'
                 redis-rate-limiter.replenishRate: 10
                 redis-rate-limiter.burstCapacity: 20
                 redis-rate-limiter.requestedTokens: 1
@@ -86,6 +90,7 @@ spring:
                 fallbackUri: forward:/fallback
             - name: RequestRateLimiter
               args:
+                key-resolver: '#{@customKeyResolver}'
                 redis-rate-limiter.replenishRate: 10
                 redis-rate-limiter.burstCapacity: 20
                 redis-rate-limiter.requestedTokens: 1
@@ -93,3 +98,7 @@ spring:
           uri: http://localhost:9000
           predicates:
             - Path=/fallback
+  data:
+    redis:
+      host: localhost
+      port: 6370
