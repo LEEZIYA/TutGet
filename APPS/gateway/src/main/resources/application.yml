@@ -98,7 +98,3 @@ spring:
           uri: http://localhost:9000
           predicates:
             - Path=/fallback
-  data:
-    redis:
-      host: localhost
-      port: 6370
