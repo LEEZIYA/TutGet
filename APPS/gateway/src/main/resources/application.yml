@@ -22,7 +22,7 @@ spring:
         add-to-simple-url-handler-mapping: true
       routes:
         - id: listing-service
-          uri: lb://listing-service:8091
+          uri: lb://listing-service
           predicates:
             - Path=/listings/**
           filters:
@@ -37,7 +37,7 @@ spring:
                 redis-rate-limiter.burstCapacity: 20
                 redis-rate-limiter.requestedTokens: 1
         - id: payment-service
-          uri: lb://payment-service:8092
+          uri: lb://payment-service
           predicates:
             - Path=/payment/**
           filters:
@@ -52,7 +52,7 @@ spring:
                 redis-rate-limiter.burstCapacity: 20
                 redis-rate-limiter.requestedTokens: 1
         - id: profile-service
-          uri: lb://profile-service:8093
+          uri: lb://profile-service
           predicates:
             - Path=/users/**
           filters:
@@ -67,7 +67,7 @@ spring:
                 redis-rate-limiter.burstCapacity: 20
                 redis-rate-limiter.requestedTokens: 1
         - id: qna-service
-          uri: lb://qna-service:8094
+          uri: lb://qna-service
           predicates:
             - Path=/qna/**
           filters:
@@ -82,7 +82,7 @@ spring:
                 redis-rate-limiter.burstCapacity: 20
                 redis-rate-limiter.requestedTokens: 1
         - id: search-service
-          uri: lb://search-service:8096
+          uri: lb://search-service
           predicates:
             - Path=/search/**
           filters:
