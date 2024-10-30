@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { LocalStorageService} from '../local-storage.service'
@@ -17,8 +17,8 @@ import { STUDENT, TEACHER, TEACHER2 } from 'src/app/components/listing/test-user
 export class LoginService {
     private userSubject: BehaviorSubject<unknown>;
     public user: Observable<unknown>;
-    BASE_URL: string = 'http://localhost:9000/api/users';
-
+    BASE_URL: string = 'https://localhost:8443/api/users';
+    
 
     constructor(
         private router: Router,
@@ -53,6 +53,22 @@ export class LoginService {
 //            userForm = this.restclient.postjson(this.BASE_URL + '/users/login',loginForm);
 //            localStorage.setItem('user', JSON.stringify(user));
 //            this.userSubject.next(user);
+    }
+
+    loginWithOAuth(loginUser: CreateUserForm, token: string) {
+        const headers = new HttpHeaders({
+            'Authorization': `Bearer ${token}`,
+        })
+        return this.http.post<unknown>(
+            this.BASE_URL + '/login',
+            loginUser,
+            { observe: 'response', headers }
+        ).pipe(map(res => {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem('ActiveUser', JSON.stringify(res.body));
+            this.userSubject.next(res.body);
+            return res;
+        }));
     }
 
     async logout() {

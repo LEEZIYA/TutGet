@@ -6,11 +6,9 @@ import { first } from 'rxjs/operators';
 
 // import { UtilitiesService } from './../../../services/utilities.service';
 import { LoginService } from './../../../services/API/login.service';
-import { Constants } from './../../../utilities/constants';
 // import { ACADEMICLEVELSUBJECTLIST, ACADEMICLEVELIDLIST, ACADEMICSUBJECTIDLIST,  } from './../../../utilities/code-table/AcademicLevelSubjectList';
 // import { Component } from '@angular/core';
 import { CreateUserForm } from 'src/app/DTO/CreateUserForm';
-import { RestclientService } from 'src/app/services/restclient.service';
 import { Router } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { authCodeFlowConfig } from '../../../auth.config';
@@ -121,10 +119,6 @@ export class LoginComponent implements OnInit {
                 }
             });
     }
-    logOut(){
-      this.loginService.logout();
-      this.loginSuccess = '';
-    }
 
     clearStorage(){
       this.localStorageService.clearStorageToken();
@@ -132,33 +126,7 @@ export class LoginComponent implements OnInit {
       window.sessionStorage.clear();
     }
 
-    get userName(): string {
-      const claims = this.oauthService.getIdentityClaims();
-      if (!claims) return "";
-      return claims['given_name'];
-    }
-
-    get email(): string {
-      const claims = this.oauthService.getIdentityClaims();
-      if (!claims) return "";
-      return claims['email'];
-    }
-  
-    get idToken(): string {
-      return this.oauthService.getIdToken();
-    }
-  
-    get accessToken(): string {
-      return this.oauthService.getAccessToken();
-    }
-
-    login() {
+    loginWithOAuth() {
       this.oauthService.loadDiscoveryDocumentAndLogin();
-    }
-
-    logout() {
-      this.oauthService.loadDiscoveryDocument();
-      console.log(this.oauthService.logoutUrl);
-      this.oauthService.logOut(false);
     }
 }

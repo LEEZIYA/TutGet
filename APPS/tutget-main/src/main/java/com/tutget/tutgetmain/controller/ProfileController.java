@@ -2,18 +2,14 @@ package com.tutget.tutgetmain.controller;
 
 import com.tutget.tutgetmain.model.profile.AuthResult;
 import com.tutget.tutgetmain.model.profile.Profile;
-import com.tutget.tutgetmain.model.profile.ProfileList;
 import com.tutget.tutgetmain.service.ProfileService;
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -43,9 +39,10 @@ public class ProfileController {
     }
 
     @PostMapping("/users/login")
-    public ResponseEntity<AuthResult> loginUser(@RequestBody Profile profile, HttpServletResponse response){
+    public ResponseEntity<AuthResult> loginUser(@RequestBody Profile profile, @RequestHeader(value = "Authorization", required = false) String authHeader, HttpServletResponse response){
         System.out.println("Profile: " + profile);
-        AuthResult loginResult = profileService.login(profile);
+        System.out.println("Auth Header: " + authHeader);
+        AuthResult loginResult = profileService.login(profile, authHeader);
 
         if (loginResult == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

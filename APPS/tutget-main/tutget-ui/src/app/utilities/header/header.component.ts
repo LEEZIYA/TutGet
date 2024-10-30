@@ -1,7 +1,8 @@
 import { LoginService } from './../../services/API/login.service';
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { CreateUserForm } from 'src/app/DTO/CreateUserForm';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { authCodeFlowConfig } from 'src/app/auth.config';
 
 @Component({
   selector: 'app-header',
@@ -16,8 +17,9 @@ export class HeaderComponent {
   @Input()
   isStudent: boolean = false;
 
-  constructor(private router: Router, private loginService: LoginService){
-
+  constructor(private router: Router, private loginService: LoginService, private oauthService: OAuthService){
+    this.oauthService.configure(authCodeFlowConfig);
+    this.oauthService.loadDiscoveryDocument();
   }
 
 
@@ -35,6 +37,10 @@ export class HeaderComponent {
   }
 
   logOut(){
+    if (this.oauthService.hasValidAccessToken()) {
+      this.oauthService.loadDiscoveryDocument();
+      this.oauthService.logOut();  
+    }
     this.loginService.logout();
   }
 }
