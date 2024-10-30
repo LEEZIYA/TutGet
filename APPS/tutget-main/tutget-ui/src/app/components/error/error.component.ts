@@ -12,4 +12,8 @@ export class ErrorComponent {
   constructor(public router: Router) {
     this.error = this.router.getCurrentNavigation()?.extras;
   }
+
+  isString(error: any): boolean {
+    return typeof error === 'string';
+  }
 }
