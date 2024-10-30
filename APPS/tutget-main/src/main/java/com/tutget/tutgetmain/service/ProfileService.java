@@ -21,7 +21,7 @@ public class ProfileService {
     @Autowired
     private RestTemplate restTemplate;
 
-    private String microserviceURL = "http://gateway/users";
+    private String microserviceURL = "http://profile-service/users";
 
     @Value("${jjwt.key}")
     private String jjwtKey;

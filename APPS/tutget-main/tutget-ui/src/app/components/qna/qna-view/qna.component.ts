@@ -37,13 +37,13 @@ export class QnaComponent {
     onViewQuestion(question: Question): void {
         this.router.navigate(['/qna/view' , question.id]);
     }
-    
+
     onSelectTabSort(sortOption: SortOption) {
         this.selectedTabSort = sortOption;
     }
 
     getQuestionsList(): void {
-        this.qnaService.getQuestions().then(questions => this.questionsList = questions);
+        this.qnaService.getQuestions().then(questions => this.questionsList = questions['allQuestion']);
     }
 }
 

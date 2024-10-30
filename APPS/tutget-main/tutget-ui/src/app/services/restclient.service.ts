@@ -8,7 +8,7 @@ import { Router } from "@angular/router";
 })
 export class RestclientService {
 
-  BASE_URL: string = 'http://localhost:9000/api'
+  BASE_URL: string = 'http://localhost:9000'
   external: boolean = false;
 
   httpOptions = {

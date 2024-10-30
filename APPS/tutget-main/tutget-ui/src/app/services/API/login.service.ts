@@ -17,7 +17,7 @@ import { STUDENT, TEACHER, TEACHER2 } from 'src/app/components/listing/test-user
 export class LoginService {
     private userSubject: BehaviorSubject<unknown>;
     public user: Observable<unknown>;
-    BASE_URL: string = 'http://localhost:9000/api/users';
+    BASE_URL: string = 'http://localhost:9000/users';
 
 
     constructor(

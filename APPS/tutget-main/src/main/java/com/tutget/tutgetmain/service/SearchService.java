@@ -14,8 +14,8 @@ import com.tutget.tutgetmain.model.Listing;
 @Service
 public class SearchService {
 
-    private String listingmicroserviceURL = "http://gateway/listings";
-    //private String qnamicroserviceURL = "http://gateway/qna";
+    private String listingmicroserviceURL = "http://listing-service/listings";
+    //private String qnamicroserviceURL = "http://qna-service/qna";
 
     @Autowired
     private RestTemplate restTemplate;

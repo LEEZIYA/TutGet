@@ -14,7 +14,7 @@ public class ListingService {
     @Autowired
     private RestTemplate restTemplate;
 
-    private String microserviceURL = "http://gateway/listings";
+    private String microserviceURL = "http://listing-service/listings";
 
     public List<Listing> getAllListings(){
         AllListing allListing = restTemplate.getForObject(microserviceURL, AllListing.class);

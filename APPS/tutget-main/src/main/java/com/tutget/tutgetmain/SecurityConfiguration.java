@@ -1,6 +1,5 @@
 package com.tutget.tutgetmain;
 
-
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,42 +8,60 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
+import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.csrf.*;
+import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.security.web.server.csrf.CookieServerCsrfTokenRepository;
+import org.springframework.security.web.server.csrf.ServerCsrfTokenRequestAttributeHandler;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebFilter;
+import org.springframework.web.server.WebFilterChain;
+import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 import java.util.function.Supplier;
 
 @Configuration
-@EnableWebSecurity
+//@EnableFluxSecurity
+@EnableWebFluxSecurity
 public class SecurityConfiguration {
 
 private static final Logger logger = LoggerFactory.getLogger(SecurityConfiguration.class);
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         http
-//          .csrf()
-//          .disable()
-//        http.csrf(csrf -> csrf.csrfTokenRepository((CookieCsrfTokenRepository.withHttpOnlyFalse())))
-//          .authorizeHttpRequests()
-//          .anyRequest()
-//          .permitAll()
-
-          .csrf((csrf) -> csrf
-            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-            .csrfTokenRequestHandler(new SpaCsrfTokenRequestHandler())
-          )
-          .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class);
+                .csrf((csrf) -> csrf
+                        .csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse())
+                        .csrfTokenRequestHandler(new ServerCsrfTokenRequestAttributeHandler())
+                )
+                .addFilterAfter(new JwtAuthenticationFilter(), SecurityWebFiltersOrder.AUTHENTICATION);
 
         return http.build();
     }
+
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http
+////          .csrf()
+////          .disable()
+////        http.csrf(csrf -> csrf.csrfTokenRepository((CookieCsrfTokenRepository.withHttpOnlyFalse())))
+////          .authorizeHttpRequests()
+////          .anyRequest()
+////          .permitAll()
+//
+//          .csrf((csrf) -> csrf
+//            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+//            .csrfTokenRequestHandler(new SpaCsrfTokenRequestHandler())
+//          )
+//          .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class);
+//
+//        return http.build();
+//    }
 }
 
 final class SpaCsrfTokenRequestHandler extends CsrfTokenRequestAttributeHandler {
@@ -80,22 +97,29 @@ final class SpaCsrfTokenRequestHandler extends CsrfTokenRequestAttributeHandler 
     }
 }
 
-final class CsrfCookieFilter extends OncePerRequestFilter {
+//final class CsrfCookieFilter extends OncePerRequestFilter {
+//
+//    @Override
+//    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+//      throws ServletException, IOException {
+//        CsrfToken csrfToken = (CsrfToken) request.getAttribute("_csrf");
+//        // Render the token value to a cookie by causing the deferred token to be loaded
+//        csrfToken.getToken();
+//
+//        // Cors before filter
+//        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+//        response.setHeader("Access-Control-Allow-Credentials", "true");
+//        response.setHeader("Access-Control-Allow-Methods", "*");
+//        response.setHeader("Access-Control-Allow-Headers", "*");
+//        response.setHeader("Access-Control-Max-Age", "3600");
+//
+//        filterChain.doFilter(request, response);
+//    }
+//}
 
+final class JwtAuthenticationFilter implements WebFilter {
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-      throws ServletException, IOException {
-        CsrfToken csrfToken = (CsrfToken) request.getAttribute("_csrf");
-        // Render the token value to a cookie by causing the deferred token to be loaded
-        csrfToken.getToken();
-
-        // Cors before filter
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
-        response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.setHeader("Access-Control-Allow-Methods", "*");
-        response.setHeader("Access-Control-Allow-Headers", "*");
-        response.setHeader("Access-Control-Max-Age", "3600");
-
-        filterChain.doFilter(request, response);
+    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+        return chain.filter(exchange);
     }
 }
