@@ -2,6 +2,7 @@ import { LoginService } from './../../services/API/login.service';
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { CreateUserForm } from 'src/app/DTO/CreateUserForm';
+import { LocalStorageService } from './../../services/local-storage.service';
 
 @Component({
   selector: 'app-header',
@@ -16,11 +17,26 @@ export class HeaderComponent {
   @Input()
   isStudent: boolean = false;
 
-  constructor(private router: Router, private loginService: LoginService){
+  firstName?: string;
+
+  constructor(private router: Router, private loginService: LoginService, private localStorageService: LocalStorageService){
 
   }
 
+  ngOnInit(): void {
+    this.loginService.user.subscribe(user => {
+        this.showMenu = this.localStorageService.getShowMenu();
 
+        this.loginService.getUser().then( res => {
+              if (res) {
+                this.firstName = res.firstName;
+              } else {
+                this.firstName = "";
+              }
+              console.log('header component: ' + this.showMenu)
+            })
+      });
+  }
 
   createListing(){
     this.router.navigate(['listing'])

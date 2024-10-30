@@ -29,6 +29,7 @@ public class ListingService {
     }
 
     public void updateListing(Listing listing) {
+        System.out.println("Update listing: " + listing.getAssignedTutorId());
         restTemplate.put(microserviceURL, listing, Listing.class);
     }
 

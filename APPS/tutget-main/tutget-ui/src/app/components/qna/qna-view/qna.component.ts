@@ -3,6 +3,7 @@ import { Question } from './question';
 import { User } from './user';
 import { QnaService } from 'src/app/services/API/qna.service';
 import { Router } from '@angular/router';
+import { LoginService } from 'src/app/services/API/login.service';
 
 @Component({
   selector: 'app-qna',
@@ -22,8 +23,14 @@ export class QnaComponent {
     testingString: String = "";
 
     loggedInUser?: User;
+    activeUser?: any
 
-    constructor(private qnaService: QnaService, private router: Router) { }
+    constructor(
+      private qnaService: QnaService,
+      private router: Router,
+      private loginService: LoginService
+    ) {
+    }
 
     ngOnInit() {
         this.getQuestionsList();
@@ -31,13 +38,19 @@ export class QnaComponent {
     }
 
     onNewQuestion() {
-      this.router.navigate(['/qna/new-question']);
+      this.loginService.getUser().then( res => {
+        if (res) {
+          this.router.navigate(['/qna/new-question']);
+        } else {
+          this.router.navigate(['/login']);
+        }
+      })
     }
 
     onViewQuestion(question: Question): void {
         this.router.navigate(['/qna/view' , question.id]);
     }
-    
+
     onSelectTabSort(sortOption: SortOption) {
         this.selectedTabSort = sortOption;
     }
