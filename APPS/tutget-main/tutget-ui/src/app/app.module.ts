@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
@@ -23,6 +23,7 @@ import { importProvidersFrom } from '@angular/core';
 //import {CreateUserComponent} from './components/user/create-user/create-user.component';
 import { LoginComponent } from './components/user/login/login.component';
 // import { ProfileComponent } from './components/user/profile/profile.component';
+import { ErrorInterceptor } from './components/interceptor/error-interceptor';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,12 @@ import { LoginComponent } from './components/user/login/login.component';
     importProvidersFrom(
       HttpClientXsrfModule.withOptions()
     ),
+    // Interceptor
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+    },
   ],
   bootstrap: [AppComponent]
 })
