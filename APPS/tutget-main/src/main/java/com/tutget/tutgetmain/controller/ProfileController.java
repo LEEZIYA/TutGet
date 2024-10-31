@@ -1,5 +1,8 @@
 package com.tutget.tutgetmain.controller;
 
+import com.tutget.tutgetmain.constants.AuthConstants;
+import com.tutget.tutgetmain.dto.ProfileDTO;
+import com.tutget.tutgetmain.mapper.ProfileMapper;
 import com.tutget.tutgetmain.model.profile.AuthResult;
 import com.tutget.tutgetmain.model.profile.Profile;
 import com.tutget.tutgetmain.service.ProfileService;
@@ -49,7 +52,8 @@ public class ProfileController {
         }
 
         Cookie authCookie = new Cookie("authCookie", loginResult.jwt());
-        authCookie.setMaxAge(60*60); // 1 hour
+        authCookie.setMaxAge(AuthConstants.AUTH_EXPIRY_IN_SECONDS); // 1 hour
+        System.out.println("ProfileController: " + authCookie.getMaxAge());
         authCookie.setPath("/");
         authCookie.setHttpOnly(true);
         authCookie.setSecure(true);
@@ -61,7 +65,7 @@ public class ProfileController {
     @GetMapping("/users/logout")
     public ResponseEntity<Void> logoutUser(HttpServletResponse response) {
         Cookie authCookie = new Cookie("authCookie", null);
-        authCookie.setMaxAge(0); // 1 hour
+        authCookie.setMaxAge(0);
         authCookie.setPath("/");
         authCookie.setHttpOnly(true);
         authCookie.setSecure(true);
@@ -71,12 +75,21 @@ public class ProfileController {
         return ResponseEntity.ok(null);
     }
 
+    @GetMapping("/users/userId")
+    public ProfileDTO getProfile() {
+        String contextId = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
+        System.out.println("contextId" + contextId);
+        Profile profile = profileService.getProfile(contextId);
+        return ProfileMapper.INSTANCE.toDTO(profile);
+    }
+
     @GetMapping("/users/userId/{userID}")
     public Profile getProfileByUserID(@PathVariable String userID){
         System.out.println("user id" + userID);
         String contextId = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
         System.out.println("contextId" + contextId);
-        return profileService.getProfile(contextId);
+        return userID != null ? profileService.getProfileByUserID(userID) : profileService.getProfile(contextId);
+
     }
 
     @PostMapping("/users")

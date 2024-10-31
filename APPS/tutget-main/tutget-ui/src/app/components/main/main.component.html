@@ -44,8 +44,10 @@ html{
 <!-- Header / Home-->
 <header class="w3-display-container w3-wide bgimg w3-grayscale-min" id="home">
   <div class="w3-display-middle w3-text-white w3-center">
-    <h1 *ngIf="!showMenu" class="w3-jumbo">TutGet, your trusted tuition platform.</h1>
-    <h1 *ngIf="showMenu" class="w3-jumbo">Welcome back, {{ firstName }}!</h1>
+    <h1 *ngIf="showMenu && firstName else defaultMsg" class="w3-jumbo">Welcome back, {{ firstName }}!</h1>
+    <ng-template #defaultMsg>
+      <h1 class="w3-jumbo">TutGet, your trusted tuition platform.</h1>
+    </ng-template>
   </div>
 </header>
 

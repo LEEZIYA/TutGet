@@ -49,7 +49,10 @@ export class SearchComponent {
       alert("Please enter a valid search.");
     }else{
       this.searchService.getSearchResult(trimmedSearchQuery ? trimmedSearchQuery : null)
-      .then((res)=>{this.searchResults = res.allListing; console.log(this.searchResults);});
+      .then(res => {
+        this.searchResults = res ? res.allListing : [];
+        console.log(this.searchResults);
+      }, reject => {});
     }
     if (trimmedSearchQuery === 'invalidsearch'){
       alert("Please enter a valid search.");
@@ -61,7 +64,10 @@ export class SearchComponent {
       };
       console.log("HELP: " + requestData.acadlvl + requestData.acadSubject + requestData.trimmedSearchQuery);
       this.searchService.getSearchResultAll(requestData)
-      .then((res)=>{this.searchResults = res.allListing; console.log(this.searchResults);});
+      .then(res => {
+        this.searchResults = res ? res.allListing : [];
+        console.log(this.searchResults);
+      }, reject => {});
 
 
     }

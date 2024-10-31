@@ -1,7 +1,7 @@
 [
   {
     "acadLvl": "J1",
-    "userID": "<script>alert('HI')</script>",
+    "userID": "StudentSam",
     "password": "password",
     "userType": "S",
     "firstName": "Sam",

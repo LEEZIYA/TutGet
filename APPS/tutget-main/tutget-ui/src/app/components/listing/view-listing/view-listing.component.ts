@@ -51,41 +51,60 @@ export class ViewListingComponent implements OnInit {
     private loginService: LoginService) { }
 
   ngOnInit() {
-    this.loginService.user.subscribe(user => this.activeUser = user);
     this.restClient.getrawjson('/ad', false)
-      .then((res)=>{
-        this.enableAd = res;
-      });
+          .then((res)=>{
+            if (res) {
+              this.enableAd = res;
+            }
+          });
 
-    this.sub = this.activatedRoute.params.subscribe(params => {
-      this.listingService.getListing(params['id'])
-          .then((res) => {
-            if(res){
-              // this.id = params['id'];
-              this.createListingForm = res;
+//     this.loginService.user.subscribe(user => {
+//       this.activeUser = user;
+//       console.log('view-listing: ' + this.activeUser);
+//     });
 
-               this.loginService.getUser(res.userId).then((res) => {
-                if(res){
-                  this.listingOwner = res;
+    this.loginService.getUser().then((res) => {
+      if(res) {
+        this.activeUser = res;
+      }
+      console.log('view-listing: ' + JSON.stringify(res));
 
-                  this.requestedUsers = this.createListingForm.requests.split(",");
-                  this.requestedUsers.shift();
+      this.sub = this.activatedRoute.params.subscribe(params => {
+            this.listingService.getListing(params['id'])
+                .then((res) => {
+                  if(res){
+                    // this.id = params['id'];
+                    this.createListingForm = res;
 
+                     this.loginService.getUser(res.userId).then((res) => {
+                      if(res) {
+                        this.listingOwner = res;
 
-                  if(this.activeUser.userID == this.listingOwner.userID ){
-                    this.listingRights = true;
-                  } else {
-                    if(this.requestedUsers.includes(this.activeUser.userID)){
-                      this.requested = true;
-                    }
-                  }
+                        this.requestedUsers = this.createListingForm.requests.split(",");
+                        this.requestedUsers.shift();
+                        console.log('Active user: ' + JSON.stringify(this.activeUser) + 'Listing owner: ' + JSON.stringify(this.listingOwner))
+
+                        if (this.activeUser) {
+                          if(this.activeUser.userID == this.listingOwner.userID ){
+                            this.listingRights = true;
+                          } else {
+                            if(this.requestedUsers.includes(this.activeUser.userID)){
+                              this.requested = true;
+                            }
+                          }
+                        }
+
+                      }
+                    })
 
                   this.academicLvlLabel = this.academicLvlList.get(this.createListingForm.acadLvl);
                   this.academicSubjectLabel = this.academicSubjectList.get(this.createListingForm.acadSubject);
 
                   this.restClient.getrawjson(Constants.oneMapURLStart + this.createListingForm.postalCode + Constants.oneMapURLEnd, true)
                   .then((res) => {
-                    this.address = res.results[0].ADDRESS;
+                    if (res) {
+                      this.address = res.results[0].ADDRESS;
+                    }
                   })
 
                   for(let i = 0; i < 7; i++){
@@ -118,15 +137,16 @@ export class ViewListingComponent implements OnInit {
 
                   }
 
-                }
-              })
+                  } else {
+                    this.router.navigate(['']);
+                  }
+                });
+          })
+    });
 
 
-            } else {
-              this.router.navigate(['']);
-            }
-          });
-    })
+
+
 
   }
 

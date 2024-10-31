@@ -28,9 +28,12 @@
             <ul class="navbar-nav">
                 <a class="nav-link hover-link" routerLink="/search">Search</a>
                 <a class="nav-link hover-link" routerLink="/qna">QnA Board</a>
-                <a *ngIf="!showMenu" class="nav-link hover-link" href="#">Register</a>
-                <a  *ngIf="!showMenu" class="nav-link hover-link" routerLink="/login">Login</a>
-                <a  *ngIf="showMenu" class="nav-link hover-link" routerLink="/" (click)="logOut()">Logout</a>
+                <a  *ngIf="showMenu && firstName else default" class="nav-link hover-link" routerLink="/" (click)="logOut()">Logout</a>
+                <ng-template #default>
+                  <a class="nav-link hover-link" href="#">Register</a>
+                  <a class="nav-link hover-link" routerLink="/login">Login</a>
+                </ng-template>
+
                 <!-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Menu </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

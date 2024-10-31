@@ -1,6 +1,9 @@
 package com.tutget.tutgetmain.filter;
 
 import com.tutget.tutgetmain.exception.AuthCookieNotFoundException;
+import com.tutget.tutgetmain.exception.PermissionsException;
+import com.tutget.tutgetmain.model.profile.Profile;
+import com.tutget.tutgetmain.service.ProfileService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
@@ -18,14 +21,22 @@ import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
- * Intercepts all API call except for login to verify JWT
+ * Intercepts all API calls to verify JWT
  */
 @Component
 public class AuthenticationFilter extends OncePerRequestFilter {
 
   private String jjwtKey;
+  private final ProfileService profileService;
+
+  public AuthenticationFilter(ProfileService profileService) {
+    this.profileService = profileService;
+  }
 
   public void setJjwtKey(String jjwtKey) {
     this.jjwtKey = jjwtKey;
@@ -65,8 +76,20 @@ public class AuthenticationFilter extends OncePerRequestFilter {
   @Override
   protected void doFilterInternal(HttpServletRequest httpRequest, HttpServletResponse servletResponse, FilterChain filterChain) throws ServletException, IOException {
     // Pre-processing: Code to execute before the request (API call) is handled
-    if (httpRequest.getRequestURI().contains("login") || httpRequest.getRequestURI().contains("logout")) {
-      System.out.println("Login URI, do not run jwt validation");
+    System.out.println("Request servlet: " + httpRequest.getMethod() + httpRequest.getRequestURI());
+
+    Pattern otherUserPattern = Pattern.compile("users/userId/.+$");
+    Matcher otherUserMatcher = otherUserPattern.matcher(httpRequest.getRequestURI());
+
+    if (
+      httpRequest.getRequestURI().contains("login") ||
+      httpRequest.getRequestURI().contains("logout") ||
+      httpRequest.getRequestURI().contains("search") ||
+      httpRequest.getRequestURI().contains("api/ad") ||
+      otherUserMatcher.find() ||
+      (httpRequest.getMethod().contains("GET") && (httpRequest.getRequestURI().contains("listings") || httpRequest.getRequestURI().contains("qna")))
+    ) {
+      System.out.println("Jwt validation not required");
 
     } else {
       System.out.println("Verifying with jjwt key: " + jjwtKey);
@@ -74,16 +97,36 @@ public class AuthenticationFilter extends OncePerRequestFilter {
       Cookie cookie = Arrays.stream(httpRequest.getCookies())
         .filter(c -> c.getName().equals("authCookie"))
         .findFirst()
-        .orElseThrow(AuthCookieNotFoundException::new);
+//        .orElseThrow(AuthCookieNotFoundException::new);
+        .orElse(null);
+
+      // Check if cookie is missing
+      if (cookie == null) {
+//        servletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        servletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "AuthCookieNotFound");
+//        servletResponse.getWriter().write("{\"error\":\"AuthCookieNotFound\", \"message\":\"User is not authorized to access this resource.\"}");
+        servletResponse.getWriter().flush();
+        return;
+      }
 
       System.out.println("Cookie: " + cookie.getName() + " value: " + cookie.getValue());
 
-      Jwt<?, Claims> jwt = Jwts.parser()
-        // SHA256(CAKES) = 256 bits
-        //"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        .verifyWith(new SecretKeySpec(jjwtKey.getBytes(StandardCharsets.UTF_8), "HmacSHA256"))
-        .build()
-        .parseSignedClaims(cookie.getValue());
+      Jwt<?, Claims> jwt;
+
+      try {
+        jwt = Jwts.parser()
+          // SHA256(CAKES) = 256 bits
+          //"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          .verifyWith(new SecretKeySpec(jjwtKey.getBytes(StandardCharsets.UTF_8), "HmacSHA256"))
+          .build()
+          .parseSignedClaims(cookie.getValue());
+      } catch (Exception e) {
+        // Jwt expired etc.
+        System.out.println("Jwt error: " + e);
+        servletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "AuthCookieNotFound");
+        servletResponse.getWriter().flush();
+        return;
+      }
 
       System.out.println("ID: " + jwt.getPayload().get("id", String.class));
       // Set the authentication in the context
@@ -92,6 +135,15 @@ public class AuthenticationFilter extends OncePerRequestFilter {
           jwt.getPayload().getSubject(), jwt.getPayload().get("id", String.class)
         )
       );
+
+      if (httpRequest.getMethod().contains("POST") && httpRequest.getRequestURI().contains("listings")) {
+        Profile profile = profileService.getProfile(SecurityContextHolder.getContext().getAuthentication().getCredentials().toString());
+
+        if (profile == null || !profile.userType().equalsIgnoreCase("S")) {
+          throw new PermissionsException();
+        }
+      }
+
 
     }
 

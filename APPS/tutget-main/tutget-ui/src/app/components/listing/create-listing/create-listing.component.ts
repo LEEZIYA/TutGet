@@ -53,7 +53,7 @@ export class CreateListingComponent {
 
   constructor(private restClient: RestclientService, private listingService: ListingService, private utilitiesService: UtilitiesService, private reloadService: ReloadService, private router: Router, public activatedRoute: ActivatedRoute,
     private loginService: LoginService) {
-      this.loginService.user.subscribe(user => this.activeUser = user);
+//       this.loginService.user.subscribe(user => {this.activeUser = user; console.log('create-listing: ' + JSON.stringify(user))});
     //console.log(this.router.getCurrentNavigation()?.extras.state);
   }
 
@@ -116,33 +116,38 @@ export class CreateListingComponent {
     this.showTotal = false;
     this.hourlyRate = undefined;
 
-    this.createListingForm.acadLvl = this.activeUser.acadLvl;
-    //call userservice or get from localstorage after login to get user academic level
+    this.loginService.getUser().then((res) => {
+      if(res) {
+        this.activeUser = res;
 
-    this.academicLvlLabel = this.academicLvlList.get(this.createListingForm.acadLvl);
 
-    // ACADEMICLEVELSUBJECTLIST.forEach((lvlSubj) => {
-    //   if(lvlSubj.acadLvlId === this.createListingForm.acadLvl){
-    //     this.academicLvlSubjectList = lvlSubj.acadSubjectIdList;
-    //   }
-    // })
 
-    this.academicLvlSubjectList = ACADEMICLEVELSUBJECTLIST.get(this.createListingForm.acadLvl);
+        this.createListingForm.acadLvl = this.activeUser.acadLvl;
+        //call userservice or get from localstorage after login to get user academic level
 
-    this.createListingForm.postalCode = this.activeUser.postalCode;
-    //200640
-    //call userservice or get from localstorage after login to get user postal code
+        this.academicLvlLabel = this.academicLvlList.get(this.createListingForm.acadLvl);
 
-    this.loginService.getUser('unusedIdGetFromContext').then( res => {
-          this.createListingForm.postalCode = res.postalCode
+        // ACADEMICLEVELSUBJECTLIST.forEach((lvlSubj) => {
+        //   if(lvlSubj.acadLvlId === this.createListingForm.acadLvl){
+        //     this.academicLvlSubjectList = lvlSubj.acadSubjectIdList;
+        //   }
+        // })
 
-          this.restClient.getrawjson(Constants.oneMapURLStart + this.createListingForm.postalCode + Constants.oneMapURLEnd, true)
-            .then((res) => {
-              this.address = res.results[0].ADDRESS;
+        this.academicLvlSubjectList = ACADEMICLEVELSUBJECTLIST.get(this.createListingForm.acadLvl);
+
+        this.createListingForm.postalCode = this.activeUser.postalCode;
+        //200640
+        //call userservice or get from localstorage after login to get user postal code
+
+
+        this.createListingForm.postalCode = res.postalCode
+
+        this.restClient.getrawjson(Constants.oneMapURLStart + this.createListingForm.postalCode + Constants.oneMapURLEnd, true)
+          .then((res) => {
+            this.address = res.results[0].ADDRESS;
           })
+      }
     });
-
-
 
   }
 
@@ -243,8 +248,10 @@ export class CreateListingComponent {
       if(!this.editMode){
         this.listingService.createListing(this.createListingForm)
         .then((res) => {
-          this.listingId = res;
-          this.submitted = true;
+          if (res) {
+            this.listingId = res;
+            this.submitted = true;
+          }
         })
       } else {
         this.listingService.updateListing(this.createListingForm);

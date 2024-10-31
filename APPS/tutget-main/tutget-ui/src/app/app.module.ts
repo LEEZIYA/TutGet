@@ -31,6 +31,7 @@ import { importProvidersFrom } from '@angular/core';
 import { ErrorComponent } from "./components/error/error.component";
 //import {CreateUserComponent} from './components/user/create-user/create-user.component';
 // import { ProfileComponent } from './components/user/profile/profile.component';
+import { ErrorInterceptor } from './components/interceptor/error-interceptor';
 
 @NgModule({
   declarations: [
@@ -66,11 +67,17 @@ import { ErrorComponent } from "./components/error/error.component";
     OAuthModule.forRoot(),
   ],
   providers: [
-      // Csrf token
-      importProvidersFrom(HttpClientModule),
-      importProvidersFrom(
-        HttpClientXsrfModule.withOptions()
-      ),
+    // Csrf token
+    importProvidersFrom(HttpClientModule),
+    importProvidersFrom(
+      HttpClientXsrfModule.withOptions()
+    ),
+    // Interceptor
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+    },
   ],
   bootstrap: [AppComponent]
 })

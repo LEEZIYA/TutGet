@@ -1,5 +1,6 @@
 package com.tutget.tutgetmain.service;
 
+import com.tutget.tutgetmain.constants.AuthConstants;
 import com.tutget.tutgetmain.model.profile.AuthResult;
 import com.tutget.tutgetmain.model.profile.ProfileList;
 import com.tutget.tutgetmain.model.profile.Profile;
@@ -94,13 +95,13 @@ public class ProfileService {
         //    return profile;
 //        System.out.println("Login jwt key: " + jjwtKey);
 
-        if (profile != null && profile.authenticateStatus().equals("true")) {
+        if (profile != null && "true".equalsIgnoreCase(profile.authenticateStatus())) {
             System.out.println(profile.toString());
             return new AuthResult(Jwts.builder()
               .subject(profile.userID())
               .claim("id", profile.id())
               .issuer("TutGet")
-              .expiration(Date.from(LocalDateTime.now().plusHours(1L).atZone(ZoneId.systemDefault()).toInstant())) // 1 hour
+              .expiration(Date.from(LocalDateTime.now().plusHours(AuthConstants.AUTH_EXPIRY_IN_SECONDS.longValue() / 60 / 60).atZone(ZoneId.systemDefault()).toInstant())) // 1 hour
               .signWith(new SecretKeySpec(jjwtKey.getBytes(StandardCharsets.UTF_8), "HmacSHA256"))
               .compact(), profile.userType(), profile.acadLvl());
         }

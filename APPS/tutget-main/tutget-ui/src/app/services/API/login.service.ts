@@ -73,7 +73,7 @@ export class LoginService {
 
     async logout() {
         // remove user from local storage and set current user to null
-        console.log('AAA')
+        console.log('login.service: Logging out');
         localStorage.removeItem('ActiveUser');
         this.localStorageService.setShowMenu(false);
         this.userSubject.next(null);
@@ -90,8 +90,8 @@ export class LoginService {
     }
 
 
-    getUser(id: string){
-      return this.restclient.getrawjson('/users/userId/' + id, false);
+    getUser(id?: string){
+      return this.restclient.getrawjson('/users/userId' + (id ? `/${encodeURIComponent(id)}` : ''), false);
     }
 
 
