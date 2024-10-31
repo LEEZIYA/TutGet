@@ -42,7 +42,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           console.log(error);
           this.oauthService.loadDiscoveryDocumentAndLogin();
         }
-        else {
+        else if (this.router.url !== '/') {
           console.log(error);
           this.router.navigate(['/error'], error);
         }
