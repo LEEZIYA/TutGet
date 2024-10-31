@@ -1,5 +1,7 @@
 package com.tutget.tutgetmain;
 
+import com.tutget.tutgetmain.config.JwtAuthenticationEntryPoint;
+import com.tutget.tutgetmain.filter.JwtAuthenticationFilter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -34,7 +37,16 @@ import java.util.function.Supplier;
 @EnableWebFluxSecurity
 public class SecurityConfiguration {
 
-private static final Logger logger = LoggerFactory.getLogger(SecurityConfiguration.class);
+    private static final Logger logger = LoggerFactory.getLogger(SecurityConfiguration.class);
+
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
+    public SecurityConfiguration(JwtAuthenticationFilter jwtAuthenticationFilter,
+                          JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint) {
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
+    }
 
     @Bean
     SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
@@ -43,7 +55,13 @@ private static final Logger logger = LoggerFactory.getLogger(SecurityConfigurati
                         .csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse())
                         .csrfTokenRequestHandler(new ServerCsrfTokenRequestAttributeHandler())
                 )
-                .addFilterAfter(new JwtAuthenticationFilter(), SecurityWebFiltersOrder.AUTHENTICATION);
+                .exceptionHandling(e -> e.authenticationEntryPoint(jwtAuthenticationEntryPoint))
+                .authorizeExchange(authorizeExchangeSpec -> authorizeExchangeSpec
+                        .pathMatchers("/**").permitAll()
+                        .anyExchange().authenticated())
+                .addFilterBefore(jwtAuthenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION)
+                .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
+                .formLogin(ServerHttpSecurity.FormLoginSpec::disable);
 
         return http.build();
     }
@@ -120,10 +138,3 @@ final class SpaCsrfTokenRequestHandler extends CsrfTokenRequestAttributeHandler 
 //        filterChain.doFilter(request, response);
 //    }
 //}
-
-final class JwtAuthenticationFilter implements WebFilter {
-    @Override
-    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
-        return chain.filter(exchange);
-    }
-}
