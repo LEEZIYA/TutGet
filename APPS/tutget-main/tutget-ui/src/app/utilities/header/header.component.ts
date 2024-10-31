@@ -38,6 +38,7 @@ export class HeaderComponent {
               }
               console.log('header component: ' + this.showMenu)
             })
+          .catch(() => this.firstName = "");
       });
   }
 
