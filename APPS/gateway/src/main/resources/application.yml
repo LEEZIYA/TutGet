@@ -14,7 +14,7 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOrigins: "http://localhost:9000"
+            allowedOrigins: "http://localhost:8443"
             allowCredentials: true
             allowedHeaders: '*'
             allowedMethods: '*'
@@ -97,6 +97,6 @@ spring:
                 redis-rate-limiter.burstCapacity: 20
                 redis-rate-limiter.requestedTokens: 1
         - id: fallback
-          uri: http://localhost:9000
+          uri: http://localhost:8443
           predicates:
             - Path=/fallback
