@@ -2,8 +2,8 @@ name: Build code, run unit test, run SAST, SCA, DAST security scans for NodeJs A
 on: push
 
 defaults:
- run:
-  working-directory: ./APPS
+  run:
+    working-directory: ./APPS
   
 jobs:
   build:
@@ -36,8 +36,6 @@ jobs:
         continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-         with:
-          args: --all-projects
   zap_scan:
     runs-on: ubuntu-latest
     needs: security
