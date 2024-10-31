@@ -54,23 +54,23 @@ export class SearchComponent {
         console.log(this.searchResults);
       }, reject => {});
     }
-    if (trimmedSearchQuery === 'invalidsearch'){
-      alert("Please enter a valid search.");
-    }else{
-      const requestData = {
-      trimmedSearchQuery: trimmedSearchQuery,
-      acadlvl: this.acadlvl,
-      acadSubject: this.acadSubject,
-      };
-      console.log("HELP: " + requestData.acadlvl + requestData.acadSubject + requestData.trimmedSearchQuery);
-      this.searchService.getSearchResultAll(requestData)
-      .then(res => {
-        this.searchResults = res ? res.allListing : [];
-        console.log(this.searchResults);
-      }, reject => {});
-
-
-    }
+    // if (trimmedSearchQuery === 'invalidsearch'){
+    //   alert("Please enter a valid search.");
+    // }else{
+    //   const requestData = {
+    //   trimmedSearchQuery: trimmedSearchQuery,
+    //   acadlvl: this.acadlvl,
+    //   acadSubject: this.acadSubject,
+    //   };
+    //   console.log("HELP: " + requestData.acadlvl + requestData.acadSubject + requestData.trimmedSearchQuery);
+    //   this.searchService.getSearchResultAll(requestData)
+    //   .then(res => {
+    //     this.searchResults = res ? res.allListing : [];
+    //     console.log(this.searchResults);
+    //   }, reject => {});
+    //
+    //
+    // }
   }
 
   navigate(listingId: string){
