@@ -3,13 +3,27 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, Htt
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import {OAuthService} from "angular-oauth2-oidc";
+import {environment} from "../../../environments/environment";
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private oauthService: OAuthService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    let url = request.url.toLowerCase();
+    if (!url.startsWith(environment.apiBaseUrl)) {
+      return next.handle(request);
+    }
+
+    let token = this.oauthService.getAccessToken();
+    if (token != null) {
+      request = request.clone({
+        headers: request.headers.set('Authorization', 'Bearer ' + token)
+      });
+    }
+
     return next.handle(request).pipe(
       catchError((error: any) => {
         // Check for specific error status or message
@@ -18,12 +32,17 @@ export class ErrorInterceptor implements HttpInterceptor {
         const viewListingPattern = new RegExp('listing/.+$');
         const viewQnaPattern = new RegExp('qna');
 
-        console.log('test regexp: ' + viewListingPattern.test(this.router.url));
+        console.log('test view qna regexp: ' + viewQnaPattern.test(this.router.url));
 
         if (!viewQnaPattern.test(this.router.url) && !viewListingPattern.test(this.router.url) && error.status === 401 && this.router.url !== '/') {
           // Redirect to login page
           this.router.navigate(['/login']);
-        } else if (viewQnaPattern.test(this.router.url)) {
+        }
+        else if (error.status === 401 && request.url.includes('/realms')) {
+          console.log(error);
+          this.oauthService.loadDiscoveryDocumentAndLogin();
+        }
+        else {
           console.log(error);
           this.router.navigate(['/error'], error);
         }

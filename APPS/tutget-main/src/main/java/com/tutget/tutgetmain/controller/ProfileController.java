@@ -66,13 +66,13 @@ public class ProfileController {
 
     @GetMapping("/users/logout")
     public ResponseEntity<Void> logoutUser(HttpServletResponse response) {
-        Cookie authCookie = new Cookie("authCookie", null);
-        authCookie.setMaxAge(0);
-        authCookie.setPath("/");
-        authCookie.setHttpOnly(true);
-        authCookie.setSecure(true);
-
-        response.addCookie(authCookie);
+//        Cookie authCookie = new Cookie("authCookie", null);
+//        authCookie.setMaxAge(0);
+//        authCookie.setPath("/");
+//        authCookie.setHttpOnly(true);
+//        authCookie.setSecure(true);
+        response.addHeader("Set-Cookie", "authCookie=" + null + "; SameSite=None; Secure; Path=/; HttpOnly; Max-Age=" + 0);
+//        response.addCookie(authCookie);
 
         return ResponseEntity.ok(null);
     }

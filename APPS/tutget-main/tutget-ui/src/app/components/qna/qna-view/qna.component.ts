@@ -44,7 +44,9 @@ export class QnaComponent {
         } else {
           this.router.navigate(['/login']);
         }
-      })
+      }).catch(() => {
+        this.router.navigate(['/login']);
+      });
     }
 
     onViewQuestion(question: Question): void {

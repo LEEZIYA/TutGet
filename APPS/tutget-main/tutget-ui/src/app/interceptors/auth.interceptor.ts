@@ -26,7 +26,7 @@ export class AuthInterceptor implements HttpInterceptor {
         return next.handle(req).pipe(
             catchError((e: HttpErrorResponse) => {
                 if (e.status == HttpStatusCode.Unauthorized) {
-                    this.oauthService.loadDiscoveryDocumentAndLogin();
+                    // this.oauthService.loadDiscoveryDocumentAndLogin();
                 }
                 return throwError(() => e)
             })

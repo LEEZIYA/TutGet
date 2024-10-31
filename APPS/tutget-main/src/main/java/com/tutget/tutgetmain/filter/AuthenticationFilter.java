@@ -94,6 +94,14 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     } else {
       System.out.println("Verifying with jjwt key: " + jjwtKey);
 
+      Cookie[] cookies = httpRequest.getCookies();
+
+      if (cookies == null) {
+        servletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "AuthCookieNotFound");
+        servletResponse.getWriter().flush();
+        return;
+      }
+
       Cookie cookie = Arrays.stream(httpRequest.getCookies())
         .filter(c -> c.getName().equals("authCookie"))
         .findFirst()

@@ -70,7 +70,9 @@ export class QnaViewQuestionComponent {
         } else {
           this.router.navigate(['/login']);
         }
-      })
+      }).catch(() => {
+        this.router.navigate(['/login']);
+      });
     }
   }
 
