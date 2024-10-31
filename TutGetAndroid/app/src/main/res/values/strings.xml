@@ -8,7 +8,7 @@
     <string name="userName">User Name</string>
     <string name="passWord">Password</string>
     <string name="wrong_login">Either Username or Password is wrong</string>
-    <string name="logout">Log Out of your Account</string>
+    <string name="logout">Log Out</string>
     <string name="logoutText">Are you sure you want to logout, </string>
 
 

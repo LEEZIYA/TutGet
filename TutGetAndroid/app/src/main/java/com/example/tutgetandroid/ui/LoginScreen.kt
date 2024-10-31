@@ -34,6 +34,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.TextField
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.tutgetandroid.MyListingScreen
 import com.example.tutgetandroid.ui.theme.TutGetAndroidTheme
@@ -59,9 +60,16 @@ fun LoginScreen(
 
             if(loginUiState.loggedIn){
                 Text(
-                    text = "Hi Welcome to Tutget, You have logged in as $loginUiState.username",
+                    text = "Hi Welcome to Tutget, You have logged in as ${loginUiState.username}",
                     modifier = Modifier.padding(24.dp)
                 )
+                Button(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    onClick = { loginViewModel.resetLogin() }
+                ) {
+                    Text(stringResource(R.string.logout))
+                }
             }
             else {
                 Text(
@@ -176,6 +184,7 @@ fun LoginLayout(
             Text(stringResource(R.string.passWord))
 
                 },
+        visualTransformation = PasswordVisualTransformation(),
         singleLine = false,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
         //keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
