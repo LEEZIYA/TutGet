@@ -4,9 +4,9 @@ on:
   push:
     branches: [ main ]
     
-defaults:
-  run:
-    working-directory: ./APPS/tutget-main/tutget-ui
+# defaults:
+#   run:
+#     working-directory: ./APPS/tutget-main/tutget-ui
   
 jobs:
   build:
@@ -16,7 +16,7 @@ jobs:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
-        cache-dependency-path: ./package-lock.json
+        cache-dependency-path: ./APPS/tutget-main/tutget-ui/package-lock.json
         node-version: 16
         cache: npm
     - name: Install dependencies
