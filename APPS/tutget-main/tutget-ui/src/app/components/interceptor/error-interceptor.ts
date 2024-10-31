@@ -11,7 +11,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
-      catchError((error: HttpErrorResponse) => {
+      catchError((error: any) => {
         // Check for specific error status or message
         console.log(JSON.stringify(error), this.router.url);
 
@@ -23,6 +23,9 @@ export class ErrorInterceptor implements HttpInterceptor {
         if (!viewQnaPattern.test(this.router.url) && !viewListingPattern.test(this.router.url) && error.status === 401 && this.router.url !== '/') {
           // Redirect to login page
           this.router.navigate(['/login']);
+        } else if (viewQnaPattern.test(this.router.url)) {
+          console.log(error);
+          this.router.navigate(['/error'], error);
         }
 
         // Optionally handle other errors

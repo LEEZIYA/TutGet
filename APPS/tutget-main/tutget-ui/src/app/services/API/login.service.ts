@@ -18,7 +18,7 @@ export class LoginService {
     private userSubject: BehaviorSubject<unknown>;
     public user: Observable<unknown>;
     BASE_URL: string = 'https://localhost:8443/api/users';
-    
+
 
     constructor(
         private router: Router,
@@ -40,7 +40,7 @@ export class LoginService {
         return this.http.post<unknown>(
            this.BASE_URL + '/login',
            loginForm,
-           { observe: 'response' } // To read response status in header
+           { observe: 'response', withCredentials: true } // To read response status in header
         ).pipe(map(res => {
                // store user details and jwt token in local storage to keep user logged in between page refreshes
                localStorage.setItem('ActiveUser', JSON.stringify(res.body));
@@ -62,7 +62,7 @@ export class LoginService {
         return this.http.post<unknown>(
             this.BASE_URL + '/login',
             loginUser,
-            { observe: 'response', headers }
+            { observe: 'response', headers, withCredentials: true }
         ).pipe(map(res => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('ActiveUser', JSON.stringify(res.body));

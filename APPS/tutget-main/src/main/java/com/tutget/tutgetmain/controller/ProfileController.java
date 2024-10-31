@@ -51,14 +51,16 @@ public class ProfileController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        Cookie authCookie = new Cookie("authCookie", loginResult.jwt());
-        authCookie.setMaxAge(AuthConstants.AUTH_EXPIRY_IN_SECONDS); // 1 hour
-        System.out.println("ProfileController: " + authCookie.getMaxAge());
-        authCookie.setPath("/");
-        authCookie.setHttpOnly(true);
-        authCookie.setSecure(true);
+//        Cookie authCookie = new Cookie("authCookie", loginResult.jwt());
+//        authCookie.setMaxAge(AuthConstants.AUTH_EXPIRY_IN_SECONDS); // 1 hour
+//        System.out.println("ProfileController: " + authCookie.getMaxAge());
+//        authCookie.setPath("/");
+//        authCookie.setHttpOnly(true);
+//        authCookie.setSecure(true);
 
-        response.addCookie(authCookie);
+        response.addHeader("Set-Cookie", "authCookie=" + loginResult.jwt() + "; SameSite=None; Secure; Path=/; HttpOnly; Max-Age=" + AuthConstants.AUTH_EXPIRY_IN_SECONDS);
+//        response.addCookie(authCookie);
+
         return ResponseEntity.ok(new AuthResult(null, loginResult.userType(), loginResult.acadLvl()));
     }
 
