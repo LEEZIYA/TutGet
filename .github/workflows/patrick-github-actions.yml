@@ -1,9 +1,11 @@
-name: Run Shell Commands
-on: [push]
-
+name: Example workflow for Maven using Snyk
+on: push
 jobs:
-  run-shell-command:
+  security:
     runs-on: ubuntu-latest
     steps:
-      - name: Echo a String
-        run: echo "Hello Security Gurus!! This is our first GitHub Actions Workflow file"
+      - uses: actions/checkout@master
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/maven@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
