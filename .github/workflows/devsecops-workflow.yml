@@ -22,7 +22,7 @@ jobs:
     - name: Install dependencies
       working-directory: ./APPS/tutget-main/tutget-ui
       run: npm ci
-    - name: SonarCloud Scan
+    - name: SonarCloud Scan v2
       uses: sonarsource/sonarcloud-github-action@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
