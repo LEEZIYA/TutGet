@@ -187,7 +187,8 @@ fun LoginPage2(
                     )
                 )
             },
-                    bottomBar = { TutGetBottomNavigation() }
+            bottomBar = { TutGetBottomNavigation() },
+
 
         ) { innerPadding ->
             LoginScreen()

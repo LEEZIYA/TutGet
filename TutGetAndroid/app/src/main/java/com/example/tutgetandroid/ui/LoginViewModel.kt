@@ -23,12 +23,10 @@ class LoginViewModel : ViewModel() {
     }
 
     fun updatePassword(password: String){
-        userInputUsername = password
+        userInputPassword = password
     }
 
-    init {
-        resetLogin()
-    }
+
     /*hard coded*/
     val userMap = mapOf (
         "Tom" to "Password",
@@ -70,7 +68,10 @@ class LoginViewModel : ViewModel() {
 
     fun resetLogin() {
 //        usedWords.clear()
-        _uiState.value = LoginUiState(loggedIn = false)
+//        _uiState.update { currentState ->
+//            currentState.copy(loggedIn = false,username = "")
+//        }
+        _uiState.value = LoginUiState()
     }
 
     init {

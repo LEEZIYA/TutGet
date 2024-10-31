@@ -30,7 +30,9 @@ import androidx.compose.material3.OutlinedTextField
 
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.TextField
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.tutgetandroid.MyListingScreen
@@ -83,9 +85,7 @@ fun LoginScreen(
 
                 Button(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                        .padding(start = 8.dp),
+                        .fillMaxWidth(),
                     onClick = { loginViewModel.checkLogin() }
                 ) {
                     Text(stringResource(R.string.login))
@@ -166,7 +166,7 @@ fun LoginLayout(
         //keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
     )
     TextField(
-        value = userName,
+        value = passWord,
         onValueChange = onPasswordChanged,
         isError = loggedInWrong,
         modifier = modifier,
@@ -197,10 +197,46 @@ fun LoginLayout(
 //            }
         }
 
-@Preview
-@Composable
-fun TutGetMyListingPagePreview() {
-    TutGetAndroidTheme {
-        LoginScreen()
-    }
-}
+//@Composable
+//private fun LogOutDialog(
+//    onPlayAgain: () -> Unit,
+//    modifier: Modifier = Modifier
+//) {
+//    val activity = (LocalContext.current as Activity)
+//
+//    AlertDialog(
+//        onDismissRequest = {
+//            // Dismiss the dialog when the user clicks outside the dialog or on the back
+//            // button. If you want to disable that functionality, simply use an empty
+//            // onDismissRequest.
+//        },
+//        title = { Text(stringResource(R.string.logout)) },
+//        text = { Text(stringResource(R.string.logoutText, 0)) },
+//        modifier = modifier,
+//        dismissButton = {
+//            TextButton(
+//                onClick = {
+//                    activity.finish()
+//                }
+//            ) {
+//                Text(text = stringResource(R.string.exit))
+//            }
+//        },
+//        confirmButton = {
+//            TextButton(
+//                onClick = {
+//                    onPlayAgain()
+//                }
+//            ) {
+//                Text(text = stringResource(R.string.play_again))
+//            }
+//        }
+//    )
+//}
+//@Preview
+//@Composable
+//fun TutGetMyListingPagePreview() {
+//    TutGetAndroidTheme {
+//        LoginScreen()
+//    }
+//}
