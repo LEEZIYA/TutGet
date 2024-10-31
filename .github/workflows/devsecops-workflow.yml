@@ -19,7 +19,9 @@ jobs:
         cache-dependency-path: subdir/package-lock.json
         node-version: 16
         cache: npm
-    - run: npm ci
+    - name: Install dependencies
+      working-directory: ./APPS/tutget-main/tutget-ui
+      run: npm install
     - name: SonarCloud Scan
       uses: sonarsource/sonarcloud-github-action@master
       env:
