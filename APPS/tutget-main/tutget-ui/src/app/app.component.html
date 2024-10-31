@@ -1,4 +1,4 @@
-<app-header [showMenu]="false" [isStudent]="false"></app-header>
+<app-header [showMenu]="localStorageService.getShowMenu()" [isStudent]="localStorageService.getIsStud()"></app-header>
   <section>
     <router-outlet></router-outlet>
   </section>

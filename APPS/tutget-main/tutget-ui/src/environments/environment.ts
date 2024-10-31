@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    apiBaseUrl: 'http://localhost:9000/api',
+    apiBaseUrl: 'https://localhost:8443/api',
     authIssuer: 'http://localhost:8080/realms/TutGet',
   };
   

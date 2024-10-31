@@ -63,15 +63,9 @@ import { ErrorComponent } from "./components/error/error.component";
     RouterOutlet,
     RouterLink,
     RouterLinkActive,
-    OAuthModule.forRoot({
-      resourceServer: {
-        sendAccessToken: true,
-        allowedUrls: [environment.apiBaseUrl]
-      }
-    }),
+    OAuthModule.forRoot(),
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
       // Csrf token
       importProvidersFrom(HttpClientModule),
       importProvidersFrom(
