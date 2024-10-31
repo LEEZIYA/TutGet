@@ -3,7 +3,7 @@ on: push
 
 defaults:
   run:
-    working-directory: ./APPS/tutget-main
+    working-directory: ./APPS/tutget-main/tutget-ui
   
 jobs:
   build:
