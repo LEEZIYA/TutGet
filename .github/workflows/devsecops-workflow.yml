@@ -1,5 +1,5 @@
 name: Build code, run unit test, run SAST, SCA, DAST security scans for NodeJs App
-
+ 
 on: 
   push:
     branches: [ main ]
