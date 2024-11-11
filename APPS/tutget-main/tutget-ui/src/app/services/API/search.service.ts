@@ -14,7 +14,7 @@ export class SearchService {
     return this.restclient.getrawjson(this.BASE_URL + '/' + id, false);
   }
 
-  getSearchResult(searchKey: String) {
+  getSearchResult(searchKey: String | null) {
     return this.restclient.getrawjson(this.BASE_URL + '/all/'+ searchKey, false);
   }
 

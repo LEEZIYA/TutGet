@@ -1,12 +1,21 @@
 package com.tutget.tutgetmain.service;
 
+import com.tutget.tutgetmain.constants.AuthConstants;
+import com.tutget.tutgetmain.model.profile.AuthResult;
 import com.tutget.tutgetmain.model.profile.ProfileList;
 import com.tutget.tutgetmain.model.profile.Profile;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
+import java.security.PublicKey;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 
 @Service
@@ -15,7 +24,13 @@ public class ProfileService {
     @Autowired
     private RestTemplate restTemplate;
 
-    private String microserviceURL = "http://profile-service/users";
+    @Autowired
+    private OAuthService oAuthService;
+
+    private String microserviceURL = "http://gateway/users";
+
+    @Value("${jjwt.key}")
+    private String jjwtKey;
 
     public List<Profile> getAllProfiles() {
         ProfileList profileList = restTemplate.getForObject(microserviceURL, ProfileList.class);
@@ -26,27 +41,72 @@ public class ProfileService {
         return restTemplate.getForObject(microserviceURL + "/" + id, Profile.class);
     }
 
-    public Profile login(Profile loginProfile) {
-//        ProfileList profilelist;
+    public AuthResult login(Profile loginProfile, String authHeader) {
+        if (authHeader != null) {   // for login via Keycloak
+            String token = authHeader.replace("Bearer ", "");
+
+            Claims claims = null;
+            try {
+                PublicKey key = oAuthService.getPublicKey();
+                System.out.println("OAuth Public Key: " + key);
+
+                claims = Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload();
+                System.out.println("Verified Claims: " + claims);
+            } catch (Exception e) {
+                System.err.println("Invalid token: " + e.getMessage());
+                return null;
+            }
+
+            String subject = claims.getSubject();
+            String firstName = claims.get("given_name", String.class);
+            String lastName = claims.get("family_name", String.class);
+
+            Profile p = new Profile(
+                null,
+                "J1",
+                subject,
+                "",
+                "S",
+                firstName,
+                lastName,
+                "98765432",
+                "Home",
+                "123456",
+                "New Google user",
+                "");
+
+            if (getProfileByUserID(subject) != null) {
+                Profile returnedUser = addProfile(p);
+                System.out.println(returnedUser);
+            }
+
+            loginProfile = p;
+        }
+
+        if (loginProfile.userID() == null) {
+            // return loginProfile
+            return null;
+        }
+
         Profile profile;
-        if(loginProfile.getUserID()==null){
-            return loginProfile;
-        }
         profile = restTemplate.postForObject(microserviceURL + "/login", loginProfile ,Profile.class);
-//        profile = profilelist.getProfileList().get(0);
+        // profile = profilelist.getProfileList().get(0);
+        // if (profile.getAuthenticateStatus()) {
+        //    return profile;
+//        System.out.println("Login jwt key: " + jjwtKey);
 
-        if (profile.getAuthenticateStatus()) {
-            return profile;
-
-//        profile = restTemplate.getForObject(microserviceURL + "/userId/" + loginProfile.getUserID(), Profile.class);
-////        profile = profilelist.getProfileList().get(0);
-//
-//        if (profile!= null && profile.getPassword()!=null && profile.getPassword().equals(loginProfile.getPassword())) {
-//            return profile;
-        } else {
-            return loginProfile;
+        if (profile != null && "true".equalsIgnoreCase(profile.authenticateStatus())) {
+            System.out.println(profile.toString());
+            return new AuthResult(Jwts.builder()
+              .subject(profile.userID())
+              .claim("id", profile.id())
+              .issuer("TutGet")
+              .expiration(Date.from(LocalDateTime.now().plusHours(AuthConstants.AUTH_EXPIRY_IN_SECONDS.longValue() / 60 / 60).atZone(ZoneId.systemDefault()).toInstant())) // 1 hour
+              .signWith(new SecretKeySpec(jjwtKey.getBytes(StandardCharsets.UTF_8), "HmacSHA256"))
+              .compact(), profile.userType(), profile.acadLvl());
         }
 
+        return null;
     }
 
 

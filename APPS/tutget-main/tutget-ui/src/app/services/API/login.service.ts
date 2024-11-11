@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-// import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
+import { LocalStorageService} from '../local-storage.service'
 // import { Injectable } from '@angular/core';
 import { RestclientService } from '../restclient.service';
 // import { CreateListingForm } from 'src/app/DTO/CreateListingForm';
@@ -15,15 +15,16 @@ import { STUDENT, TEACHER, TEACHER2 } from 'src/app/components/listing/test-user
 
 @Injectable({ providedIn: 'root' })
 export class LoginService {
-    private userSubject: BehaviorSubject<CreateUserForm | null>;
-    public user: Observable<CreateUserForm | null>;
-    BASE_URL: string = '/api/users';
+    private userSubject: BehaviorSubject<unknown>;
+    public user: Observable<unknown>;
+    BASE_URL: string = 'https://localhost:8443/api/users';
 
 
     constructor(
-//         private router: Router,
+        private router: Router,
         private http: HttpClient,
-        private restclient: RestclientService
+        private restclient: RestclientService,
+        private localStorageService: LocalStorageService
     ) {
         this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('ActiveUser')!));
         this.user = this.userSubject.asObservable();
@@ -36,11 +37,14 @@ export class LoginService {
     login(loginForm:CreateUserForm) {
 
 //            return this.restclient.postjson(this.BASE_URL + '/users/login',loginForm)
-        return this.http.post<CreateUserForm>(this.BASE_URL + '/login',loginForm)
-           .pipe(map(res => {
+        return this.http.post<unknown>(
+           this.BASE_URL + '/login',
+           loginForm,
+           { observe: 'response', withCredentials: true } // To read response status in header
+        ).pipe(map(res => {
                // store user details and jwt token in local storage to keep user logged in between page refreshes
-               localStorage.setItem('ActiveUser', JSON.stringify(res));
-               this.userSubject.next(res);
+               localStorage.setItem('ActiveUser', JSON.stringify(res.body));
+               this.userSubject.next(res.body); //
                return res;
            }));
 //            let loginForm:CreateUserForm;
@@ -51,23 +55,43 @@ export class LoginService {
 //            this.userSubject.next(user);
     }
 
-    logout() {
+    loginWithOAuth(loginUser: CreateUserForm, token: string) {
+        const headers = new HttpHeaders({
+            'Authorization': `Bearer ${token}`,
+        })
+        return this.http.post<unknown>(
+            this.BASE_URL + '/login',
+            loginUser,
+            { observe: 'response', headers, withCredentials: true }
+        ).pipe(map(res => {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem('ActiveUser', JSON.stringify(res.body));
+            this.userSubject.next(res.body);
+            return res;
+        }));
+    }
+
+    async logout() {
         // remove user from local storage and set current user to null
+        console.log('login.service: Logging out');
         localStorage.removeItem('ActiveUser');
+        this.localStorageService.setShowMenu(false);
         this.userSubject.next(null);
-//         this.router.navigate(['/account/login']);
+        await this.restclient.getrawjson('/users/logout', false);
+
+        this.router.navigate(['/']);
     }
 
 
     createUser(){
-      this.restclient.postjson('/users', STUDENT);
-      this.restclient.postjson('/users', TEACHER);
-      this.restclient.postjson('/users', TEACHER2);
+//       this.restclient.postjson('/users', STUDENT);
+//       this.restclient.postjson('/users', TEACHER);
+//       this.restclient.postjson('/users', TEACHER2);
     }
 
 
-    getUser(id: string){
-      return this.restclient.getrawjson('/users/userId/' + id, false);
+    getUser(id?: string){
+      return this.restclient.getrawjson('/users/userId' + (id ? `/${encodeURIComponent(id)}` : ''), false);
     }
 
 

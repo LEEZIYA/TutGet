@@ -45,26 +45,32 @@ export class SearchComponent {
   onSubmit() {
     const trimmedSearchQuery = this.searchQuery.trim();
 
-    if (trimmedSearchQuery === ''){
+    if (trimmedSearchQuery === 'invalidsearch'){
       alert("Please enter a valid search.");
     }else{
-      this.searchService.getSearchResult(trimmedSearchQuery)
-      .then((res)=>{this.searchResults = res.allListing; console.log(this.searchResults);});
+      this.searchService.getSearchResult(trimmedSearchQuery ? trimmedSearchQuery : null)
+      .then(res => {
+        this.searchResults = res ? res.allListing : [];
+        console.log(this.searchResults);
+      }, reject => {});
     }
-    if (trimmedSearchQuery === ''){
-      alert("Please enter a valid search.");
-    }else{
-      const requestData = {
-      trimmedSearchQuery: trimmedSearchQuery,
-      acadlvl: this.acadlvl,
-      acadSubject: this.acadSubject,
-      };
-      console.log("HELP: " + requestData.acadlvl + requestData.acadSubject + requestData.trimmedSearchQuery);
-      this.searchService.getSearchResultAll(requestData)
-      .then((res)=>{this.searchResults = res.allListing; console.log(this.searchResults);});
-
-
-    }
+    // if (trimmedSearchQuery === 'invalidsearch'){
+    //   alert("Please enter a valid search.");
+    // }else{
+    //   const requestData = {
+    //   trimmedSearchQuery: trimmedSearchQuery,
+    //   acadlvl: this.acadlvl,
+    //   acadSubject: this.acadSubject,
+    //   };
+    //   console.log("HELP: " + requestData.acadlvl + requestData.acadSubject + requestData.trimmedSearchQuery);
+    //   this.searchService.getSearchResultAll(requestData)
+    //   .then(res => {
+    //     this.searchResults = res ? res.allListing : [];
+    //     console.log(this.searchResults);
+    //   }, reject => {});
+    //
+    //
+    // }
   }
 
   navigate(listingId: string){

@@ -14,7 +14,7 @@ public class ListingService {
     @Autowired
     private RestTemplate restTemplate;
 
-    private String microserviceURL = "http://listing-service/listings";
+    private String microserviceURL = "http://gateway/listings";
 
     public List<Listing> getAllListings(){
         AllListing allListing = restTemplate.getForObject(microserviceURL, AllListing.class);
@@ -29,6 +29,7 @@ public class ListingService {
     }
 
     public void updateListing(Listing listing) {
+        System.out.println("Update listing: " + listing.getAssignedTutorId());
         restTemplate.put(microserviceURL, listing, Listing.class);
     }
 

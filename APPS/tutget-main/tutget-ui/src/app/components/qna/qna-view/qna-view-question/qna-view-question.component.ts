@@ -13,7 +13,7 @@ import { CreateAnswerForm } from 'src/app/DTO/CreateAnswerForm';
 })
 export class QnaViewQuestionComponent {
   private sub: any;
-  
+
   constructor(private restClient: RestclientService, private router: Router, private activatedRoute: ActivatedRoute, private qnaService: QnaService) { }
   question?: Question;
   answers?: Answer[];
@@ -25,7 +25,7 @@ export class QnaViewQuestionComponent {
   {displayName: "Weekly Upvoted", id:"upvoted"}];
   selectedTabSort: SortOption = this.tabSortingOptions[0];
 
-  
+
   createAnswerForm: CreateAnswerForm = new CreateAnswerForm();
   answerErr: string = '';
 
@@ -39,19 +39,19 @@ export class QnaViewQuestionComponent {
           this.answers = res.answers;
         } else {
         }
-        
+
       })
     })
-  }    
-  
+  }
+
   backToQnaBoards() {
     this.router.navigate(['/qna']);
   }
 
   onSelectTabSort(sortOption: SortOption) {
     this.selectedTabSort = sortOption;
-  }  
-  
+  }
+
   submit() {
     this.clearError();
 
@@ -64,9 +64,15 @@ export class QnaViewQuestionComponent {
       this.createAnswerForm.postDate = new Date();
       this.qnaService.createAnswer(this.createAnswerForm)
       .then((res) => {
-        window.alert('Success! Reloading page now.');
-        location.reload();
-      })
+        if (res) {
+          window.alert('Success! Reloading page now.');
+          location.reload();
+        } else {
+          this.router.navigate(['/login']);
+        }
+      }).catch(() => {
+        this.router.navigate(['/login']);
+      });
     }
   }
 

@@ -21,7 +21,7 @@
           </tr>
           <tr>
             <th>Tutee</th>
-            <td><a href="#">{{ listingOwner?.firstName }}  {{ listingOwner?.lastName }}</a></td>
+            <td><a href="#">{{ listingOwner?.firstName ?? '-' }}  {{ listingOwner?.lastName }}</a></td>
           </tr>
           <tr>
             <th>Academic Level</th>
@@ -66,7 +66,7 @@
         <div class="div-button mt-4 ps-3" (click)="editListing()" >Edit Listing</div>
         <div class="div-button mt-4 ps-3" (click)="deleteListing()">Delete Listing</div>
     </div>
-    <div class="col-5 col-sm-4 col-lg-2 p-2 pt-0" *ngIf="!listingRights && activeUser.userType === 'T'">
+    <div class="col-5 col-sm-4 col-lg-2 p-2 pt-0" *ngIf="!listingRights && activeUser && activeUser.userType === 'T'">
       <div *ngIf="!requested" class="div-button mt-4 ps-3" (click)="requestListing()" >Request Assignment</div>
       <!-- <div *ngIf="requested" class="div-button-disabled mt-4 ps-3">Requested</div> -->
       <div *ngIf="requested" class="div-button mt-4 ps-3" (click)="cancelRequest()">Cancel Request</div>
@@ -90,10 +90,10 @@
           <tbody>
             <tr *ngFor="let tutor of requestedUsers; let i = index;">
               <td><a href="#">{{ tutor }}</a></td>
-              <td *ngIf="!assignedATutor">
+              <td *ngIf="!createListingForm.assignedTutorId">
                 <div class="div-button-2" (click)="assignListing(tutor)">Assign</div>
               </td>
-              <td *ngIf="assignedATutor">
+              <td *ngIf="createListingForm.assignedTutorId">
                 <div *ngIf="tutor == this.createListingForm.assignedTutorId" class="div-button-2" style="width: 180px;" (click)="cancelAssign()">Cancel Assignment</div>
               </td>
             </tr>
@@ -106,7 +106,7 @@
         There are no requests for this assignment yet!
       </div>
     </div>
-    <div class="row row-cols-1" *ngIf="assignedATutor">
+    <div class="row row-cols-1" *ngIf="createListingForm.assignedTutorId && createListingForm.status !== 'Paid'">
       <div class="col-lg-9 mb-5 mt-5 justify-content-center" style="text-align: right;">
         <app-single-button buttonTitle="Proceed to Payment" (eventEmit)="createPayment()"></app-single-button>
       </div>
