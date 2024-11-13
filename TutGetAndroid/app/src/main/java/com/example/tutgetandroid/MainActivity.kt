@@ -64,6 +64,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.material3.TextButton
 
 import com.example.tutgetandroid.ui.LoginScreen
+import com.example.tutgetandroid.ui.TutgetScreen
 
 private const val TAG = "MainActivity"
 class MainActivity : ComponentActivity() {
@@ -88,7 +89,7 @@ class MainActivity : ComponentActivity() {
 //                    color = MaterialTheme.colorScheme.background
 //                ) {
                 //DiceRollerApp()
-                TutGetApp()
+                TutgetScreen()
             }
 
 
@@ -169,7 +170,7 @@ fun LoginPage2(
     //@Preview(showBackground = true, widthDp = 320)
     //@Preview(showBackground = true)
     @Composable
-    fun TutGetApp(modifier: Modifier = Modifier) {
+    fun TutGetApp2(modifier: Modifier = Modifier) {
         var loggedIn by rememberSaveable {mutableStateOf(false)}
         var submitted by rememberSaveable {mutableStateOf(false)}
         Scaffold(
@@ -521,7 +522,7 @@ private fun LoginFailDialog(
 @Composable
 fun TutGetAppPreview() {
     TutGetAndroidTheme {
-        TutGetApp(Modifier.fillMaxSize())
+        TutGetApp2(Modifier.fillMaxSize())
     }
 
 }

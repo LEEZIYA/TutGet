@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config  cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">tutget.com</domain>
+        <trust-anchors>
+            <certificates src="@raw/ca"/>
+        </trust-anchors>
+        <pin-set expiration="2026-01-01">
+            <pin digest="SHA-256">sQVbDvSL8FA10Fqv6OMygY8wuYowsanUK7CHGju2MJc</pin>
+
+        </pin-set>
+    </domain-config>
+</network-security-config>

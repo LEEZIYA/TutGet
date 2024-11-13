@@ -34,7 +34,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 
-enum class TutGetScreen() {
+enum class TutGetScreens() {
     Profile,
     Login,
     QnA,
@@ -43,7 +43,10 @@ enum class TutGetScreen() {
 
 @Composable
 private fun TutGetBottomNavigation(
-    navigate:()->Unit,
+    loggedIn:Boolean = false,
+    onProfileClicked:(Boolean)->Unit,
+    onQnAClicked:(Boolean)->Unit,
+    onListingClicked:(Boolean)->Unit,
     modifier: Modifier = Modifier) {
     NavigationBar(
         containerColor = MaterialTheme.colorScheme.surfaceVariant,
@@ -58,11 +61,11 @@ private fun TutGetBottomNavigation(
             },
             label = {
                 Text(
-                    text = stringResource(R.string.bottom_navigation_listing)
+                    text = stringResource(R.string.bottom_navigation_QnA)
                 )
             },
             selected = true,
-            onClick = {}
+            onClick = {onQnAClicked(loggedIn)}
         )
         NavigationBarItem(
             icon = {
@@ -77,7 +80,7 @@ private fun TutGetBottomNavigation(
                 )
             },
             selected = true,
-            onClick = {}
+            onClick = {onListingClicked(loggedIn)}
         )
         NavigationBarItem(
             icon = {
@@ -92,7 +95,7 @@ private fun TutGetBottomNavigation(
                 )
             },
             selected = false,
-            onClick = {}
+            onClick = {onProfileClicked(loggedIn)}
         )
     }
 }
@@ -103,7 +106,7 @@ private fun TutGetBottomNavigation(
 //@Preview(showBackground = true, widthDp = 320)
 //@Preview(showBackground = true)
 @Composable
-fun TutGetApp(
+fun TutgetScreen(
     viewModel: LoginViewModel = viewModel(),
     navController: NavHostController = rememberNavController(),
     modifier: Modifier = Modifier) {
@@ -124,28 +127,46 @@ fun TutGetApp(
                 )
             )
         },
-        bottomBar = { TutGetBottomNavigation(
-            navigate = {}
+        bottomBar = { TutGetBottomNavigation(loggedIn,
+            onProfileClicked={navController.navigate(TutGetScreens.Profile.name)},
+            onQnAClicked={navController.navigate(TutGetScreens.QnA.name)},
+            onListingClicked={navController.navigate(TutGetScreens.Listing.name)},
         ) },
 
 
         ) { innerPadding ->
         val uiState by viewModel.uiState.collectAsState()
+        val loggedIn = uiState.loggedIn
 
         NavHost(
             navController = navController,
-            startDestination = TutGetScreen.Profile.name,
+            startDestination = TutGetScreens.Profile.name,
             modifier = Modifier.padding(innerPadding)
         ){
-            composable(route = TutGetScreen.Profile.name) {
-                LoginScreen()
+            composable(route = TutGetScreens.Profile.name) {
+                if(!loggedIn){
+                LoginScreen(loginViewModel=viewModel)}
+                else{
+                    Text("You have logged in, welcome")
+                }
             }
-            composable(route = TutGetScreen.Listing.name) {
-                ListingScreen()
+            composable(route = TutGetScreens.Listing.name) {
+
+                if(loggedIn) {
+                    ListingScreen()
+                }
+                else{
+                    Text("Please logged in to access Listing")
+                }
             }
-            composable(route = TutGetScreen.Listing.name) {
+            composable(route = TutGetScreens.QnA.name) {
                 //QnAScreen()
-                Text("QnA")
+                if(loggedIn){
+                Text("QnA Screen under construction")}
+                else{
+                    Text("Please logged in to access QnA")
+                }
+
             }
         }
         //LoginScreen()
